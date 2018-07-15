@@ -15,7 +15,21 @@ namespace GameSol
         Random r = new Random();
         public enum GameState { TitleScreen, Game, GameOver};
         public GameState _gameState = GameState.TitleScreen;
-        public int score = 0;
+        public ConsoleKeyInfo key;
+        public struct ScoreAndStats
+        {
+            public int L;
+            public int backL;
+            public int I;
+            public int U;
+            public int Z;
+            public int S;
+            public int T;
+            public int Score;
+        }
+
+        public bool isKeyPressed;
+        public ScoreAndStats _scoreAndStats;
         public Tetris()
         {
             
@@ -23,23 +37,40 @@ namespace GameSol
 
         public void Start()
         {
+            ResetScoreAndStats();
             while (true)
-            {                
-                if (_gameState == GameState.TitleScreen)
+            {
+                if (System.Environment.TickCount - lastTick >= 60)
                 {
-                    PrintTitle();
-                    if (Console.ReadKey().Key == ConsoleKey.Enter)
+                    GetKeyPress();
+                    if (_gameState == GameState.TitleScreen)
                     {
+                        //if (Console.ReadKey().Key == ConsoleKey.Enter)
+                        if (key.Key == ConsoleKey.Enter)
+                        {
+                            
+                        }
                         Update();
-                    }
-                }
-
-                //keyboard input
-                if (Console.ReadKey().Key == ConsoleKey.RightArrow)
-                {
-                    
+                    } /// iskeypressed is used to indicate whether or not a key is still pressed since key var should always hold last key this avoids spamming.
+                    _scoreAndStats.Score++;
+                    lastTick = System.Environment.TickCount;
                 }
             }
+        }
+
+        public void ClearKey()
+        {
+            
+        }
+
+        public void GetKeyPress()
+        {
+            if (Console.KeyAvailable)
+            {
+                key = Console.ReadKey();
+                isKeyPressed = true;
+            }
+            else isKeyPressed = false;
         }
 
         public void Update()
@@ -47,13 +78,16 @@ namespace GameSol
             printGameGUI();
         }
 
+        /// <summary>
+        /// reset the board
+        /// </summary>
         public void FillBoardWithZero()
         {
             Array.Clear(board, 0, board.Length);
         }
 
         /// <summary>
-        /// prints board directly... Phase this out.
+        /// creates a string array holding the board
         /// </summary>
         public string[] boardToStringArr()
         {
@@ -115,19 +149,66 @@ namespace GameSol
             currPiece = new Piece(r.Next(1, 8));
         }
 
-        public void PrintTitle()
+        public void ResetScoreAndStats()
         {
-            Console.WriteLine("");
+            _scoreAndStats.L = 0;
+            _scoreAndStats.I = 0;
+            _scoreAndStats.S = 0;
+            _scoreAndStats.T = 0;
+            _scoreAndStats.Z = 0;
+            _scoreAndStats.backL = 0;
+            _scoreAndStats.Score = 0;
         }
 
         public void printGameGUI()
         {
             string[] BoardAsString = boardToStringArr();
             StringBuilder sb = new StringBuilder();
-            sb.Append("||||||||||||||||||||||||||||||||||||||||||\n"
+            sb.Append(
+                "||||||||||||||||||||||||||||||||||||||||||\n"
                 + "||||||||||||||||**TETRIS**||||||||||||||||\n"
-                + "|||||SCORE:|||||----------|| NEXT PIECE ||");
-            Console.WriteLine("||||||||||||||||"+ BoardAsString[0] +"||||||||||||||||");
+                + "|||||SCORE:|||||----------|| NEXT PIECE ||\n"
+                +"||||||||||||||||" + BoardAsString[0] + "||||||||||||||||\n" +
+                "|||||"+_scoreAndStats.Score.ToString("000000")+ "|||||" + BoardAsString[1] + "||            ||\n" +
+                "||||||||||||||||" + BoardAsString[2] + "||            ||\n" +
+                "|| STATISTICS ||" + BoardAsString[3] + "||            ||\n" +
+                "||||||||||||||||" + BoardAsString[4] + "||            ||\n" +
+                "||| L - 0000 |||" + BoardAsString[5] + "||            ||\n" +
+                "||||||||||||||||" + BoardAsString[6] + "||            ||\n" +
+                "||| J - 0000 |||" + BoardAsString[7] + "||||||||||||||||\n" +
+                "||||||||||||||||" + BoardAsString[8] + "||||||||||||||||\n" +
+                "||| S - 0000 |||" + BoardAsString[9] + "||||||||||||||||\n" +
+                "||||||||||||||||" + BoardAsString[10] + "||||||||||||||||\n" +
+                "||| Z - 0000 |||" + BoardAsString[11] + "||||||||||||||||\n" +
+                "||||||||||||||||" + BoardAsString[12] + "||||||||||||||||\n" +
+                "||| | - 0000 |||" + BoardAsString[13] + "||||||||||||||||\n" +
+                "||||||||||||||||" + BoardAsString[14] + "||||||||||||||||\n" +
+                "||| U - 0000 |||" + BoardAsString[15] + "||||||||||||||||\n" +
+                "||||||||||||||||" + BoardAsString[16] + "||||||||||||||||\n" +
+                "||| T - 0000 |||" + BoardAsString[17] + "||||||FPS:||||||\n" +
+                "||||||||||||||||" + BoardAsString[18] + "||"+ CalculateFrameRate().ToString("000000000000") +"||\n" +
+                "||||||||||||||||" + BoardAsString[19] + "||||||||||||||||\n" +
+                "||||||||||||||||||||||||||||||||||||||||||"
+                );
+            Console.Clear();
+            Console.Write(sb.ToString());
+        }
+
+        private static int lastTick;
+        private static int _lastTick;
+        private static int lastFrameRate;
+        private static int frameRate;
+
+        public static int CalculateFrameRate()
+        {
+            if (System.Environment.TickCount - _lastTick >= 1000)
+            {
+                lastFrameRate = frameRate;
+                frameRate = 0;
+                _lastTick = System.Environment.TickCount;
+            }
+            frameRate++;
+            return lastFrameRate;
         }
     }
 }
@@ -136,7 +217,7 @@ namespace GameSol
 ||||||||||||||||||||||||||||||||||||||||||c
 ||||||||||||||||**TETRIS**||||||||||||||||c
 |||||SCORE:|||||----------|| NEXT PIECE ||c
-||||||||||||||||0000000000||||||||||||||||
+||||||||||||||||0000000000||||||||||||||||c
 |||||000000|||||0000000000||            ||
 ||||||||||||||||0000000000||            ||
 || STATISTICS ||0000000000||            ||
