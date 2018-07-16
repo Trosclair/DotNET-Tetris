@@ -19,7 +19,7 @@ namespace GameSol
         public struct ScoreAndStats
         {
             public int L;
-            public int backL;
+            public int J;
             public int I;
             public int U;
             public int Z;
@@ -30,6 +30,8 @@ namespace GameSol
 
         public bool isKeyPressed;
         public ScoreAndStats _scoreAndStats;
+
+
         public Tetris()
         {
             
@@ -40,27 +42,29 @@ namespace GameSol
             ResetScoreAndStats();
             while (true)
             {
+                GetKeyPress();
+                _scoreAndStats.Score++;
+                if (
+                    key.Key == ConsoleKey.Enter && 
+                    isKeyPressed &&
+                    _gameState != GameState.Game &&
+                    _gameState != GameState.GameOver
+                    )
+                {
+                    _gameState = GameState.Game;
+                }
+
                 if (System.Environment.TickCount - lastTick >= 60)
                 {
-                    GetKeyPress();
+                    Update();
                     if (_gameState == GameState.TitleScreen)
                     {
                         //if (Console.ReadKey().Key == ConsoleKey.Enter)
-                        if (key.Key == ConsoleKey.Enter)
-                        {
-                            
-                        }
                         Update();
                     } /// iskeypressed is used to indicate whether or not a key is still pressed since key var should always hold last key this avoids spamming.
-                    _scoreAndStats.Score++;
                     lastTick = System.Environment.TickCount;
                 }
             }
-        }
-
-        public void ClearKey()
-        {
-            
         }
 
         public void GetKeyPress()
@@ -75,7 +79,7 @@ namespace GameSol
 
         public void Update()
         {
-            printGameGUI();
+            if (_gameState == GameState.Game) printGameGUI();
         }
 
         /// <summary>
@@ -156,7 +160,7 @@ namespace GameSol
             _scoreAndStats.S = 0;
             _scoreAndStats.T = 0;
             _scoreAndStats.Z = 0;
-            _scoreAndStats.backL = 0;
+            _scoreAndStats.J = 0;
             _scoreAndStats.Score = 0;
         }
 
@@ -173,19 +177,19 @@ namespace GameSol
                 "||||||||||||||||" + BoardAsString[2] + "||            ||\n" +
                 "|| STATISTICS ||" + BoardAsString[3] + "||            ||\n" +
                 "||||||||||||||||" + BoardAsString[4] + "||            ||\n" +
-                "||| L - 0000 |||" + BoardAsString[5] + "||            ||\n" +
+                "||| L - "+_scoreAndStats.L.ToString("0000")+" |||" + BoardAsString[5] + "||            ||\n" +
                 "||||||||||||||||" + BoardAsString[6] + "||            ||\n" +
-                "||| J - 0000 |||" + BoardAsString[7] + "||||||||||||||||\n" +
+                "||| J - " + _scoreAndStats.J.ToString("0000") + " |||" + BoardAsString[7] + "||||||||||||||||\n" +
                 "||||||||||||||||" + BoardAsString[8] + "||||||||||||||||\n" +
-                "||| S - 0000 |||" + BoardAsString[9] + "||||||||||||||||\n" +
+                "||| S - " + _scoreAndStats.S.ToString("0000") + " |||" + BoardAsString[9] + "||||||||||||||||\n" +
                 "||||||||||||||||" + BoardAsString[10] + "||||||||||||||||\n" +
-                "||| Z - 0000 |||" + BoardAsString[11] + "||||||||||||||||\n" +
+                "||| Z - " + _scoreAndStats.Z.ToString("0000") + " |||" + BoardAsString[11] + "||||||||||||||||\n" +
                 "||||||||||||||||" + BoardAsString[12] + "||||||||||||||||\n" +
-                "||| | - 0000 |||" + BoardAsString[13] + "||||||||||||||||\n" +
+                "||| I - " + _scoreAndStats.I.ToString("0000") + " |||" + BoardAsString[13] + "||||||||||||||||\n" +
                 "||||||||||||||||" + BoardAsString[14] + "||||||||||||||||\n" +
-                "||| U - 0000 |||" + BoardAsString[15] + "||||||||||||||||\n" +
+                "||| U - " + _scoreAndStats.U.ToString("0000") + " |||" + BoardAsString[15] + "||||||||||||||||\n" +
                 "||||||||||||||||" + BoardAsString[16] + "||||||||||||||||\n" +
-                "||| T - 0000 |||" + BoardAsString[17] + "||||||FPS:||||||\n" +
+                "||| T - " + _scoreAndStats.T.ToString("0000") + " |||" + BoardAsString[17] + "||||||FPS:||||||\n" +
                 "||||||||||||||||" + BoardAsString[18] + "||"+ CalculateFrameRate().ToString("000000000000") +"||\n" +
                 "||||||||||||||||" + BoardAsString[19] + "||||||||||||||||\n" +
                 "||||||||||||||||||||||||||||||||||||||||||"
@@ -218,26 +222,26 @@ namespace GameSol
 ||||||||||||||||**TETRIS**||||||||||||||||c
 |||||SCORE:|||||----------|| NEXT PIECE ||c
 ||||||||||||||||0000000000||||||||||||||||c
-|||||000000|||||0000000000||            ||
-||||||||||||||||0000000000||            ||
-|| STATISTICS ||0000000000||            ||
-||||||||||||||||0000000000||            ||
-||| L - 0000 |||0000000000||            ||
-||||||||||||||||0000000000||            ||
-||| ⅃ - 0000 |||0000000000||||||||||||||||
-||||||||||||||||0000000000||||||||||||||||
-||| S - 0000 |||0000000000||||||||||||||||
-||||||||||||||||0000000000||||||||||||||||
-||| Z - 0000 |||0000000000||||||||||||||||
-||||||||||||||||0000000000||||||||||||||||
-||| | - 0000 |||0000000000||||||||||||||||
-||||||||||||||||0000000000||||||||||||||||
-||| U - 0000 |||0000000000||||||||||||||||
-||||||||||||||||0000000000||||||||||||||||
-||| T - 0000 |||0000000000||||||||||||||||
-||||||||||||||||0000000000||||||||||||||||
-||||||||||||||||0000000000||||||||||||||||
-||||||||||||||||||||||||||||||||||||||||||
+|||||000000|||||0000000000||            ||c
+||||||||||||||||0000000000||            ||c
+|| STATISTICS ||0000000000||            ||c
+||||||||||||||||0000000000||            ||c
+||| L - 0000 |||0000000000||            ||c
+||||||||||||||||0000000000||            ||c
+||| ⅃ - 0000 |||0000000000||||||||||||||||c
+||||||||||||||||0000000000||||||||||||||||c
+||| S - 0000 |||0000000000||||||||||||||||c
+||||||||||||||||0000000000||||||||||||||||c
+||| Z - 0000 |||0000000000||||||||||||||||c
+||||||||||||||||0000000000||||||||||||||||c
+||| | - 0000 |||0000000000||||||||||||||||c
+||||||||||||||||0000000000||||||||||||||||c
+||| U - 0000 |||0000000000||||||||||||||||c
+||||||||||||||||0000000000||||||||||||||||c
+||| T - 0000 |||0000000000||||||||||||||||c
+||||||||||||||||0000000000||||||||||||||||c
+||||||||||||||||0000000000||||||||||||||||c
+||||||||||||||||||||||||||||||||||||||||||c
 
 */
 
