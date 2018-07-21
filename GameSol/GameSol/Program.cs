@@ -10,6 +10,7 @@ namespace GameSol
     {
         static void Main(string[] args)
         {
+            Console.SetWindowSize(43,25);
             Tetris Game = new Tetris();
             Game.Start();
         }  

@@ -9,8 +9,9 @@ namespace GameSol
     public class Piece
     {
         private int[,] _board = new int[10, 20];
-        enum PieceType { L, J, I, U, S, Z, T };
+        public enum PieceType { L, J, I, U, S, Z, T };
         PieceType thisPiece;
+
         public Piece(int i)
         {
             switch (i)
@@ -68,6 +69,11 @@ namespace GameSol
                     throw new ArgumentException();
             }
 
+        }
+
+        public PieceType CurrPiece
+        {
+            get { return thisPiece; }
         }
     }
 

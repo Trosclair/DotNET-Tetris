@@ -9,10 +9,9 @@ namespace GameSol
 {
     class Tetris
     {
-        public enum PieceType { L, J, I, U, S, Z, T };
+        //public enum PieceType { L, J, I, U, S, Z, T };
         Piece currPiece;
         public int[,] board = new int[20, 10];
-        Random r = new Random();
         public enum GameState { TitleScreen, Game, GameOver};
         public GameState _gameState = GameState.TitleScreen;
         public ConsoleKeyInfo key;
@@ -27,9 +26,25 @@ namespace GameSol
             public int T;
             public int Score;
         }
-
+        public bool isDropping = false;
         public bool isKeyPressed;
         public ScoreAndStats _scoreAndStats;
+
+        public struct Coordinates
+        {
+            public int X;
+            public int Y;
+        }
+
+        public struct DroppedPiece
+        {
+            public Coordinates One;
+            public Coordinates Two;
+            public Coordinates Three;
+            public Coordinates Four;
+        }
+
+        public DroppedPiece droppedPiece;
 
 
         public Tetris()
@@ -43,7 +58,7 @@ namespace GameSol
             while (true)
             {
                 GetKeyPress();
-                _scoreAndStats.Score++;
+                
                 if (
                     key.Key == ConsoleKey.Enter && 
                     isKeyPressed &&
@@ -53,6 +68,10 @@ namespace GameSol
                 {
                     _gameState = GameState.Game;
                 }
+                if (isDropping)
+                {
+                    CheckMove();
+                }
 
                 if (System.Environment.TickCount - lastTick >= 60)
                 {
@@ -61,7 +80,7 @@ namespace GameSol
                     {
                         //if (Console.ReadKey().Key == ConsoleKey.Enter)
                         Update();
-                    } /// iskeypressed is used to indicate whether or not a key is still pressed since key var should always hold last key this avoids spamming.
+                    } // iskeypressed is used to indicate whether or not a key is still pressed since key var should always hold last key this avoids spamming.
                     lastTick = System.Environment.TickCount;
                 }
             }
@@ -79,11 +98,173 @@ namespace GameSol
 
         public void Update()
         {
-            if (_gameState == GameState.Game) printGameGUI();
+            if (_gameState == GameState.Game)
+            {
+                if (!isDropping)
+                {
+                    DropPiece();
+                }
+                board[droppedPiece.One.X, droppedPiece.One.Y] = 2;
+                board[droppedPiece.Two.X, droppedPiece.Two.Y] = 2;
+                board[droppedPiece.Three.X, droppedPiece.Three.Y] = 2;
+                board[droppedPiece.Four.X, droppedPiece.Four.Y] = 2;
+                printGameGUI();
+            }
+            
+        }
+
+        public void CheckMove()
+        {
+            if (key.Key == ConsoleKey.K && isKeyPressed)
+            {
+                TurnLeft();
+            }
+            else if (key.Key == ConsoleKey.L && isKeyPressed)
+            {
+                TurnRight();
+            }
+            else if (key.Key == ConsoleKey.A && isKeyPressed)
+            {
+                MoveLeft();
+            }
+            else if (key.Key == ConsoleKey.DownArrow && isKeyPressed)
+            {
+                MoveDown();
+            }
+            else if (key.Key == ConsoleKey.D && isKeyPressed)
+            {
+                MoveRight();
+            }
+        }
+
+        public void TurnLeft()
+        {
+
+        }
+
+        public void TurnRight()
+        {
+
+        }
+
+        public void MoveLeft()
+        {
+
+        }
+
+        public void MoveDown()
+        {
+            if (droppedPiece.One.X < 19 && droppedPiece.Two.X < 19 && droppedPiece.Three.X < 19 && droppedPiece.Four.X < 19)
+            {
+                if (
+                    board[droppedPiece.One.X, droppedPiece.One.Y + 1] != 1 &&
+                    board[droppedPiece.Two.X, droppedPiece.Two.Y + 1] != 1 &&
+                    board[droppedPiece.Three.X, droppedPiece.Three.Y + 1] != 1 &&
+                    board[droppedPiece.Four.X, droppedPiece.Four.Y + 1] != 1
+                    )
+                {
+                    board[droppedPiece.One.X, droppedPiece.One.Y] = 0;
+                    board[droppedPiece.Two.X, droppedPiece.Two.Y] = 0;
+                    board[droppedPiece.Three.X, droppedPiece.Three.Y] = 0;
+                    board[droppedPiece.Four.X, droppedPiece.Four.Y] = 0;
+                    droppedPiece.One.X++;
+                    droppedPiece.Two.X++;
+                    droppedPiece.Three.X++;
+                    droppedPiece.Four.X++;
+
+                }
+            }
+        }
+
+        public void MoveRight()
+        {
+
+        }
+
+        public void DropPiece()
+        {
+            isDropping = true;
+            currPiece = NewPiece();
+
+            switch (currPiece.CurrPiece)
+            {
+                case Piece.PieceType.L:
+                    droppedPiece.One.X = 0;
+                    droppedPiece.One.Y = 5;
+                    droppedPiece.Two.X = 1;
+                    droppedPiece.Two.Y = 5;
+                    droppedPiece.Three.X = 2;
+                    droppedPiece.Three.Y = 5;
+                    droppedPiece.Four.X = 2;
+                    droppedPiece.Four.Y = 6;
+                    break;
+                case Piece.PieceType.J:
+                    droppedPiece.One.X = 0;
+                    droppedPiece.One.Y = 5;
+                    droppedPiece.Two.X = 1;
+                    droppedPiece.Two.Y = 5;
+                    droppedPiece.Three.X = 2;
+                    droppedPiece.Three.Y = 5;
+                    droppedPiece.Four.X = 2;
+                    droppedPiece.Four.Y = 4;
+                    break;
+                case Piece.PieceType.S:
+                    droppedPiece.One.X = 0;
+                    droppedPiece.One.Y = 5;
+                    droppedPiece.Two.X = 0;
+                    droppedPiece.Two.Y = 6;
+                    droppedPiece.Three.X = 1;
+                    droppedPiece.Three.Y = 5;
+                    droppedPiece.Four.X = 1;
+                    droppedPiece.Four.Y = 4;
+                    break;
+                case Piece.PieceType.T:
+                    droppedPiece.One.X = 0;
+                    droppedPiece.One.Y = 5;
+                    droppedPiece.Two.X = 1;
+                    droppedPiece.Two.Y = 5;
+                    droppedPiece.Three.X = 1;
+                    droppedPiece.Three.Y = 6;
+                    droppedPiece.Four.X = 1;
+                    droppedPiece.Four.Y = 4;
+                    break;
+                case Piece.PieceType.Z:
+                    droppedPiece.One.X = 0;
+                    droppedPiece.One.Y = 5;
+                    droppedPiece.Two.X = 0;
+                    droppedPiece.Two.Y = 4;
+                    droppedPiece.Three.X = 1;
+                    droppedPiece.Three.Y = 5;
+                    droppedPiece.Four.X = 1;
+                    droppedPiece.Four.Y = 6;
+                    break;
+                case Piece.PieceType.U:
+                    droppedPiece.One.X = 0;
+                    droppedPiece.One.Y = 5;
+                    droppedPiece.Two.X = 0;
+                    droppedPiece.Two.Y = 4;
+                    droppedPiece.Three.X = 1;
+                    droppedPiece.Three.Y = 5;
+                    droppedPiece.Four.X = 1;
+                    droppedPiece.Four.Y = 4;
+                    break;
+                case Piece.PieceType.I:              
+                    droppedPiece.One.X = 0;
+                    droppedPiece.One.Y = 5;
+                    droppedPiece.Two.X = 1;
+                    droppedPiece.Two.Y = 5;
+                    droppedPiece.Three.X = 2;
+                    droppedPiece.Three.Y = 5;
+                    droppedPiece.Four.X = 3;
+                    droppedPiece.Four.Y = 5;
+                    break;
+                default:
+                    throw new ArgumentException();
+            }
         }
 
         /// <summary>
-        /// reset the board
+        //  reset the board
         /// </summary>
         public void FillBoardWithZero()
         {
@@ -148,9 +329,10 @@ namespace GameSol
             for (int j = 0; j < 9; j++) board[0, j] = 0; // inserts blank row at top of the board.
         }
 
-        public void NewPiece()
+        public Piece NewPiece()
         {
-            currPiece = new Piece(r.Next(1, 8));
+            Random r = new Random();
+            return new Piece(r.Next(1, 8));
         }
 
         public void ResetScoreAndStats()
