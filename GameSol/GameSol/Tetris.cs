@@ -157,10 +157,10 @@ namespace GameSol
             if (droppedPiece.One.X < 19 && droppedPiece.Two.X < 19 && droppedPiece.Three.X < 19 && droppedPiece.Four.X < 19)
             {
                 if (
-                    board[droppedPiece.One.X, droppedPiece.One.Y + 1] != 1 &&
-                    board[droppedPiece.Two.X, droppedPiece.Two.Y + 1] != 1 &&
-                    board[droppedPiece.Three.X, droppedPiece.Three.Y + 1] != 1 &&
-                    board[droppedPiece.Four.X, droppedPiece.Four.Y + 1] != 1
+                    board[droppedPiece.One.X+1, droppedPiece.One.Y] != 1 &&
+                    board[droppedPiece.Two.X+1, droppedPiece.Two.Y] != 1 &&
+                    board[droppedPiece.Three.X+1, droppedPiece.Three.Y] != 1 &&
+                    board[droppedPiece.Four.X+1, droppedPiece.Four.Y] != 1
                     )
                 {
                     board[droppedPiece.One.X, droppedPiece.One.Y] = 0;
@@ -173,6 +173,14 @@ namespace GameSol
                     droppedPiece.Four.X++;
 
                 }
+                else
+                {
+                    EndDrop();
+                }
+            }
+            else
+            {
+                EndDrop();
             }
         }
 
@@ -186,7 +194,7 @@ namespace GameSol
             isDropping = true;
             currPiece = NewPiece();
 
-            switch (currPiece.CurrPiece)
+            switch (currPiece.CurrPiece) /// this switch can and needs to be merged with piece class. dropped piece could be used to create block objects vs struct.
             {
                 case Piece.PieceType.L:
                     droppedPiece.One.X = 0;
@@ -261,6 +269,15 @@ namespace GameSol
                 default:
                     throw new ArgumentException();
             }
+        }
+
+        public void EndDrop()
+        {
+            board[droppedPiece.One.X, droppedPiece.One.Y] = 1;
+            board[droppedPiece.Two.X, droppedPiece.Two.Y] = 1;
+            board[droppedPiece.Three.X, droppedPiece.Three.Y] = 1;
+            board[droppedPiece.Four.X, droppedPiece.Four.Y] = 1;
+            isDropping = false;
         }
 
         /// <summary>
