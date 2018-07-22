@@ -9,43 +9,14 @@ namespace GameSol
 {
     class Tetris
     {
-        //public enum PieceType { L, J, I, U, S, Z, T };
-        Piece currPiece;
+        public Piece currPiece;
         public int[,] board = new int[20, 10];
         public enum GameState { TitleScreen, Game, GameOver};
         public GameState _gameState = GameState.TitleScreen;
         public ConsoleKeyInfo key;
-        public struct ScoreAndStats
-        {
-            public int L;
-            public int J;
-            public int I;
-            public int U;
-            public int Z;
-            public int S;
-            public int T;
-            public int Score;
-        }
         public bool isDropping = false;
         public bool isKeyPressed;
-        public ScoreAndStats _scoreAndStats;
-
-        public struct Coordinates
-        {
-            public int X;
-            public int Y;
-        }
-
-        public struct DroppedPiece
-        {
-            public Coordinates One;
-            public Coordinates Two;
-            public Coordinates Three;
-            public Coordinates Four;
-        }
-
-        public DroppedPiece droppedPiece;
-
+        public ScoreAndStatistics _scoreAndStats = new ScoreAndStatistics();
 
         public Tetris()
         {
@@ -54,7 +25,7 @@ namespace GameSol
 
         public void Start()
         {
-            ResetScoreAndStats();
+            
             while (true)
             {
                 GetKeyPress();
@@ -104,10 +75,10 @@ namespace GameSol
                 {
                     DropPiece();
                 }
-                board[droppedPiece.One.X, droppedPiece.One.Y] = 2;
-                board[droppedPiece.Two.X, droppedPiece.Two.Y] = 2;
-                board[droppedPiece.Three.X, droppedPiece.Three.Y] = 2;
-                board[droppedPiece.Four.X, droppedPiece.Four.Y] = 2;
+                board[currPiece.One.X, currPiece.One.Y] = 2;
+                board[currPiece.Two.X, currPiece.Two.Y] = 2;
+                board[currPiece.Three.X, currPiece.Three.Y] = 2;
+                board[currPiece.Four.X, currPiece.Four.Y] = 2;
                 printGameGUI();
             }
             
@@ -154,23 +125,23 @@ namespace GameSol
 
         public void MoveDown()
         {
-            if (droppedPiece.One.X < 19 && droppedPiece.Two.X < 19 && droppedPiece.Three.X < 19 && droppedPiece.Four.X < 19)
+            if (currPiece.One.X < 19 && currPiece.Two.X < 19 && currPiece.Three.X < 19 && currPiece.Four.X < 19)
             {
                 if (
-                    board[droppedPiece.One.X+1, droppedPiece.One.Y] != 1 &&
-                    board[droppedPiece.Two.X+1, droppedPiece.Two.Y] != 1 &&
-                    board[droppedPiece.Three.X+1, droppedPiece.Three.Y] != 1 &&
-                    board[droppedPiece.Four.X+1, droppedPiece.Four.Y] != 1
+                    board[currPiece.One.X+1, currPiece.One.Y] != 1 &&
+                    board[currPiece.Two.X+1, currPiece.Two.Y] != 1 &&
+                    board[currPiece.Three.X+1, currPiece.Three.Y] != 1 &&
+                    board[currPiece.Four.X+1, currPiece.Four.Y] != 1
                     )
                 {
-                    board[droppedPiece.One.X, droppedPiece.One.Y] = 0;
-                    board[droppedPiece.Two.X, droppedPiece.Two.Y] = 0;
-                    board[droppedPiece.Three.X, droppedPiece.Three.Y] = 0;
-                    board[droppedPiece.Four.X, droppedPiece.Four.Y] = 0;
-                    droppedPiece.One.X++;
-                    droppedPiece.Two.X++;
-                    droppedPiece.Three.X++;
-                    droppedPiece.Four.X++;
+                    board[currPiece.One.X, currPiece.One.Y] = 0;
+                    board[currPiece.Two.X, currPiece.Two.Y] = 0;
+                    board[currPiece.Three.X, currPiece.Three.Y] = 0;
+                    board[currPiece.Four.X, currPiece.Four.Y] = 0;
+                    currPiece.One.X++;
+                    currPiece.Two.X++;
+                    currPiece.Three.X++;
+                    currPiece.Four.X++;
 
                 }
                 else
@@ -193,90 +164,14 @@ namespace GameSol
         {
             isDropping = true;
             currPiece = NewPiece();
-
-            switch (currPiece.CurrPiece) /// this switch can and needs to be merged with piece class. dropped piece could be used to create block objects vs struct.
-            {
-                case Piece.PieceType.L:
-                    droppedPiece.One.X = 0;
-                    droppedPiece.One.Y = 5;
-                    droppedPiece.Two.X = 1;
-                    droppedPiece.Two.Y = 5;
-                    droppedPiece.Three.X = 2;
-                    droppedPiece.Three.Y = 5;
-                    droppedPiece.Four.X = 2;
-                    droppedPiece.Four.Y = 6;
-                    break;
-                case Piece.PieceType.J:
-                    droppedPiece.One.X = 0;
-                    droppedPiece.One.Y = 5;
-                    droppedPiece.Two.X = 1;
-                    droppedPiece.Two.Y = 5;
-                    droppedPiece.Three.X = 2;
-                    droppedPiece.Three.Y = 5;
-                    droppedPiece.Four.X = 2;
-                    droppedPiece.Four.Y = 4;
-                    break;
-                case Piece.PieceType.S:
-                    droppedPiece.One.X = 0;
-                    droppedPiece.One.Y = 5;
-                    droppedPiece.Two.X = 0;
-                    droppedPiece.Two.Y = 6;
-                    droppedPiece.Three.X = 1;
-                    droppedPiece.Three.Y = 5;
-                    droppedPiece.Four.X = 1;
-                    droppedPiece.Four.Y = 4;
-                    break;
-                case Piece.PieceType.T:
-                    droppedPiece.One.X = 0;
-                    droppedPiece.One.Y = 5;
-                    droppedPiece.Two.X = 1;
-                    droppedPiece.Two.Y = 5;
-                    droppedPiece.Three.X = 1;
-                    droppedPiece.Three.Y = 6;
-                    droppedPiece.Four.X = 1;
-                    droppedPiece.Four.Y = 4;
-                    break;
-                case Piece.PieceType.Z:
-                    droppedPiece.One.X = 0;
-                    droppedPiece.One.Y = 5;
-                    droppedPiece.Two.X = 0;
-                    droppedPiece.Two.Y = 4;
-                    droppedPiece.Three.X = 1;
-                    droppedPiece.Three.Y = 5;
-                    droppedPiece.Four.X = 1;
-                    droppedPiece.Four.Y = 6;
-                    break;
-                case Piece.PieceType.U:
-                    droppedPiece.One.X = 0;
-                    droppedPiece.One.Y = 5;
-                    droppedPiece.Two.X = 0;
-                    droppedPiece.Two.Y = 4;
-                    droppedPiece.Three.X = 1;
-                    droppedPiece.Three.Y = 5;
-                    droppedPiece.Four.X = 1;
-                    droppedPiece.Four.Y = 4;
-                    break;
-                case Piece.PieceType.I:              
-                    droppedPiece.One.X = 0;
-                    droppedPiece.One.Y = 5;
-                    droppedPiece.Two.X = 1;
-                    droppedPiece.Two.Y = 5;
-                    droppedPiece.Three.X = 2;
-                    droppedPiece.Three.Y = 5;
-                    droppedPiece.Four.X = 3;
-                    droppedPiece.Four.Y = 5;
-                    break;
-                default:
-                    throw new ArgumentException();
-            }
         }
 
         public void EndDrop()
         {
-            board[droppedPiece.One.X, droppedPiece.One.Y] = 1;
-            board[droppedPiece.Two.X, droppedPiece.Two.Y] = 1;
-            board[droppedPiece.Three.X, droppedPiece.Three.Y] = 1;
-            board[droppedPiece.Four.X, droppedPiece.Four.Y] = 1;
+            board[currPiece.One.X, currPiece.One.Y] = 1;
+            board[currPiece.Two.X, currPiece.Two.Y] = 1;
+            board[currPiece.Three.X, currPiece.Three.Y] = 1;
+            board[currPiece.Four.X, currPiece.Four.Y] = 1;
             isDropping = false;
         }
 
@@ -348,19 +243,8 @@ namespace GameSol
 
         public Piece NewPiece()
         {
-            Random r = new Random();
-            return new Piece(r.Next(1, 8));
-        }
-
-        public void ResetScoreAndStats()
-        {
-            _scoreAndStats.L = 0;
-            _scoreAndStats.I = 0;
-            _scoreAndStats.S = 0;
-            _scoreAndStats.T = 0;
-            _scoreAndStats.Z = 0;
-            _scoreAndStats.J = 0;
-            _scoreAndStats.Score = 0;
+            Random r = new Random(); // this method might need to be clean up to not instantiate a random everytime.
+            return new Piece(r.Next(0, 7));
         }
 
         public void printGameGUI()

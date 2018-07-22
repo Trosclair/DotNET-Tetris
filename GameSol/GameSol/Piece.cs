@@ -8,73 +8,134 @@ namespace GameSol
 {
     public class Piece
     {
-        private int[,] _board = new int[10, 20];
         public enum PieceType { L, J, I, U, S, Z, T };
-        PieceType thisPiece;
+        private Block _one;
+        private Block _two;
+        private Block _three;
+        private Block _four;
+        private PieceType _thisPiece;
+
 
         public Piece(int i)
         {
+            _thisPiece = (PieceType)i;
+
             switch (i)
             {
+                case 0:
+                    _one = new Block(0, 5);
+                    _two = new Block(1, 5);
+                    _three = new Block(2, 5);
+                    _four = new Block(2, 6);
+                    break;
                 case 1:
-                    thisPiece = PieceType.L;
-                    _board[0, 5] = 1;
-                    _board[1, 5] = 1;
-                    _board[2, 5] = 1;
-                    _board[2, 6] = 1;
+                    _one = new Block(0, 5);
+                    _two = new Block(1, 5);
+                    _three = new Block(2, 5);
+                    _four = new Block(2, 4);
                     break;
                 case 2:
-                    thisPiece = PieceType.J;
-                    _board[0, 5] = 1;
-                    _board[1, 5] = 1;
-                    _board[2, 5] = 1;
-                    _board[2, 4] = 1;
+                    _one = new Block(0, 5);
+                    _two = new Block(1, 5);
+                    _three = new Block(2, 5);
+                    _four = new Block(3, 5);
                     break;
                 case 3:
-                    thisPiece = PieceType.S;
-                    _board[0, 5] = 1;
-                    _board[0, 6] = 1;
-                    _board[1, 5] = 1;
-                    _board[1, 4] = 1;
+                    _one = new Block(0, 5);
+                    _two = new Block(0, 4);
+                    _three = new Block(1, 5);
+                    _four = new Block(1, 4);
                     break;
                 case 4:
-                    thisPiece = PieceType.T;
-                    _board[0, 5] = 1;
-                    _board[1, 5] = 1;
-                    _board[1, 6] = 1;
-                    _board[1, 4] = 1;
+                    _one = new Block(0, 5);
+                    _two = new Block(0, 6);
+                    _three = new Block(1, 5);
+                    _four = new Block(1, 4);
                     break;
                 case 5:
-                    thisPiece = PieceType.Z;
-                    _board[0, 5] = 1;
-                    _board[0, 4] = 1;
-                    _board[1, 5] = 1;
-                    _board[1, 6] = 1;
+                    _one = new Block(0, 5);
+                    _two = new Block(0, 4);
+                    _three = new Block(1, 5);
+                    _four = new Block(1, 6);
                     break;
                 case 6:
-                    thisPiece = PieceType.U;
-                    _board[0, 5] = 1;
-                    _board[0, 4] = 1;
-                    _board[1, 5] = 1;
-                    _board[1, 4] = 1;
-                    break;
-                case 7:
-                    thisPiece = PieceType.I;
-                    _board[0, 5] = 1;
-                    _board[1, 5] = 1;
-                    _board[2, 5] = 1;
-                    _board[3, 5] = 1;
+                    _one = new Block(0, 5);
+                    _two = new Block(1, 5);
+                    _three = new Block(1, 6);
+                    _four = new Block(1, 4);
                     break;
                 default:
                     throw new ArgumentException();
             }
-
         }
 
-        public PieceType CurrPiece
+        internal PieceType CurrPiece
         {
-            get { return thisPiece; }
+            get
+            {
+                return _thisPiece;
+            }
+
+            set
+            {
+                _thisPiece = value;
+            }
         }
+
+        internal Block One
+        {
+            get
+            {
+                return _one;
+            }
+
+            set
+            {
+                _one = value;
+            }
+        }
+
+        internal Block Two
+        {
+            get
+            {
+                return _two;
+            }
+
+            set
+            {
+                _two = value;
+            }
+        }
+
+        internal Block Three
+        {
+            get
+            {
+                return _three;
+            }
+
+            set
+            {
+                _three = value;
+            }
+        }
+
+        internal Block Four
+        {
+            get
+            {
+                return _four;
+            }
+
+            set
+            {
+                _four = value;
+            }
+        }
+
     }
 
 }
+
+            
