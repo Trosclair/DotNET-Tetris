@@ -94,7 +94,7 @@ namespace GameSol
             {
                 TurnRight();
             }
-            else if (key.Key == ConsoleKey.A && isKeyPressed)
+            else if (key.Key == ConsoleKey.LeftArrow && isKeyPressed)
             {
                 MoveLeft();
             }
@@ -102,7 +102,7 @@ namespace GameSol
             {
                 MoveDown();
             }
-            else if (key.Key == ConsoleKey.D && isKeyPressed)
+            else if (key.Key == ConsoleKey.RightArrow && isKeyPressed)
             {
                 MoveRight();
             }
@@ -120,7 +120,46 @@ namespace GameSol
 
         public void MoveLeft()
         {
+            if 
+                (
+                currPiece.One.Y > 0 && currPiece.Two.Y > 0 && currPiece.Three.Y > 0 && currPiece.Four.Y > 0 &&
+                board[currPiece.One.X, currPiece.One.Y - 1] != 1 &&
+                board[currPiece.Two.X, currPiece.Two.Y - 1] != 1 &&
+                board[currPiece.Three.X, currPiece.Three.Y - 1] != 1 &&
+                board[currPiece.Four.X, currPiece.Four.Y - 1] != 1
+                )
+            {
+                board[currPiece.One.X, currPiece.One.Y] = 0;
+                board[currPiece.Two.X, currPiece.Two.Y] = 0;
+                board[currPiece.Three.X, currPiece.Three.Y] = 0;
+                board[currPiece.Four.X, currPiece.Four.Y] = 0;
+                currPiece.One.Y--;
+                currPiece.Two.Y--;
+                currPiece.Three.Y--;
+                currPiece.Four.Y--;
+            }
+        }
 
+        public void MoveRight()
+        {
+            if 
+                (
+                currPiece.One.Y < 9 && currPiece.Two.Y < 9 && currPiece.Three.Y < 9 && currPiece.Four.Y < 9 &&
+                board[currPiece.One.X, currPiece.One.Y + 1] != 1 &&
+                board[currPiece.Two.X, currPiece.Two.Y + 1] != 1 &&
+                board[currPiece.Three.X, currPiece.Three.Y + 1] != 1 &&
+                board[currPiece.Four.X, currPiece.Four.Y + 1] != 1
+                )
+            {
+                board[currPiece.One.X, currPiece.One.Y] = 0;
+                board[currPiece.Two.X, currPiece.Two.Y] = 0;
+                board[currPiece.Three.X, currPiece.Three.Y] = 0;
+                board[currPiece.Four.X, currPiece.Four.Y] = 0;
+                currPiece.One.Y++;
+                currPiece.Two.Y++;
+                currPiece.Three.Y++;
+                currPiece.Four.Y++;
+            }
         }
 
         public void MoveDown()
@@ -155,11 +194,6 @@ namespace GameSol
             }
         }
 
-        public void MoveRight()
-        {
-
-        }
-
         public void DropPiece()
         {
             isDropping = true;
@@ -173,6 +207,7 @@ namespace GameSol
             board[currPiece.Three.X, currPiece.Three.Y] = 1;
             board[currPiece.Four.X, currPiece.Four.Y] = 1;
             isDropping = false;
+            CheckLineClears();
         }
 
         /// <summary>
