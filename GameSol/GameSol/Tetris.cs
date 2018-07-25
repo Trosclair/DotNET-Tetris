@@ -110,12 +110,60 @@ namespace GameSol
 
         public void TurnLeft()
         {
+            switch (currPiece.CurrPiece)
+            {
+                case Piece.PieceType.U:
+                    break;
+                case Piece.PieceType.I:
+                    RotateIPiece();
+                    break;
+                case Piece.PieceType.J:
 
+                    break;
+                case Piece.PieceType.L:
+
+                    break;
+                case Piece.PieceType.S:
+
+                    break;
+                case Piece.PieceType.Z:
+
+                    break;
+                case Piece.PieceType.T:
+
+                    break;
+                default:
+                    break;
+            }
         }
 
         public void TurnRight()
         {
+            switch (currPiece.CurrPiece)
+            {
+                case Piece.PieceType.U:
+                    break;
+                case Piece.PieceType.I:
+                    RotateIPiece();
+                    break;
+                case Piece.PieceType.J:
 
+                    break;
+                case Piece.PieceType.L:
+
+                    break;
+                case Piece.PieceType.S:
+
+                    break;
+                case Piece.PieceType.Z:
+
+                    break;
+                case Piece.PieceType.T:
+
+                    break;
+                default:
+                    break;
+            }
         }
 
         public void MoveLeft()
@@ -129,10 +177,7 @@ namespace GameSol
                 board[currPiece.Four.X, currPiece.Four.Y - 1] != 1
                 )
             {
-                board[currPiece.One.X, currPiece.One.Y] = 0;
-                board[currPiece.Two.X, currPiece.Two.Y] = 0;
-                board[currPiece.Three.X, currPiece.Three.Y] = 0;
-                board[currPiece.Four.X, currPiece.Four.Y] = 0;
+                ClearPositionFromAMove();
                 currPiece.One.Y--;
                 currPiece.Two.Y--;
                 currPiece.Three.Y--;
@@ -151,15 +196,20 @@ namespace GameSol
                 board[currPiece.Four.X, currPiece.Four.Y + 1] != 1
                 )
             {
-                board[currPiece.One.X, currPiece.One.Y] = 0;
-                board[currPiece.Two.X, currPiece.Two.Y] = 0;
-                board[currPiece.Three.X, currPiece.Three.Y] = 0;
-                board[currPiece.Four.X, currPiece.Four.Y] = 0;
+                ClearPositionFromAMove();
                 currPiece.One.Y++;
                 currPiece.Two.Y++;
                 currPiece.Three.Y++;
                 currPiece.Four.Y++;
             }
+        }
+
+        public void ClearPositionFromAMove()
+        {
+            board[currPiece.One.X, currPiece.One.Y] = 0;
+            board[currPiece.Two.X, currPiece.Two.Y] = 0;
+            board[currPiece.Three.X, currPiece.Three.Y] = 0;
+            board[currPiece.Four.X, currPiece.Four.Y] = 0;
         }
 
         public void MoveDown()
@@ -173,10 +223,7 @@ namespace GameSol
                     board[currPiece.Four.X+1, currPiece.Four.Y] != 1
                     )
                 {
-                    board[currPiece.One.X, currPiece.One.Y] = 0;
-                    board[currPiece.Two.X, currPiece.Two.Y] = 0;
-                    board[currPiece.Three.X, currPiece.Three.Y] = 0;
-                    board[currPiece.Four.X, currPiece.Four.Y] = 0;
+                    ClearPositionFromAMove();
                     currPiece.One.X++;
                     currPiece.Two.X++;
                     currPiece.Three.X++;
@@ -191,6 +238,31 @@ namespace GameSol
             else
             {
                 EndDrop();
+            }
+        }
+
+        public void RotateIPiece()
+        {
+            if (currPiece.Three.X == currPiece.Two.X && board[currPiece.One.X - 2, currPiece.Three.Y] != 1 && board[currPiece.Two.X - 1, currPiece.Three.Y] != 1 && board[currPiece.Four.X + 1, currPiece.Three.Y] != 1)
+            {
+                ClearPositionFromAMove();
+                currPiece.Four.X++;
+                currPiece.Four.Y = currPiece.Three.Y;
+                currPiece.Two.X--;
+                currPiece.Four.Y = currPiece.Three.Y;
+                currPiece.One.X -= 2;
+                currPiece.One.Y = currPiece.Three.Y;
+                currPiece.Two.Y = currPiece.Three.Y;
+            }
+            else if (board[currPiece.Three.X, currPiece.One.Y - 2] != 1 && board[currPiece.Three.X, currPiece.Two.Y - 1] != 1 && board[currPiece.Three.X, currPiece.Four.Y + 1] != 1)
+            {
+                ClearPositionFromAMove();
+                currPiece.Four.X = currPiece.Three.X;
+                currPiece.Two.X = currPiece.Three.X;
+                currPiece.One.X = currPiece.Three.X;
+                currPiece.Four.Y++;
+                currPiece.Two.Y--;
+                currPiece.One.Y -= 2;
             }
         }
 
@@ -243,7 +315,7 @@ namespace GameSol
         /// optimizable by checking if the next three lines below the line being cleared are clearable. instead of calling clear line 3 times.
         /// </summary>
         /// <returns></returns>
-        public int CheckLineClears()
+        public int CheckLineClears() /////////////////////////////////////////////// HAS PROBLEMS ATM
         {
             int linesCleared = 0;
             bool isClear;
