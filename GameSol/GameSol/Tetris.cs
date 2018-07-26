@@ -124,22 +124,7 @@ namespace GameSol
 
                     break;
                 case Piece.PieceType.S:
-                    if (currPiece.One.X == currPiece.Two.X)
-                    {
-                        currPiece.Two.X--;
-                        currPiece.Two.Y--;
-                        currPiece.Three.X--;
-                        currPiece.Three.Y++;
-                        currPiece.Four.Y += 2;
-                    }
-                    else
-                    {
-                        currPiece.Two.X++;
-                        currPiece.Two.Y++;
-                        currPiece.Three.X++;
-                        currPiece.Three.Y--;
-                        currPiece.Four.Y -= 2;
-                    }
+                    RotateSPiece();
                     break;
                 case Piece.PieceType.Z:
 
@@ -168,23 +153,7 @@ namespace GameSol
 
                     break;
                 case Piece.PieceType.S:
-                    ClearPositionFromAMove();
-                    if (currPiece.One.X == currPiece.Two.X)
-                    {
-                        currPiece.Two.X--;
-                        currPiece.Two.Y--;
-                        currPiece.Three.X--;
-                        currPiece.Three.Y++;
-                        currPiece.Four.Y += 2;
-                    }
-                    else
-                    {            
-                        currPiece.Two.X++;
-                        currPiece.Two.Y++;
-                        currPiece.Three.X++;
-                        currPiece.Three.Y--;
-                        currPiece.Four.Y -= 2;
-                    }
+                    RotateSPiece();
                     break;
                 case Piece.PieceType.Z:
 
@@ -269,6 +238,27 @@ namespace GameSol
             else
             {
                 EndDrop();
+            }
+        }
+
+        public void RotateSPiece()
+        {
+            ClearPositionFromAMove();
+            if (currPiece.One.X == currPiece.Two.X)
+            {
+                currPiece.Two.X--;
+                currPiece.Two.Y--;
+                currPiece.Three.X--;
+                currPiece.Three.Y++;
+                currPiece.Four.Y += 2;
+            }
+            else
+            {
+                currPiece.Two.X++;
+                currPiece.Two.Y++;
+                currPiece.Three.X++;
+                currPiece.Three.Y--;
+                currPiece.Four.Y -= 2;
             }
         }
 
