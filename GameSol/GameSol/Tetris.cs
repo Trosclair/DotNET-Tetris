@@ -86,6 +86,7 @@ namespace GameSol
 
         public void CheckMove()
         {
+            ClearPositionFromAMove();
             if (key.Key == ConsoleKey.K && isKeyPressed)
             {
                 TurnLeft();
@@ -127,10 +128,10 @@ namespace GameSol
                     RotateSPiece();
                     break;
                 case Piece.PieceType.Z:
-
+                    RotateZPiece();
                     break;
                 case Piece.PieceType.T:
-
+                    RotateTPieceLeft();
                     break;
                 default:
                     break;
@@ -139,6 +140,7 @@ namespace GameSol
 
         public void TurnRight()
         {
+
             switch (currPiece.CurrPiece)
             {
                 case Piece.PieceType.U:
@@ -156,10 +158,10 @@ namespace GameSol
                     RotateSPiece();
                     break;
                 case Piece.PieceType.Z:
-
+                    RotateZPiece();
                     break;
                 case Piece.PieceType.T:
-
+                    RotateTPieceRight();
                     break;
                 default:
                     break;
@@ -177,7 +179,6 @@ namespace GameSol
                 board[currPiece.Four.X, currPiece.Four.Y - 1] != 1
                 )
             {
-                ClearPositionFromAMove();
                 currPiece.One.Y--;
                 currPiece.Two.Y--;
                 currPiece.Three.Y--;
@@ -196,7 +197,6 @@ namespace GameSol
                 board[currPiece.Four.X, currPiece.Four.Y + 1] != 1
                 )
             {
-                ClearPositionFromAMove();
                 currPiece.One.Y++;
                 currPiece.Two.Y++;
                 currPiece.Three.Y++;
@@ -223,7 +223,6 @@ namespace GameSol
                     board[currPiece.Four.X+1, currPiece.Four.Y] != 1
                     )
                 {
-                    ClearPositionFromAMove();
                     currPiece.One.X++;
                     currPiece.Two.X++;
                     currPiece.Three.X++;
@@ -241,9 +240,132 @@ namespace GameSol
             }
         }
 
+        public void RotateZPiece()
+        {
+            if (currPiece.One.X == currPiece.Two.X)
+            {
+                currPiece.Two.X++;
+                currPiece.Two.Y++;
+                currPiece.Three.X--;
+                currPiece.Three.Y++;
+                currPiece.Four.X -= 2;
+            }
+            else if (currPiece.One.Y == currPiece.Two.Y)
+            {
+                currPiece.Two.X--;
+                currPiece.Two.Y--;
+                currPiece.Three.X++;
+                currPiece.Three.Y--;
+                currPiece.Four.X += 2;
+            }
+        }
+
+        public void RotateTPieceLeft()
+        {
+            if (currPiece.One.X == currPiece.Two.X - 1 && currPiece.Three.Y - 1 == currPiece.Two.Y && currPiece.Four.Y + 1 == currPiece.Two.Y && currPiece.Two.X != 19)
+            {
+                // 00100
+                // 04230
+                // 00000
+                currPiece.Four.X++;
+                currPiece.Four.Y++;
+                currPiece.One.X++;
+                currPiece.One.Y--;
+                currPiece.Three.X--;
+                currPiece.Three.Y--;
+            }
+            else if (currPiece.One.Y + 1 == currPiece.Two.Y && currPiece.Three.Y == currPiece.Two.Y && currPiece.Four.Y == currPiece.Two.Y && currPiece.Two.X != 9)
+            {
+                // 00300
+                // 01200
+                // 00400
+                currPiece.One.X++;
+                currPiece.One.Y++;
+                currPiece.Three.X++;
+                currPiece.Three.Y--;
+                currPiece.Four.X--;
+                currPiece.Four.Y++;
+            }
+            else if (currPiece.One.X - 1 == currPiece.Two.X && currPiece.Three.X == currPiece.Two.X && currPiece.Four.X == currPiece.Two.X && currPiece.Two.X != 0)
+            {
+                // 00000
+                // 03240
+                // 00100
+                currPiece.One.X--;
+                currPiece.One.Y++;
+                currPiece.Three.X++;
+                currPiece.Three.Y++;
+                currPiece.Four.X--;
+                currPiece.Four.Y--;
+            }
+            else if (currPiece.One.Y - 1 == currPiece.Two.Y && currPiece.Three.Y == currPiece.Two.Y && currPiece.Four.Y == currPiece.Two.Y && currPiece.Two.Y != 0)
+            {
+                // 00400
+                // 00210
+                // 00300
+                currPiece.One.X--;
+                currPiece.One.Y--;
+                currPiece.Three.X--;
+                currPiece.Three.Y++;
+                currPiece.Four.X++;
+                currPiece.Four.Y--;
+            }
+        }
+
+        public void RotateTPieceRight()
+        {
+            if (currPiece.One.X == currPiece.Two.X - 1 && currPiece.Three.Y - 1 == currPiece.Two.Y && currPiece.Four.Y + 1 == currPiece.Two.Y && currPiece.Two.X != 19)
+            {
+                // 00100
+                // 04230
+                // 00000
+                currPiece.Four.X--;
+                currPiece.Four.Y++;
+                currPiece.One.X++;
+                currPiece.One.Y++;
+                currPiece.Three.X++;
+                currPiece.Three.Y--;
+            }
+            else if (currPiece.One.Y + 1 == currPiece.Two.Y && currPiece.Three.Y == currPiece.Two.Y && currPiece.Four.Y == currPiece.Two.Y && currPiece.Two.X != 9)
+            {
+                // 00300
+                // 01200
+                // 00400
+                currPiece.One.X--;
+                currPiece.One.Y++;
+                currPiece.Three.X++;
+                currPiece.Three.Y++;
+                currPiece.Four.X--;
+                currPiece.Four.Y--;
+            }
+            else if (currPiece.One.X - 1 == currPiece.Two.X && currPiece.Three.X == currPiece.Two.X && currPiece.Four.X == currPiece.Two.X && currPiece.Two.X != 0)
+            {
+                // 00000
+                // 03240
+                // 00100
+                currPiece.One.X--;
+                currPiece.One.Y--;
+                currPiece.Three.X--;
+                currPiece.Three.Y++;
+                currPiece.Four.X++;
+                currPiece.Four.Y--;
+            }
+            else if (currPiece.One.Y - 1 == currPiece.Two.Y && currPiece.Three.Y == currPiece.Two.Y && currPiece.Four.Y == currPiece.Two.Y && currPiece.Two.Y != 0)
+            {
+                // 00400
+                // 00210
+                // 00300
+                currPiece.One.X++;
+                currPiece.One.Y--;
+                currPiece.Three.X--;
+                currPiece.Three.Y--;
+                currPiece.Four.X++;
+                currPiece.Four.Y++;
+            }
+        }
+
         public void RotateSPiece()
         {
-            ClearPositionFromAMove();
             if (currPiece.One.X == currPiece.Two.X)
             {
                 currPiece.Two.X--;
@@ -266,7 +388,6 @@ namespace GameSol
         {
             if (currPiece.Three.X == currPiece.Two.X && board[currPiece.One.X - 2, currPiece.Three.Y] != 1 && board[currPiece.Two.X - 1, currPiece.Three.Y] != 1 && board[currPiece.Four.X + 1, currPiece.Three.Y] != 1)
             {
-                ClearPositionFromAMove();
                 currPiece.Four.X++;
                 currPiece.Four.Y = currPiece.Three.Y;
                 currPiece.Two.X--;
@@ -277,7 +398,6 @@ namespace GameSol
             }
             else if (board[currPiece.Three.X, currPiece.One.Y - 2] != 1 && board[currPiece.Three.X, currPiece.Two.Y - 1] != 1 && board[currPiece.Three.X, currPiece.Four.Y + 1] != 1)
             {
-                ClearPositionFromAMove();
                 currPiece.Four.X = currPiece.Three.X;
                 currPiece.Two.X = currPiece.Three.X;
                 currPiece.One.X = currPiece.Three.X;
