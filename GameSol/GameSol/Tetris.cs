@@ -214,25 +214,19 @@ namespace GameSol
 
         public void MoveDown()
         {
-            if (currPiece.One.X < 19 && currPiece.Two.X < 19 && currPiece.Three.X < 19 && currPiece.Four.X < 19)
-            {
-                if (
-                    board[currPiece.One.X+1, currPiece.One.Y] != 1 &&
-                    board[currPiece.Two.X+1, currPiece.Two.Y] != 1 &&
-                    board[currPiece.Three.X+1, currPiece.Three.Y] != 1 &&
-                    board[currPiece.Four.X+1, currPiece.Four.Y] != 1
+            if (
+                    currPiece.One.X < 19 && currPiece.Two.X < 19 && currPiece.Three.X < 19 && currPiece.Four.X < 19 &&
+                    board[currPiece.One.X + 1, currPiece.One.Y] != 1 &&
+                    board[currPiece.Two.X + 1, currPiece.Two.Y] != 1 &&
+                    board[currPiece.Three.X + 1, currPiece.Three.Y] != 1 &&
+                    board[currPiece.Four.X + 1, currPiece.Four.Y] != 1
                     )
-                {
-                    currPiece.One.X++;
-                    currPiece.Two.X++;
-                    currPiece.Three.X++;
-                    currPiece.Four.X++;
+            {
+                currPiece.One.X++;
+                currPiece.Two.X++;
+                currPiece.Three.X++;
+                currPiece.Four.X++;
 
-                }
-                else
-                {
-                    EndDrop();
-                }
             }
             else
             {
