@@ -28,6 +28,7 @@ namespace GameSol
             
             while (true)
             {
+                
                 GetKeyPress();
                 
                 if (
@@ -522,7 +523,13 @@ namespace GameSol
             }
         }
 
-        public void RotateIPiece()
+        /// <summary>
+        /// Handles all rotation of the 'I' Tetromino
+        /// first if/else if statement checks to see the position of the Piece
+        /// 2nd if statement checks to see if the rotation will put the piece out of bounds in anyway
+        /// 3rd if checks for collision with other pieces
+        /// </summary>
+        public void RotateIPiece() 
         {
             if (currPiece.Three.Y + 1 == currPiece.Four.Y)
             {
@@ -557,12 +564,19 @@ namespace GameSol
             }
         }
 
+        /// <summary>
+        /// Handles dropping Pieces and calls for the creation of a new piece
+        /// </summary>
         public void DropPiece()
         {
             isDropping = true;
             currPiece = NewPiece();
         }
-
+        
+        /// <summary>
+        /// sets the final position of the piece when the piece collides with a block lower than it. set isdropping to false to prepare the game to drop another piece.
+        /// calls to check amount of line clears
+        /// </summary>
         public void EndDrop()
         {
             board[currPiece.One.X, currPiece.One.Y] = 1;
@@ -582,7 +596,8 @@ namespace GameSol
         }
 
         /// <summary>
-        /// creates a string array holding the board
+        /// creates a string array holding the board 
+        /// returns a string arr with each row of the board as an element in the array
         /// </summary>
         public string[] boardToStringArr()
         {
@@ -606,14 +621,14 @@ namespace GameSol
         /// optimizable by checking if the next three lines below the line being cleared are clearable. instead of calling clear line 3 times.
         /// </summary>
         /// <returns></returns>
-        public int CheckLineClears() /////////////////////////////////////////////// HAS PROBLEMS ATM
+        public int CheckLineClears()
         {
             int linesCleared = 0;
             bool isClear;
             for (int i = 19; i >= 0; i--)
             {
                 isClear = true;
-                for (int j = 9; j >= 0; j--)
+                for (int j = 0; j < 10; j++)
                 {
                     if (isClear && board[i, j] != 1) isClear = false;
                 }
@@ -621,7 +636,9 @@ namespace GameSol
                 {
                     linesCleared++;
                     ClearLine(i);
+                    i++;
                 }
+                
             }
             return linesCleared;
         }
@@ -629,7 +646,7 @@ namespace GameSol
         public void ClearLine(int lineNumber)
         {
             // shifts the board starting at the line number down by one.
-            for (int i = 19; i >= 1; i--)
+            for (int i = lineNumber; i >= 1; i--)
             {
                 for (int j = 9; j >= 0; j--)
                 {
