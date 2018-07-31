@@ -412,7 +412,7 @@ namespace GameSol
                 currPiece.Three.X--;
                 currPiece.Three.Y--;
             }
-            else if (currPiece.One.Y + 1 == currPiece.Two.Y && currPiece.Three.Y == currPiece.Two.Y && currPiece.Four.Y == currPiece.Two.Y && currPiece.Two.X != 9)
+            else if (currPiece.One.Y + 1 == currPiece.Two.Y && currPiece.Three.Y == currPiece.Two.Y && currPiece.Four.Y == currPiece.Two.Y && currPiece.Two.Y != 9)
             {
                 // 00300
                 // 01200
@@ -464,7 +464,7 @@ namespace GameSol
                 currPiece.Three.X++;
                 currPiece.Three.Y--;
             }
-            else if (currPiece.One.Y + 1 == currPiece.Two.Y && currPiece.Three.Y == currPiece.Two.Y && currPiece.Four.Y == currPiece.Two.Y && currPiece.Two.X != 9)
+            else if (currPiece.One.Y + 1 == currPiece.Two.Y && currPiece.Three.Y == currPiece.Two.Y && currPiece.Four.Y == currPiece.Two.Y && currPiece.Two.Y != 9)
             {
                 // 00300
                 // 01200
@@ -524,24 +524,36 @@ namespace GameSol
 
         public void RotateIPiece()
         {
-            if (currPiece.Three.X == currPiece.Two.X && board[currPiece.One.X - 2, currPiece.Three.Y] != 1 && board[currPiece.Two.X - 1, currPiece.Three.Y] != 1 && board[currPiece.Four.X + 1, currPiece.Three.Y] != 1)
+            if (currPiece.Three.Y + 1 == currPiece.Four.Y)
             {
-                currPiece.Four.X++;
-                currPiece.Four.Y = currPiece.Three.Y;
-                currPiece.Two.X--;
-                currPiece.Four.Y = currPiece.Three.Y;
-                currPiece.One.X -= 2;
-                currPiece.One.Y = currPiece.Three.Y;
-                currPiece.Two.Y = currPiece.Three.Y;
+                if (currPiece.Three.X != 19)
+                {
+                    if (board[currPiece.One.X-2, currPiece.One.Y+2] != 1 && board[currPiece.Two.X-1, currPiece.Two.Y+1] != 1 && board[currPiece.Four.X+1, currPiece.Four.Y-1] != 1)
+                    {
+                        currPiece.Four.X++;
+                        currPiece.Four.Y = currPiece.Three.Y;
+                        currPiece.Two.X--;
+                        currPiece.Four.Y = currPiece.Three.Y;
+                        currPiece.One.X -= 2;
+                        currPiece.One.Y = currPiece.Three.Y;
+                        currPiece.Two.Y = currPiece.Three.Y;
+                    }
+                }
             }
-            else if (board[currPiece.Three.X, currPiece.One.Y - 2] != 1 && board[currPiece.Three.X, currPiece.Two.Y - 1] != 1 && board[currPiece.Three.X, currPiece.Four.Y + 1] != 1)
+            else if ( currPiece.Three.X + 1 == currPiece.Four.X)
             {
-                currPiece.Four.X = currPiece.Three.X;
-                currPiece.Two.X = currPiece.Three.X;
-                currPiece.One.X = currPiece.Three.X;
-                currPiece.Four.Y++;
-                currPiece.Two.Y--;
-                currPiece.One.Y -= 2;
+                if (currPiece.Four.Y != 0 && currPiece.Four.Y != 1 && currPiece.Four.Y != 9)
+                {
+                    if (board[currPiece.One.X+2, currPiece.One.Y-2] != 1 && board[currPiece.Two.X+1,currPiece.Two.Y-1] != 1 && board[currPiece.Four.X-1, currPiece.Four.Y+1] != 1)
+                    {
+                        currPiece.Four.X = currPiece.Three.X;
+                        currPiece.Two.X = currPiece.Three.X;
+                        currPiece.One.X = currPiece.Three.X;
+                        currPiece.Four.Y++;
+                        currPiece.Two.Y--;
+                        currPiece.One.Y -= 2;
+                    }
+                }
             }
         }
 
