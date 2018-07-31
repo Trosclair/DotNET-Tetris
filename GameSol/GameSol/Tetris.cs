@@ -122,7 +122,7 @@ namespace GameSol
                     RotateJPieceLeft();
                     break;
                 case Piece.PieceType.L:
-
+                    RotateLPieceLeft();
                     break;
                 case Piece.PieceType.S:
                     RotateSPiece();
@@ -152,7 +152,7 @@ namespace GameSol
                     RotateJPieceRight();
                     break;
                 case Piece.PieceType.L:
-
+                    RotateLPieceRight();
                     break;
                 case Piece.PieceType.S:
                     RotateSPiece();
@@ -231,6 +231,78 @@ namespace GameSol
             else
             {
                 EndDrop();
+            }
+        }
+
+        public void RotateLPieceRight()
+        {
+            if (currPiece.Three.Y + 1 == currPiece.Four.Y)
+            {
+                currPiece.One.X++;
+                currPiece.One.Y++;
+                currPiece.Three.X--;
+                currPiece.Three.Y--;
+                currPiece.Four.Y -= 2;
+            }
+            else if (currPiece.Three.X + 1 == currPiece.Four.X)
+            {
+                currPiece.One.X++;
+                currPiece.One.Y--;
+                currPiece.Three.X--;
+                currPiece.Three.Y++;
+                currPiece.Four.X -= 2;
+            }
+            else if (currPiece.Four.Y + 1 == currPiece.Three.Y)
+            {
+                currPiece.One.X--;
+                currPiece.One.Y--;
+                currPiece.Three.X++;
+                currPiece.Three.Y++;
+                currPiece.Four.Y += 2;
+            }
+            else if (currPiece.Three.X - 1 == currPiece.Four.X)
+            {
+                currPiece.One.X--;
+                currPiece.One.Y++;
+                currPiece.Three.X++;
+                currPiece.Three.Y--;
+                currPiece.Four.X += 2;
+            }
+        }
+
+        public void RotateLPieceLeft()
+        {
+            if (currPiece.Three.Y + 1 == currPiece.Four.Y)
+            {
+                currPiece.One.X++;
+                currPiece.One.Y--;
+                currPiece.Three.X--;
+                currPiece.Three.Y++;
+                currPiece.Four.X -= 2;
+            }
+            else if (currPiece.Three.X - 1 == currPiece.Four.X)
+            {
+                currPiece.One.X++;
+                currPiece.One.Y++;
+                currPiece.Three.X--;
+                currPiece.Three.Y--;
+                currPiece.Four.Y -= 2;
+            }
+            else if (currPiece.Three.Y - 1 == currPiece.Four.Y)
+            {
+                currPiece.One.X--;
+                currPiece.One.Y++;
+                currPiece.Three.X++;
+                currPiece.Three.Y--;
+                currPiece.Four.X += 2;
+            }
+            else if (currPiece.Three.X + 1 == currPiece.Four.X)
+            {
+                currPiece.One.X--;
+                currPiece.One.Y--;
+                currPiece.Three.X++;
+                currPiece.Three.Y++;
+                currPiece.Four.Y += 2;
             }
         }
 
