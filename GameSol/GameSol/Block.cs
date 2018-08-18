@@ -17,6 +17,12 @@ namespace GameSol
             _Y = y;
         }
 
+        public Block(Block block)
+        {
+            _X = block.X;
+            _Y = block.Y;
+        }
+
         public int X
         {
             get

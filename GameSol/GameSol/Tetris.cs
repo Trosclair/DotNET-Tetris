@@ -87,26 +87,46 @@ namespace GameSol
 
         public void CheckMove()
         {
-            ClearPositionFromAMove();
-            if (key.Key == ConsoleKey.K && isKeyPressed)
+            Block one = new Block(currPiece.One.X, currPiece.One.Y);
+            Block two = new Block(currPiece.Two.X, currPiece.Two.Y);
+            Block three = new Block(currPiece.Three.X, currPiece.Three.Y);
+            Block four = new Block(currPiece.Four.X, currPiece.Four.Y);
+            try
             {
-                TurnLeft();
+
+                ClearPositionFromAMove();
+                if (key.Key == ConsoleKey.K && isKeyPressed)
+                {
+                    TurnLeft();
+                }
+                else if (key.Key == ConsoleKey.L && isKeyPressed)
+                {
+                    TurnRight();
+                }
+                else if (key.Key == ConsoleKey.LeftArrow && isKeyPressed)
+                {
+                    MoveLeft();
+                }
+                else if (key.Key == ConsoleKey.DownArrow && isKeyPressed)
+                {
+                    MoveDown();
+                }
+                else if (key.Key == ConsoleKey.RightArrow && isKeyPressed)
+                {
+                    MoveRight();
+                }
+                bool a = board[currPiece.One.X, currPiece.One.Y] == 0 ||
+                board[currPiece.Two.X, currPiece.Two.Y] == 0 ||
+                board[currPiece.Three.X, currPiece.Three.Y] == 0 ||
+                board[currPiece.Four.X, currPiece.Four.Y] == 0;
             }
-            else if (key.Key == ConsoleKey.L && isKeyPressed)
+            catch (Exception)
             {
-                TurnRight();
-            }
-            else if (key.Key == ConsoleKey.LeftArrow && isKeyPressed)
-            {
-                MoveLeft();
-            }
-            else if (key.Key == ConsoleKey.DownArrow && isKeyPressed)
-            {
-                MoveDown();
-            }
-            else if (key.Key == ConsoleKey.RightArrow && isKeyPressed)
-            {
-                MoveRight();
+                currPiece.One = new Block(one);
+                currPiece.Two = new Block(two);
+                currPiece.Three = new Block(three);
+                currPiece.Four = new Block(four);
+                
             }
         }
 
