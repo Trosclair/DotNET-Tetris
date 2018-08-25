@@ -20,12 +20,106 @@ namespace GameSol
 
         public override void RotateLeft()
         {
-            throw new NotImplementedException();
+            if (One.X == Two.X - 1 && Three.Y - 1 == Two.Y && Four.Y + 1 == Two.Y && Two.X != 19)
+            {
+                // 00100
+                // 04230
+                // 00000
+                Four.X++;
+                Four.Y++;
+                One.X++;
+                One.Y--;
+                Three.X--;
+                Three.Y--;
+            }
+            else if (One.Y + 1 == Two.Y && Three.Y == Two.Y && Four.Y == Two.Y && Two.Y != 9)
+            {
+                // 00300
+                // 01200
+                // 00400
+                One.X++;
+                One.Y++;
+                Three.X++;
+                Three.Y--;
+                Four.X--;
+                Four.Y++;
+            }
+            else if (One.X - 1 == Two.X && Three.X == Two.X && Four.X == Two.X && Two.X != 0)
+            {
+                // 00000
+                // 03240
+                // 00100
+                One.X--;
+                One.Y++;
+                Three.X++;
+                Three.Y++;
+                Four.X--;
+                Four.Y--;
+            }
+            else if (One.Y - 1 == Two.Y && Three.Y == Two.Y && Four.Y == Two.Y && Two.Y != 0)
+            {
+                // 00400
+                // 00210
+                // 00300
+                One.X--;
+                One.Y--;
+                Three.X--;
+                Three.Y++;
+                Four.X++;
+                Four.Y--;
+            }
         }
 
         public override void RotateRight()
         {
-            throw new NotImplementedException();
+            if (One.X == Two.X - 1 && Three.Y - 1 == Two.Y && Four.Y + 1 == Two.Y && Two.X != 19)
+            {
+                // 00100
+                // 04230
+                // 00000
+                Four.X--;
+                Four.Y++;
+                One.X++;
+                One.Y++;
+                Three.X++;
+                Three.Y--;
+            }
+            else if (One.Y + 1 == Two.Y && Three.Y == Two.Y && Four.Y == Two.Y && Two.Y != 9)
+            {
+                // 00300
+                // 01200
+                // 00400
+                One.X--;
+                One.Y++;
+                Three.X++;
+                Three.Y++;
+                Four.X--;
+                Four.Y--;
+            }
+            else if (One.X - 1 == Two.X && Three.X == Two.X && Four.X == Two.X && Two.X != 0)
+            {
+                // 00000
+                // 03240
+                // 00100
+                One.X--;
+                One.Y--;
+                Three.X--;
+                Three.Y++;
+                Four.X++;
+                Four.Y--;
+            }
+            else if (One.Y - 1 == Two.Y && Three.Y == Two.Y && Four.Y == Two.Y && Two.Y != 0)
+            {
+                // 00400
+                // 00210
+                // 00300
+                One.X++;
+                One.Y--;
+                Three.X--;
+                Three.Y--;
+                Four.X++;
+                Four.Y++;
+            }
         }
     }
 }

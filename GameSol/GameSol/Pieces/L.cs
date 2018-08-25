@@ -18,14 +18,76 @@ namespace GameSol
             Board = board;
         }
 
-        public override void RotateLeft()
-        {
-            throw new NotImplementedException();
-        }
-
         public override void RotateRight()
         {
-            throw new NotImplementedException();
+            if (Three.Y + 1 == Four.Y)
+            {
+                One.X++;
+                One.Y++;
+                Three.X--;
+                Three.Y--;
+                Four.Y -= 2;
+            }
+            else if (Three.X + 1 == Four.X)
+            {
+                One.X++;
+                One.Y--;
+                Three.X--;
+                Three.Y++;
+                Four.X -= 2;
+            }
+            else if (Four.Y + 1 == Three.Y)
+            {
+                One.X--;
+                One.Y--;
+                Three.X++;
+                Three.Y++;
+                Four.Y += 2;
+            }
+            else if (Three.X - 1 == Four.X)
+            {
+                One.X--;
+                One.Y++;
+                Three.X++;
+                Three.Y--;
+                Four.X += 2;
+            }
+        }
+
+        public override void RotateLeft()
+        {
+            if (Three.Y + 1 == Four.Y)
+            {
+                One.X++;
+                One.Y--;
+                Three.X--;
+                Three.Y++;
+                Four.X -= 2;
+            }
+            else if (Three.X - 1 == Four.X)
+            {
+                One.X++;
+                One.Y++;
+                Three.X--;
+                Three.Y--;
+                Four.Y -= 2;
+            }
+            else if (Three.Y - 1 == Four.Y)
+            {
+                One.X--;
+                One.Y++;
+                Three.X++;
+                Three.Y--;
+                Four.X += 2;
+            }
+            else if (Three.X + 1 == Four.X)
+            {
+                One.X--;
+                One.Y--;
+                Three.X++;
+                Three.Y++;
+                Four.Y += 2;
+            }
         }
     }
 }

@@ -18,14 +18,8 @@ namespace GameSol
             Board = board;
         }
 
-        public override void RotateLeft()
-        {
-            throw new NotImplementedException();
-        }
+        public override void RotateLeft(){}
 
-        public override void RotateRight()
-        {
-            throw new NotImplementedException();
-        }
+        public override void RotateRight(){}
     }
 }

@@ -20,12 +20,27 @@ namespace GameSol
 
         public override void RotateLeft()
         {
-            throw new NotImplementedException();
+            if (One.X == Two.X)
+            {
+                Two.X++;
+                Two.Y++;
+                Three.X--;
+                Three.Y++;
+                Four.X -= 2;
+            }
+            else if (One.Y == Two.Y)
+            {
+                Two.X--;
+                Two.Y--;
+                Three.X++;
+                Three.Y--;
+                Four.X += 2;
+            }
         }
 
         public override void RotateRight()
         {
-            throw new NotImplementedException();
+            RotateLeft();
         }
     }
 }

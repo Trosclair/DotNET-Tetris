@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameSol
 {
-    class ScoreAndStatistics
+    public class ScoreAndStatistics
     {
         private int _L;
         private int _J;

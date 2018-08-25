@@ -20,17 +20,13 @@ namespace GameSol
 
         public Tetris()
         {
-            
         }
 
         public void Start()
-        {
-            
+        {   
             while (true)
-            {
-                
+            {         
                 GetKeyPress();
-                
                 if (
                     key.Key == ConsoleKey.Enter && 
                     isKeyPressed &&
@@ -48,11 +44,6 @@ namespace GameSol
                 if (System.Environment.TickCount - lastTick >= 60)
                 {
                     Update();
-                    if (_gameState == GameState.TitleScreen)
-                    {
-                        //if (Console.ReadKey().Key == ConsoleKey.Enter)
-                        Update();
-                    } // iskeypressed is used to indicate whether or not a key is still pressed since key var should always hold last key this avoids spamming.
                     lastTick = System.Environment.TickCount;
                 }
             }
@@ -94,15 +85,14 @@ namespace GameSol
             Block four = new Block(currPiece.Four.X, currPiece.Four.Y);
             try
             {
-
                 currPiece.ClearPositionFromAMove();
                 if (key.Key == ConsoleKey.K && isKeyPressed)
                 {
-                    TurnLeft();
+                    currPiece.RotateLeft();
                 }
                 else if (key.Key == ConsoleKey.L && isKeyPressed)
                 {
-                    TurnRight();
+                    currPiece.RotateRight();
                 }
                 else if (key.Key == ConsoleKey.LeftArrow && isKeyPressed)
                 {
@@ -131,408 +121,12 @@ namespace GameSol
             }
         }
 
-        public void TurnLeft()
-        {
-            switch (currPiece.CurrPiece)
-            {
-                case Piece.PieceType.U:
-                    break;
-                case Piece.PieceType.I:
-                    RotateIPiece();
-                    break;
-                case Piece.PieceType.J:
-                    RotateJPieceLeft();
-                    break;
-                case Piece.PieceType.L:
-                    RotateLPieceLeft();
-                    break;
-                case Piece.PieceType.S:
-                    RotateSPiece();
-                    break;
-                case Piece.PieceType.Z:
-                    RotateZPiece();
-                    break;
-                case Piece.PieceType.T:
-                    RotateTPieceLeft();
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        public void TurnRight()
-        {
-
-            switch (currPiece.CurrPiece)
-            {
-                case Piece.PieceType.U:
-                    break;
-                case Piece.PieceType.I:
-                    RotateIPiece();
-                    break;
-                case Piece.PieceType.J:
-                    RotateJPieceRight();
-                    break;
-                case Piece.PieceType.L:
-                    RotateLPieceRight();
-                    break;
-                case Piece.PieceType.S:
-                    RotateSPiece();
-                    break;
-                case Piece.PieceType.Z:
-                    RotateZPiece();
-                    break;
-                case Piece.PieceType.T:
-                    RotateTPieceRight();
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        public void RotateLPieceRight()
-        {
-            if (currPiece.Three.Y + 1 == currPiece.Four.Y)
-            {
-                currPiece.One.X++;
-                currPiece.One.Y++;
-                currPiece.Three.X--;
-                currPiece.Three.Y--;
-                currPiece.Four.Y -= 2;
-            }
-            else if (currPiece.Three.X + 1 == currPiece.Four.X)
-            {
-                currPiece.One.X++;
-                currPiece.One.Y--;
-                currPiece.Three.X--;
-                currPiece.Three.Y++;
-                currPiece.Four.X -= 2;
-            }
-            else if (currPiece.Four.Y + 1 == currPiece.Three.Y)
-            {
-                currPiece.One.X--;
-                currPiece.One.Y--;
-                currPiece.Three.X++;
-                currPiece.Three.Y++;
-                currPiece.Four.Y += 2;
-            }
-            else if (currPiece.Three.X - 1 == currPiece.Four.X)
-            {
-                currPiece.One.X--;
-                currPiece.One.Y++;
-                currPiece.Three.X++;
-                currPiece.Three.Y--;
-                currPiece.Four.X += 2;
-            }
-        }
-
-        public void RotateLPieceLeft()
-        {
-            if (currPiece.Three.Y + 1 == currPiece.Four.Y)
-            {
-                currPiece.One.X++;
-                currPiece.One.Y--;
-                currPiece.Three.X--;
-                currPiece.Three.Y++;
-                currPiece.Four.X -= 2;
-            }
-            else if (currPiece.Three.X - 1 == currPiece.Four.X)
-            {
-                currPiece.One.X++;
-                currPiece.One.Y++;
-                currPiece.Three.X--;
-                currPiece.Three.Y--;
-                currPiece.Four.Y -= 2;
-            }
-            else if (currPiece.Three.Y - 1 == currPiece.Four.Y)
-            {
-                currPiece.One.X--;
-                currPiece.One.Y++;
-                currPiece.Three.X++;
-                currPiece.Three.Y--;
-                currPiece.Four.X += 2;
-            }
-            else if (currPiece.Three.X + 1 == currPiece.Four.X)
-            {
-                currPiece.One.X--;
-                currPiece.One.Y--;
-                currPiece.Three.X++;
-                currPiece.Three.Y++;
-                currPiece.Four.Y += 2;
-            }
-        }
-
-        public void RotateZPiece()
-        {
-            if (currPiece.One.X == currPiece.Two.X)
-            {
-                currPiece.Two.X++;
-                currPiece.Two.Y++;
-                currPiece.Three.X--;
-                currPiece.Three.Y++;
-                currPiece.Four.X -= 2;
-            }
-            else if (currPiece.One.Y == currPiece.Two.Y)
-            {
-                currPiece.Two.X--;
-                currPiece.Two.Y--;
-                currPiece.Three.X++;
-                currPiece.Three.Y--;
-                currPiece.Four.X += 2;
-            }
-        }
-
-        public void RotateJPieceLeft()
-        {
-            if (currPiece.Four.Y + 1 == currPiece.Three.Y)
-            {
-                currPiece.Four.Y += 2;
-                currPiece.Three.X--;
-                currPiece.Three.Y++;
-                currPiece.One.X++;
-                currPiece.One.Y--;
-            }
-            else if (currPiece.Four.X + 1 == currPiece.Three.X)
-            {
-                currPiece.Four.X += 2;
-                currPiece.Three.X++;
-                currPiece.Three.Y++;
-                currPiece.One.X--;
-                currPiece.One.Y--;
-            }
-            else if (currPiece.Three.Y + 1 == currPiece.Four.Y)
-            {
-                currPiece.Four.Y -= 2;
-                currPiece.Three.X++;
-                currPiece.Three.Y--;
-                currPiece.One.X--;
-                currPiece.One.Y++;
-            }
-            else
-            {
-                currPiece.Four.X -= 2;
-                currPiece.Three.X--;
-                currPiece.Three.Y--;
-                currPiece.One.X++;
-                currPiece.One.Y++;
-            }
-        }
-
-        public void RotateJPieceRight()
-        {
-            if (currPiece.Four.Y + 1 == currPiece.Three.Y)
-            {
-                currPiece.Four.X -= 2;
-                currPiece.Three.X--;
-                currPiece.Three.Y--;
-                currPiece.One.X++;
-                currPiece.One.Y++;
-            }
-            else if (currPiece.Four.X + 1 == currPiece.Three.X)
-            {
-                currPiece.Four.Y += 2;
-                currPiece.Three.X--;
-                currPiece.Three.Y++;
-                currPiece.One.X++;
-                currPiece.One.Y--;
-            }
-            else if (currPiece.Three.Y + 1 == currPiece.Four.Y)
-            {
-                currPiece.Four.X += 2;
-                currPiece.Three.X++;
-                currPiece.Three.Y++;
-                currPiece.One.X--;
-                currPiece.One.Y--;
-            }
-            else
-            {
-                currPiece.Four.Y -= 2;
-                currPiece.Three.X++;
-                currPiece.Three.Y--;
-                currPiece.One.X--;
-                currPiece.One.Y++;
-            }
-        }
-
-        public void RotateTPieceLeft()
-        {
-            if (currPiece.One.X == currPiece.Two.X - 1 && currPiece.Three.Y - 1 == currPiece.Two.Y && currPiece.Four.Y + 1 == currPiece.Two.Y && currPiece.Two.X != 19)
-            {
-                // 00100
-                // 04230
-                // 00000
-                currPiece.Four.X++;
-                currPiece.Four.Y++;
-                currPiece.One.X++;
-                currPiece.One.Y--;
-                currPiece.Three.X--;
-                currPiece.Three.Y--;
-            }
-            else if (currPiece.One.Y + 1 == currPiece.Two.Y && currPiece.Three.Y == currPiece.Two.Y && currPiece.Four.Y == currPiece.Two.Y && currPiece.Two.Y != 9)
-            {
-                // 00300
-                // 01200
-                // 00400
-                currPiece.One.X++;
-                currPiece.One.Y++;
-                currPiece.Three.X++;
-                currPiece.Three.Y--;
-                currPiece.Four.X--;
-                currPiece.Four.Y++;
-            }
-            else if (currPiece.One.X - 1 == currPiece.Two.X && currPiece.Three.X == currPiece.Two.X && currPiece.Four.X == currPiece.Two.X && currPiece.Two.X != 0)
-            {
-                // 00000
-                // 03240
-                // 00100
-                currPiece.One.X--;
-                currPiece.One.Y++;
-                currPiece.Three.X++;
-                currPiece.Three.Y++;
-                currPiece.Four.X--;
-                currPiece.Four.Y--;
-            }
-            else if (currPiece.One.Y - 1 == currPiece.Two.Y && currPiece.Three.Y == currPiece.Two.Y && currPiece.Four.Y == currPiece.Two.Y && currPiece.Two.Y != 0)
-            {
-                // 00400
-                // 00210
-                // 00300
-                currPiece.One.X--;
-                currPiece.One.Y--;
-                currPiece.Three.X--;
-                currPiece.Three.Y++;
-                currPiece.Four.X++;
-                currPiece.Four.Y--;
-            }
-        }
-
-        public void RotateTPieceRight()
-        {
-            if (currPiece.One.X == currPiece.Two.X - 1 && currPiece.Three.Y - 1 == currPiece.Two.Y && currPiece.Four.Y + 1 == currPiece.Two.Y && currPiece.Two.X != 19)
-            {
-                // 00100
-                // 04230
-                // 00000
-                currPiece.Four.X--;
-                currPiece.Four.Y++;
-                currPiece.One.X++;
-                currPiece.One.Y++;
-                currPiece.Three.X++;
-                currPiece.Three.Y--;
-            }
-            else if (currPiece.One.Y + 1 == currPiece.Two.Y && currPiece.Three.Y == currPiece.Two.Y && currPiece.Four.Y == currPiece.Two.Y && currPiece.Two.Y != 9)
-            {
-                // 00300
-                // 01200
-                // 00400
-                currPiece.One.X--;
-                currPiece.One.Y++;
-                currPiece.Three.X++;
-                currPiece.Three.Y++;
-                currPiece.Four.X--;
-                currPiece.Four.Y--;
-            }
-            else if (currPiece.One.X - 1 == currPiece.Two.X && currPiece.Three.X == currPiece.Two.X && currPiece.Four.X == currPiece.Two.X && currPiece.Two.X != 0)
-            {
-                // 00000
-                // 03240
-                // 00100
-                currPiece.One.X--;
-                currPiece.One.Y--;
-                currPiece.Three.X--;
-                currPiece.Three.Y++;
-                currPiece.Four.X++;
-                currPiece.Four.Y--;
-            }
-            else if (currPiece.One.Y - 1 == currPiece.Two.Y && currPiece.Three.Y == currPiece.Two.Y && currPiece.Four.Y == currPiece.Two.Y && currPiece.Two.Y != 0)
-            {
-                // 00400
-                // 00210
-                // 00300
-                currPiece.One.X++;
-                currPiece.One.Y--;
-                currPiece.Three.X--;
-                currPiece.Three.Y--;
-                currPiece.Four.X++;
-                currPiece.Four.Y++;
-            }
-        }
-
-        public void RotateSPiece()
-        {
-            if (currPiece.One.X == currPiece.Two.X)
-            {
-                currPiece.Two.X--;
-                currPiece.Two.Y--;
-                currPiece.Three.X--;
-                currPiece.Three.Y++;
-                currPiece.Four.Y += 2;
-            }
-            else
-            {
-                currPiece.Two.X++;
-                currPiece.Two.Y++;
-                currPiece.Three.X++;
-                currPiece.Three.Y--;
-                currPiece.Four.Y -= 2;
-            }
-        }
-
-        /// <summary>
-        /// Handles all rotation of the 'I' Tetromino
-        /// first if/else if statement checks to see the position of the Piece
-        /// 2nd if statement checks to see if the rotation will put the piece out of bounds in anyway
-        /// 3rd if checks for collision with other pieces
-        /// </summary>
-        public void RotateIPiece() 
-        {
-            if (currPiece.Three.Y + 1 == currPiece.Four.Y)
-            {
-                if (currPiece.Three.X != 19)
-                {
-                    if (board[currPiece.One.X-2, currPiece.One.Y+2] != 1 && board[currPiece.Two.X-1, currPiece.Two.Y+1] != 1 && board[currPiece.Four.X+1, currPiece.Four.Y-1] != 1)
-                    {
-                        currPiece.Four.X++;
-                        currPiece.Four.Y = currPiece.Three.Y;
-                        currPiece.Two.X--;
-                        currPiece.Four.Y = currPiece.Three.Y;
-                        currPiece.One.X -= 2;
-                        currPiece.One.Y = currPiece.Three.Y;
-                        currPiece.Two.Y = currPiece.Three.Y;
-                    }
-                }
-            }
-            else if ( currPiece.Three.X + 1 == currPiece.Four.X)
-            {
-                if (currPiece.Four.Y != 0 && currPiece.Four.Y != 1 && currPiece.Four.Y != 9)
-                {
-                    if (board[currPiece.One.X+2, currPiece.One.Y-2] != 1 && board[currPiece.Two.X+1,currPiece.Two.Y-1] != 1 && board[currPiece.Four.X-1, currPiece.Four.Y+1] != 1)
-                    {
-                        currPiece.Four.X = currPiece.Three.X;
-                        currPiece.Two.X = currPiece.Three.X;
-                        currPiece.One.X = currPiece.Three.X;
-                        currPiece.Four.Y++;
-                        currPiece.Two.Y--;
-                        currPiece.One.Y -= 2;
-                    }
-                }
-            }
-        }
-
         /// <summary>
         /// Handles dropping Pieces and calls for the creation of a new piece
         /// </summary>
         public void DropPiece()
         {
             currPiece = NewPiece();
-        }
-
-        /// <summary>
-        //  reset the board
-        /// </summary>
-        public void FillBoardWithZero()
-        {
-            board = new int[20, 10];
         }
 
         /// <summary>
@@ -561,7 +155,7 @@ namespace GameSol
         /// optimizable by checking if the next three lines below the line being cleared are clearable. instead of calling clear line 3 times.
         /// </summary>
         /// <returns></returns>
-        public int CheckLineClears()
+        public void CheckLineClears()
         {
             int linesCleared = 0;
             bool isClear;
@@ -580,7 +174,22 @@ namespace GameSol
                 }
                 
             }
-            return linesCleared;
+            if (linesCleared == 1)
+            {
+                _scoreAndStats.Score += 100;
+            }
+            else if (linesCleared == 2)
+            {
+                _scoreAndStats.Score += 300;
+            }
+            else if (linesCleared == 3)
+            {
+                _scoreAndStats.Score += 600;
+            }
+            else if (linesCleared == 4)
+            {
+                _scoreAndStats.Score += 1000;
+            }
         }
 
         public void ClearLine(int lineNumber)
@@ -601,18 +210,25 @@ namespace GameSol
             switch ((r.Next(0, 7))) /// add score and stats functionallity 
             {
                 case 0:
+                    _scoreAndStats.L++;
                     return new L(board);
                 case 1:
+                    _scoreAndStats.J++;
                     return new J(board);             
                 case 2:
+                    _scoreAndStats.I++;
                     return new I(board);
                 case 3:
+                    _scoreAndStats.U++;
                     return new U(board);
                 case 4:
+                    _scoreAndStats.S++;
                     return new S(board);
                 case 5:
+                    _scoreAndStats.Z++;
                     return new Z(board);
                 case 6:
+                    _scoreAndStats.T++;
                     return new T(board);
                 default:
                     throw new ArgumentException();
@@ -622,8 +238,8 @@ namespace GameSol
         public void printGameGUI()
         {
             string[] BoardAsString = boardToStringArr();
-            StringBuilder sb = new StringBuilder();
-            sb.Append(
+            Console.Clear();
+            Console.Write(
                 "||||||||||||||||||||||||||||||||||||||||||\n"
                 + "||||||||||||||||**TETRIS**||||||||||||||||\n"
                 + "|||||SCORE:|||||----------|| NEXT PIECE ||\n"
@@ -649,8 +265,6 @@ namespace GameSol
                 "||||||||||||||||" + BoardAsString[19] + "||||||||||||||||\n" +
                 "||||||||||||||||||||||||||||||||||||||||||"
                 );
-            Console.Clear();
-            Console.Write(sb.ToString());
         }
 
         private static int lastTick;

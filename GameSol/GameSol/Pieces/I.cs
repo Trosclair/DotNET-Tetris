@@ -20,12 +20,42 @@ namespace GameSol
 
         public override void RotateLeft()
         {
-            throw new NotImplementedException();
+            if (Three.Y + 1 == Four.Y)
+            {
+                if (Three.X != 19)
+                {
+                    if (Board[One.X - 2, One.Y + 2] != 1 && Board[Two.X - 1, Two.Y + 1] != 1 && Board[Four.X + 1, Four.Y - 1] != 1)
+                    {
+                        Four.X++;
+                        Four.Y = Three.Y;
+                        Two.X--;
+                        Four.Y = Three.Y;
+                        One.X -= 2;
+                        One.Y = Three.Y;
+                        Two.Y = Three.Y;
+                    }
+                }
+            }
+            else if (Three.X + 1 == Four.X)
+            {
+                if (Four.Y != 0 && Four.Y != 1 && Four.Y != 9)
+                {
+                    if (Board[One.X + 2, One.Y - 2] != 1 && Board[Two.X + 1, Two.Y - 1] != 1 && Board[Four.X - 1, Four.Y + 1] != 1)
+                    {
+                        Four.X = Three.X;
+                        Two.X = Three.X;
+                        One.X = Three.X;
+                        Four.Y++;
+                        Two.Y--;
+                        One.Y -= 2;
+                    }
+                }
+            }
         }
 
         public override void RotateRight()
         {
-            throw new NotImplementedException();
+            RotateLeft();
         }
     }
 }
