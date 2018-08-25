@@ -9,14 +9,14 @@ namespace GameSol
 {
     class Tetris
     {
-        public Piece currPiece;
+        public Piece currPiece = null;
         public int[,] board = new int[20, 10];
         public enum GameState { TitleScreen, Game, GameOver};
         public GameState _gameState = GameState.TitleScreen;
         public ConsoleKeyInfo key;
-        public bool isDropping = false;
         public bool isKeyPressed;
         public ScoreAndStatistics _scoreAndStats = new ScoreAndStatistics();
+        public Random r = new Random();
 
         public Tetris()
         {
@@ -40,7 +40,7 @@ namespace GameSol
                 {
                     _gameState = GameState.Game;
                 }
-                if (isDropping)
+                if (currPiece != null && currPiece.IsDropping)
                 {
                     CheckMove();
                 }
@@ -72,8 +72,9 @@ namespace GameSol
         {
             if (_gameState == GameState.Game)
             {
-                if (!isDropping)
+                if (currPiece == null || !currPiece.IsDropping)
                 {
+                    CheckLineClears();
                     DropPiece();
                 }
                 board[currPiece.One.X, currPiece.One.Y] = 2;
@@ -94,7 +95,7 @@ namespace GameSol
             try
             {
 
-                ClearPositionFromAMove();
+                currPiece.ClearPositionFromAMove();
                 if (key.Key == ConsoleKey.K && isKeyPressed)
                 {
                     TurnLeft();
@@ -105,22 +106,22 @@ namespace GameSol
                 }
                 else if (key.Key == ConsoleKey.LeftArrow && isKeyPressed)
                 {
-                    MoveLeft();
+                    currPiece.MoveLeft();
                 }
                 else if (key.Key == ConsoleKey.DownArrow && isKeyPressed)
                 {
-                    MoveDown();
+                    currPiece.MoveDown();
                 }
                 else if (key.Key == ConsoleKey.RightArrow && isKeyPressed)
                 {
-                    MoveRight();
+                    currPiece.MoveRight();
                 }
                 bool a = board[currPiece.One.X, currPiece.One.Y] == 0 ||
                 board[currPiece.Two.X, currPiece.Two.Y] == 0 ||
                 board[currPiece.Three.X, currPiece.Three.Y] == 0 ||
                 board[currPiece.Four.X, currPiece.Four.Y] == 0;
             }
-            catch (Exception)
+            catch (IndexOutOfRangeException)
             {
                 currPiece.One = new Block(one);
                 currPiece.Two = new Block(two);
@@ -186,72 +187,6 @@ namespace GameSol
                     break;
                 default:
                     break;
-            }
-        }
-
-        public void MoveLeft()
-        {
-            if 
-                (
-                currPiece.One.Y > 0 && currPiece.Two.Y > 0 && currPiece.Three.Y > 0 && currPiece.Four.Y > 0 &&
-                board[currPiece.One.X, currPiece.One.Y - 1] != 1 &&
-                board[currPiece.Two.X, currPiece.Two.Y - 1] != 1 &&
-                board[currPiece.Three.X, currPiece.Three.Y - 1] != 1 &&
-                board[currPiece.Four.X, currPiece.Four.Y - 1] != 1
-                )
-            {
-                currPiece.One.Y--;
-                currPiece.Two.Y--;
-                currPiece.Three.Y--;
-                currPiece.Four.Y--;
-            }
-        }
-
-        public void MoveRight()
-        {
-            if 
-                (
-                currPiece.One.Y < 9 && currPiece.Two.Y < 9 && currPiece.Three.Y < 9 && currPiece.Four.Y < 9 &&
-                board[currPiece.One.X, currPiece.One.Y + 1] != 1 &&
-                board[currPiece.Two.X, currPiece.Two.Y + 1] != 1 &&
-                board[currPiece.Three.X, currPiece.Three.Y + 1] != 1 &&
-                board[currPiece.Four.X, currPiece.Four.Y + 1] != 1
-                )
-            {
-                currPiece.One.Y++;
-                currPiece.Two.Y++;
-                currPiece.Three.Y++;
-                currPiece.Four.Y++;
-            }
-        }
-
-        public void ClearPositionFromAMove()
-        {
-            board[currPiece.One.X, currPiece.One.Y] = 0;
-            board[currPiece.Two.X, currPiece.Two.Y] = 0;
-            board[currPiece.Three.X, currPiece.Three.Y] = 0;
-            board[currPiece.Four.X, currPiece.Four.Y] = 0;
-        }
-
-        public void MoveDown()
-        {
-            if (
-                    currPiece.One.X < 19 && currPiece.Two.X < 19 && currPiece.Three.X < 19 && currPiece.Four.X < 19 &&
-                    board[currPiece.One.X + 1, currPiece.One.Y] != 1 &&
-                    board[currPiece.Two.X + 1, currPiece.Two.Y] != 1 &&
-                    board[currPiece.Three.X + 1, currPiece.Three.Y] != 1 &&
-                    board[currPiece.Four.X + 1, currPiece.Four.Y] != 1
-                    )
-            {
-                currPiece.One.X++;
-                currPiece.Two.X++;
-                currPiece.Three.X++;
-                currPiece.Four.X++;
-
-            }
-            else
-            {
-                EndDrop();
             }
         }
 
@@ -589,22 +524,7 @@ namespace GameSol
         /// </summary>
         public void DropPiece()
         {
-            isDropping = true;
             currPiece = NewPiece();
-        }
-        
-        /// <summary>
-        /// sets the final position of the piece when the piece collides with a block lower than it. set isdropping to false to prepare the game to drop another piece.
-        /// calls to check amount of line clears
-        /// </summary>
-        public void EndDrop()
-        {
-            board[currPiece.One.X, currPiece.One.Y] = 1;
-            board[currPiece.Two.X, currPiece.Two.Y] = 1;
-            board[currPiece.Three.X, currPiece.Three.Y] = 1;
-            board[currPiece.Four.X, currPiece.Four.Y] = 1;
-            isDropping = false;
-            CheckLineClears();
         }
 
         /// <summary>
@@ -612,7 +532,7 @@ namespace GameSol
         /// </summary>
         public void FillBoardWithZero()
         {
-            Array.Clear(board, 0, board.Length);
+            board = new int[20, 10];
         }
 
         /// <summary>
@@ -678,8 +598,25 @@ namespace GameSol
 
         public Piece NewPiece()
         {
-            Random r = new Random(); // this method might need to be clean up to not instantiate a random everytime.
-            return new Piece(r.Next(0, 7));
+            switch ((r.Next(0, 7))) /// add score and stats functionallity 
+            {
+                case 0:
+                    return new L(board);
+                case 1:
+                    return new J(board);             
+                case 2:
+                    return new I(board);
+                case 3:
+                    return new U(board);
+                case 4:
+                    return new S(board);
+                case 5:
+                    return new Z(board);
+                case 6:
+                    return new T(board);
+                default:
+                    throw new ArgumentException();
+            }
         }
 
         public void printGameGUI()
