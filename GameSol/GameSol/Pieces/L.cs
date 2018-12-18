@@ -18,15 +18,24 @@ namespace GameSol
             Board = board;
         }
 
+        ///*****
+        ///**1**
+        ///**2**
+        ///**34*
+        ///*****
+
         public override void RotateRight()
         {
             if (Three.Y + 1 == Four.Y)
             {
-                One.X++;
-                One.Y++;
-                Three.X--;
-                Three.Y--;
-                Four.Y -= 2;
+                if (Three.Y != 0)
+                {
+                    One.X++;
+                    One.Y++;
+                    Three.X--;
+                    Three.Y--;
+                    Four.Y -= 2;
+                }
             }
             else if (Three.X + 1 == Four.X)
             {
@@ -38,19 +47,25 @@ namespace GameSol
             }
             else if (Four.Y + 1 == Three.Y)
             {
-                One.X--;
-                One.Y--;
-                Three.X++;
-                Three.Y++;
-                Four.Y += 2;
+                if (Three.Y != 9)
+                {
+                    One.X--;
+                    One.Y--;
+                    Three.X++;
+                    Three.Y++;
+                    Four.Y += 2;
+                }
             }
             else if (Three.X - 1 == Four.X)
             {
-                One.X--;
-                One.Y++;
-                Three.X++;
-                Three.Y--;
-                Four.X += 2;
+                if (Three.X != 19)
+                {
+                    One.X--;
+                    One.Y++;
+                    Three.X++;
+                    Three.Y--;
+                    Four.X += 2;
+                }
             }
         }
 
@@ -58,29 +73,38 @@ namespace GameSol
         {
             if (Three.Y + 1 == Four.Y)
             {
-                One.X++;
-                One.Y--;
-                Three.X--;
-                Three.Y++;
-                Four.X -= 2;
+                if (Three.Y != 0)
+                {
+                    One.X++;
+                    One.Y--;
+                    Three.X--;
+                    Three.Y++;
+                    Four.X -= 2;
+                }
             }
             else if (Three.X - 1 == Four.X)
             {
-                One.X++;
-                One.Y++;
-                Three.X--;
-                Three.Y--;
-                Four.Y -= 2;
+                if (Three.X != 19)
+                {
+                    One.X++;
+                    One.Y++;
+                    Three.X--;
+                    Three.Y--;
+                    Four.Y -= 2;
+                }
             }
             else if (Three.Y - 1 == Four.Y)
             {
-                One.X--;
-                One.Y++;
-                Three.X++;
-                Three.Y--;
-                Four.X += 2;
+                if (Three.Y != 9)
+                {
+                    One.X--;
+                    One.Y++;
+                    Three.X++;
+                    Three.Y--;
+                    Four.X += 2;
+                }
             }
-            else if (Three.X + 1 == Four.X)
+            else
             {
                 One.X--;
                 One.Y--;

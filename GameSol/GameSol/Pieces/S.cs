@@ -18,23 +18,34 @@ namespace GameSol
             Board = board;
         }
 
+        ///*****
+        ///**12*
+        ///*43**
+        ///*****
+
         public override void RotateLeft()
         {
             if (One.X == Two.X)
             {
-                Two.X--;
-                Two.Y--;
-                Three.X--;
-                Three.Y++;
-                Four.Y += 2;
+                if (Two.X != 0)
+                {
+                    Two.X--;
+                    Two.Y--;
+                    Three.X--;
+                    Three.Y++;
+                    Four.Y += 2;
+                }
             }
             else
             {
-                Two.X++;
-                Two.Y++;
-                Three.X++;
-                Three.Y--;
-                Four.Y -= 2;
+                if (Four.Y != 1)
+                {
+                    Two.X++;
+                    Two.Y++;
+                    Three.X++;
+                    Three.Y--;
+                    Four.Y -= 2;
+                }
             }
         }
 
