@@ -18,9 +18,7 @@ namespace GameSol
         public ScoreAndStatistics _scoreAndStats = new ScoreAndStatistics();
         public Random r = new Random();
 
-        public Tetris()
-        {
-        }
+        public Tetris() { }
 
         public void Start()
         {   
