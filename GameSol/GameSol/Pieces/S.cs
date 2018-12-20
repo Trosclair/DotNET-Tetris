@@ -27,24 +27,30 @@ namespace GameSol
         {
             if (One.X == Two.X)
             {
-                if (Two.X != 0)
+                if (Board[One.X-1, One.Y] == 0 && Board[Three.X,Two.Y] == 0)
                 {
-                    Two.X--;
-                    Two.Y--;
-                    Three.X--;
-                    Three.Y++;
-                    Four.Y += 2;
+                    if (Two.X != 0)
+                    {
+                        Two.X--;
+                        Two.Y--;
+                        Three.X--;
+                        Three.Y++;
+                        Four.Y += 2;
+                    }
                 }
             }
             else
             {
-                if (Four.Y != 1)
+                if (Board[One.X+1,One.Y] == 0 && Board[One.X+1, One.Y-1] == 0)
                 {
-                    Two.X++;
-                    Two.Y++;
-                    Three.X++;
-                    Three.Y--;
-                    Four.Y -= 2;
+                    if (Four.Y != 1)
+                    {
+                        Two.X++;
+                        Two.Y++;
+                        Three.X++;
+                        Three.Y--;
+                        Four.Y -= 2;
+                    }
                 }
             }
         }

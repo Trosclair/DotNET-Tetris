@@ -20,7 +20,7 @@ namespace GameSol
 
         public override void RotateLeft()
         {
-            if (One.X == Two.X - 1 && Three.Y - 1 == Two.Y && Four.Y + 1 == Two.Y && Two.X != 19)
+            if (One.X == Two.X - 1 && Three.Y - 1 == Two.Y && Four.Y + 1 == Two.Y && Two.X != 19 && Board[Two.X+1, Two.Y] == 0)
             {
                 // 00100
                 // 04230
@@ -32,7 +32,7 @@ namespace GameSol
                 Three.X--;
                 Three.Y--;
             }
-            else if (One.Y + 1 == Two.Y && Three.Y == Two.Y && Four.Y == Two.Y && Two.Y != 9)
+            else if (One.Y + 1 == Two.Y && Three.Y == Two.Y && Four.Y == Two.Y && Two.Y != 9 && Board[Two.X, Two.Y+1] == 0)
             {
                 // 00300
                 // 01200
@@ -44,7 +44,7 @@ namespace GameSol
                 Four.X--;
                 Four.Y++;
             }
-            else if (One.X - 1 == Two.X && Three.X == Two.X && Four.X == Two.X && Two.X != 0)
+            else if (One.X - 1 == Two.X && Three.X == Two.X && Four.X == Two.X && Two.X != 0 && Board[Two.X-1, Two.Y] == 0)
             {
                 // 00000
                 // 03240
@@ -56,7 +56,7 @@ namespace GameSol
                 Four.X--;
                 Four.Y--;
             }
-            else if (One.Y - 1 == Two.Y && Three.Y == Two.Y && Four.Y == Two.Y && Two.Y != 0)
+            else if (One.Y - 1 == Two.Y && Three.Y == Two.Y && Four.Y == Two.Y && Two.Y != 0 && Board[Two.X, Two.Y-1] == 0)
             {
                 // 00400
                 // 00210
@@ -72,7 +72,7 @@ namespace GameSol
 
         public override void RotateRight()
         {
-            if (One.X == Two.X - 1 && Three.Y - 1 == Two.Y && Four.Y + 1 == Two.Y && Two.X != 19)
+            if (One.X == Two.X - 1 && Three.Y - 1 == Two.Y && Four.Y + 1 == Two.Y && Two.X != 19 && Board[Two.X+1, Two.Y] == 0)
             {
                 // 00100
                 // 04230
@@ -84,7 +84,7 @@ namespace GameSol
                 Three.X++;
                 Three.Y--;
             }
-            else if (One.Y + 1 == Two.Y && Three.Y == Two.Y && Four.Y == Two.Y && Two.Y != 9)
+            else if (One.Y + 1 == Two.Y && Three.Y == Two.Y && Four.Y == Two.Y && Two.Y != 9 && Board[Two.X, Two.Y+1] == 0)
             {
                 // 00300
                 // 01200
@@ -96,7 +96,7 @@ namespace GameSol
                 Four.X--;
                 Four.Y--;
             }
-            else if (One.X - 1 == Two.X && Three.X == Two.X && Four.X == Two.X && Two.X != 0)
+            else if (One.X - 1 == Two.X && Three.X == Two.X && Four.X == Two.X && Two.X != 0 && Board[Two.X-1, Two.Y] == 0)
             {
                 // 00000
                 // 03240
@@ -108,7 +108,7 @@ namespace GameSol
                 Four.X++;
                 Four.Y--;
             }
-            else if (One.Y - 1 == Two.Y && Three.Y == Two.Y && Four.Y == Two.Y && Two.Y != 0)
+            else if (One.Y - 1 == Two.Y && Three.Y == Two.Y && Four.Y == Two.Y && Two.Y != 0 && Board[Two.X, Two.Y-1] == 0)
             {
                 // 00400
                 // 00210
