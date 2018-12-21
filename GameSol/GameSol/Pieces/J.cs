@@ -84,7 +84,7 @@ namespace GameSol
         {
             if (Four.Y + 1 == Three.Y)
             {
-                if (Board[Four.X - 1, Four.Y] == 0 && Board[Four.X - 2, Four.Y] == 0 && Board[Two.X, Two.Y + 1] == 0)
+                if (Board[Two.X, Two.Y-1] == 0 && Board[Two.X-1, Two.Y-1] == 0 && Board[Two.X, Two.Y + 1] == 0)
                 {
                     if (Three.Y != 9)
                     {
@@ -98,7 +98,7 @@ namespace GameSol
             }
             else if (Four.X + 1 == Three.X)
             {
-                if (Board[Two.X-1, Two.Y] == 0 && Board[Two.X-1, Two.Y+1] == 0 && Board[Two.X-1, Two.Y] == 0)
+                if (Board[Two.X-1, Two.Y] == 0 && Board[Two.X-1, Two.Y+1] == 0 && Board[Two.X+1, Two.Y] == 0)
                 {
                     if (Three.X != 19)
                     {
