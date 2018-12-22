@@ -77,7 +77,15 @@ namespace GameSol
                 board[currPiece.Four.X, currPiece.Four.Y] = 2;
                 printGameGUI();
             }
-            
+            else if (_gameState == GameState.GameOver)
+            {
+                printGameOver();
+            }
+            else if (_gameState == GameState.TitleScreen)
+            {
+                printTitleScreen();
+            }
+
         }
 
         public void CheckMove()
@@ -131,6 +139,10 @@ namespace GameSol
         {
             currPiece = nextPiece;
             nextPiece = NewPiece();
+            if (board[currPiece.One.X, currPiece.One.Y] != 0 && board[currPiece.Two.X, currPiece.Two.Y] != 0 && board[currPiece.Three.X, currPiece.Three.Y] != 0 && board[currPiece.Four.X, currPiece.Four.Y] != 0)
+            {
+                _gameState = GameState.GameOver;
+            }
         }
 
         /// <summary>
@@ -281,6 +293,69 @@ namespace GameSol
                 "||||||||||||||||" + BoardAsString[19] + "||||||||||||||||\n" +
                 "||||||||||||||||||||||||||||||||||||||||||"
                 );
+        }
+        
+        public void printGameOver()
+        {
+            Console.Clear();
+            Console.Write(
+                "||||||||||||||||||||||||||||||||||||||||||\n"
+                + "||||||||||||||||**TETRIS**||||||||||||||||\n"
+                + "|||||SCORE:|||||----------|| NEXT PIECE ||\n"
+                + "||||||||||||||||XXXXXXXXXX||||||||||||||||\n" +
+                "|||||" + _scoreAndStats.Score.ToString("000000") + "|||||XXXXXXXXXX||            ||\n" +
+                "||||||||||||||||XXXXXXXXXX||            ||\n" +
+                "|| STATISTICS ||XXXXXXXXXX||     " + letter + "      ||\n" +
+                "||||||||||||||||XXXXXXXXXX||            ||\n" +
+                "||| L - " + _scoreAndStats.L.ToString("0000") + " |||XXXXXXXXXX||            ||\n" +
+                "||||||||||||||||XXXXXXXXXX||            ||\n" +
+                "||| J - " + _scoreAndStats.J.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
+                "||||||||||||||||XXXXXXXXXX||||||||||||||||\n" +
+                "||| S - " + _scoreAndStats.S.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
+                "||||||||||||||||GAME__OVER||||||||||||||||\n" +
+                "||| Z - " + _scoreAndStats.Z.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
+                "||||||||||||||||XXXXXXXXXX||||||||||||||||\n" +
+                "||| I - " + _scoreAndStats.I.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
+                "||||||||||||||||XXXXXXXXXX||||||||||||||||\n" +
+                "||| U - " + _scoreAndStats.U.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
+                "||||||||||||||||XXXXXXXXXX||||||||||||||||\n" +
+                "||| T - " + _scoreAndStats.T.ToString("0000") + " |||XXXXXXXXXX||||||FPS:||||||\n" +
+                "||||||||||||||||XXXXXXXXXX||" + CalculateFrameRate().ToString("000000000000") + "||\n" +
+                "||||||||||||||||XXXXXXXXXX||||||||||||||||\n" +
+                "||||||||||||||||||||||||||||||||||||||||||"
+                );
+            Console.ReadLine();
+            Environment.Exit(1);
+        }
+
+        public void printTitleScreen()
+        {
+            Console.Clear();
+            Console.Write(
+                "||||||||||||||||||||||||||||||||||||||||||\n"
+                + "||||||||||||||||**TETRIS**||||||||||||||||\n"
+                + "|||||SCORE:|||||----------|| NEXT PIECE ||\n"
+                + "||||||||||||||||XXXXXXXXXX||||||||||||||||\n" +
+                "|||||" + _scoreAndStats.Score.ToString("000000") + "|||||XXXXXXXXXX||            ||\n" +
+                "||||||||||||||||XXXXXXXXXX||            ||\n" +
+                "|| STATISTICS ||XXXXXXXXXX||     " + letter + "      ||\n" +
+                "||||||||||||||||XXXXXXXXXX||            ||\n" +
+                "||| L - " + _scoreAndStats.L.ToString("0000") + " |||XXXXXXXXXX||            ||\n" +
+                "||||||||||||||||XXXXXXXXXX||            ||\n" +
+                "||| J - " + _scoreAndStats.J.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
+                "||||||||||||||||XXXXXXXXXX||||||||||||||||\n" +
+                "||| S - " + _scoreAndStats.S.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
+                "||||||||||||||||PressEnter||||||||||||||||\n" +
+                "||| Z - " + _scoreAndStats.Z.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
+                "||||||||||||||||XXXXXXXXXX||||||||||||||||\n" +
+                "||| I - " + _scoreAndStats.I.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
+                "||||||||||||||||XXXXXXXXXX||||||||||||||||\n" +
+                "||| U - " + _scoreAndStats.U.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
+                "||||||||||||||||XXXXXXXXXX||||||||||||||||\n" +
+                "||| T - " + _scoreAndStats.T.ToString("0000") + " |||XXXXXXXXXX||||||FPS:||||||\n" +
+                "||||||||||||||||XXXXXXXXXX||" + CalculateFrameRate().ToString("000000000000") + "||\n" +
+                "||||||||||||||||XXXXXXXXXX||||||||||||||||\n" +
+                "||||||||||||||||||||||||||||||||||||||||||");
         }
 
         private static int lastTick;
