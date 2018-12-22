@@ -10,6 +10,7 @@ namespace GameSol
     class Tetris
     {
         public Piece currPiece = null;
+        public Piece nextPiece = null;
         public int[,] board = new int[20, 10];
         public enum GameState { TitleScreen, Game, GameOver};
         public GameState _gameState = GameState.TitleScreen;
@@ -17,8 +18,12 @@ namespace GameSol
         public bool isKeyPressed;
         public ScoreAndStatistics _scoreAndStats = new ScoreAndStatistics();
         public Random r = new Random();
+        public char letter = 'X';
 
-        public Tetris() { }
+        public Tetris()
+        {
+            nextPiece = NewPiece();
+        }
 
         public void Start()
         {   
@@ -124,7 +129,8 @@ namespace GameSol
         /// </summary>
         public void DropPiece()
         {
-            currPiece = NewPiece();
+            currPiece = nextPiece;
+            nextPiece = NewPiece();
         }
 
         /// <summary>
@@ -172,6 +178,11 @@ namespace GameSol
                 }
                 
             }
+            UpdateScore(linesCleared);
+        }
+
+        public void UpdateScore(int linesCleared)
+        {
             if (linesCleared == 1)
             {
                 _scoreAndStats.Score += 100;
@@ -209,24 +220,31 @@ namespace GameSol
             {
                 case 0:
                     _scoreAndStats.L++;
+                    letter = 'L';
                     return new L(board);
                 case 1:
                     _scoreAndStats.J++;
+                    letter = 'J';
                     return new J(board);             
                 case 2:
                     _scoreAndStats.I++;
+                    letter = 'I';
                     return new I(board);
                 case 3:
                     _scoreAndStats.U++;
+                    letter = 'U';
                     return new U(board);
                 case 4:
                     _scoreAndStats.S++;
+                    letter = 'S';
                     return new S(board);
                 case 5:
                     _scoreAndStats.Z++;
+                    letter = 'Z';
                     return new Z(board);
                 case 6:
                     _scoreAndStats.T++;
+                    letter = 'T';
                     return new T(board);
                 default:
                     throw new ArgumentException();
@@ -244,7 +262,7 @@ namespace GameSol
                 +"||||||||||||||||" + BoardAsString[0] + "||||||||||||||||\n" +
                 "|||||"+_scoreAndStats.Score.ToString("000000")+ "|||||" + BoardAsString[1] + "||            ||\n" +
                 "||||||||||||||||" + BoardAsString[2] + "||            ||\n" +
-                "|| STATISTICS ||" + BoardAsString[3] + "||            ||\n" +
+                "|| STATISTICS ||" + BoardAsString[3] + "||     "+letter+"      ||\n" +
                 "||||||||||||||||" + BoardAsString[4] + "||            ||\n" +
                 "||| L - "+_scoreAndStats.L.ToString("0000")+" |||" + BoardAsString[5] + "||            ||\n" +
                 "||||||||||||||||" + BoardAsString[6] + "||            ||\n" +
