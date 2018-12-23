@@ -19,6 +19,8 @@ namespace GameSol
         public ScoreAndStatistics _scoreAndStats = new ScoreAndStatistics();
         public Random r = new Random();
         public char letter = 'X';
+        public int level = 0;
+        public int lines = 0;
 
         public Tetris()
         {
@@ -30,20 +32,25 @@ namespace GameSol
             while (true)
             {         
                 GetKeyPress();
-                if (
-                    key.Key == ConsoleKey.Enter && 
-                    isKeyPressed &&
-                    _gameState != GameState.Game &&
-                    _gameState != GameState.GameOver
-                    )
+                if (key.Key == ConsoleKey.Enter && _gameState == GameState.TitleScreen)
                 {
                     _gameState = GameState.Game;
+                    dropTimer = System.Environment.TickCount;
                 }
-                if (currPiece != null && currPiece.IsDropping)
+                if (_gameState == GameState.Game)
                 {
-                    CheckMove();
+                    if (currPiece != null && currPiece.IsDropping)
+                    {
+                        CheckMove();
+                    }
+                    if (System.Environment.TickCount - dropTimer >= 1000 - (50 * level))
+                    {
+                        currPiece.ClearPositionFromAMove();
+                        currPiece.MoveDown();
+                        Update();
+                        dropTimer = System.Environment.TickCount;
+                    }
                 }
-
                 if (System.Environment.TickCount - lastTick >= 60)
                 {
                     Update();
@@ -197,19 +204,24 @@ namespace GameSol
         {
             if (linesCleared == 1)
             {
-                _scoreAndStats.Score += 100;
+                _scoreAndStats.Score += 100*(level+1);
             }
             else if (linesCleared == 2)
             {
-                _scoreAndStats.Score += 300;
+                _scoreAndStats.Score += 300*(level+1);
             }
             else if (linesCleared == 3)
             {
-                _scoreAndStats.Score += 600;
+                _scoreAndStats.Score += 600*(level+1);
             }
             else if (linesCleared == 4)
             {
-                _scoreAndStats.Score += 1000;
+                _scoreAndStats.Score += 1000*(level+1);
+            }
+            lines += linesCleared;
+            if ((level * 10) + 10 <= lines)
+            {
+                level++;
             }
         }
 
@@ -279,9 +291,9 @@ namespace GameSol
                 "||| L - "+_scoreAndStats.L.ToString("0000")+" |||" + BoardAsString[5] + "||            ||\n" +
                 "||||||||||||||||" + BoardAsString[6] + "||            ||\n" +
                 "||| J - " + _scoreAndStats.J.ToString("0000") + " |||" + BoardAsString[7] + "||||||||||||||||\n" +
-                "||||||||||||||||" + BoardAsString[8] + "||||||||||||||||\n" +
+                "||||||||||||||||" + BoardAsString[8] + "|||LVL - "+level.ToString("0000")+"|||\n" +
                 "||| S - " + _scoreAndStats.S.ToString("0000") + " |||" + BoardAsString[9] + "||||||||||||||||\n" +
-                "||||||||||||||||" + BoardAsString[10] + "||||||||||||||||\n" +
+                "||||||||||||||||" + BoardAsString[10] + "|||LINES:" + lines.ToString("0000") + "|||\n" +
                 "||| Z - " + _scoreAndStats.Z.ToString("0000") + " |||" + BoardAsString[11] + "||||||||||||||||\n" +
                 "||||||||||||||||" + BoardAsString[12] + "||||||||||||||||\n" +
                 "||| I - " + _scoreAndStats.I.ToString("0000") + " |||" + BoardAsString[13] + "||||||||||||||||\n" +
@@ -360,6 +372,7 @@ namespace GameSol
 
         private static int lastTick;
         private static int _lastTick;
+        private static int dropTimer;
         private static int lastFrameRate;
         private static int frameRate;
 
