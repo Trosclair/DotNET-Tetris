@@ -146,7 +146,7 @@ namespace GameSol
         {
             currPiece = nextPiece;
             nextPiece = NewPiece();
-            if (board[currPiece.One.X, currPiece.One.Y] != 0 && board[currPiece.Two.X, currPiece.Two.Y] != 0 && board[currPiece.Three.X, currPiece.Three.Y] != 0 && board[currPiece.Four.X, currPiece.Four.Y] != 0)
+            if (board[currPiece.One.X, currPiece.One.Y] != 0 || board[currPiece.Two.X, currPiece.Two.Y] != 0 || board[currPiece.Three.X, currPiece.Three.Y] != 0 || board[currPiece.Four.X, currPiece.Four.Y] != 0)
             {
                 _gameState = GameState.GameOver;
             }
@@ -164,7 +164,15 @@ namespace GameSol
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    sb.Append(board[i, j].ToString());
+                    if (board[i, j] == 0)
+                    {
+                        sb.Append("-");
+                    }
+                    else
+                    {
+                        sb.Append(board[i, j].ToString());
+                    }
+
                 }
                 arr[i] = sb.ToString();
                 sb.Clear();
