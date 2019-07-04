@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GameSol
+﻿namespace GameSol.Pieces
 {
-    class I : Piece
+    internal class I : Piece
     {
         public I(int[,] board)
         {
@@ -14,7 +8,7 @@ namespace GameSol
             Two = new Block(1, 5);
             Three = new Block(2, 5);
             Four = new Block(3, 5);
-            Piece_Type = "I";
+            StrPieceType = "I";
             Board = board;
         }
 
@@ -22,34 +16,26 @@ namespace GameSol
         {
             if (Three.Y + 1 == Four.Y)
             {
-                if (Three.X != 19)
-                {
-                    if (Board[One.X - 2, One.Y + 2] != 1 && Board[Two.X - 1, Two.Y + 1] != 1 && Board[Four.X + 1, Four.Y - 1] != 1)
-                    {
-                        Four.X++;
-                        Four.Y = Three.Y;
-                        Two.X--;
-                        Four.Y = Three.Y;
-                        One.X -= 2;
-                        One.Y = Three.Y;
-                        Two.Y = Three.Y;
-                    }
-                }
+                if (Three.X == 19 || Board[One.X - 2, One.Y + 2] == 1 || Board[Two.X - 1, Two.Y + 1] == 1 ||
+                    Board[Four.X + 1, Four.Y - 1] == 1) return;
+                Four.X++;
+                Four.Y = Three.Y;
+                Two.X--;
+                Four.Y = Three.Y;
+                One.X -= 2;
+                One.Y = Three.Y;
+                Two.Y = Three.Y;
             }
-            else if (Three.X + 1 == Four.X)
+            else if (Three.X + 1 == Four.X && Four.Y != 0 && Four.Y != 1 && Four.Y != 9)
             {
-                if (Four.Y != 0 && Four.Y != 1 && Four.Y != 9)
-                {
-                    if (Board[One.X + 2, One.Y - 2] != 1 && Board[Two.X + 1, Two.Y - 1] != 1 && Board[Four.X - 1, Four.Y + 1] != 1)
-                    {
-                        Four.X = Three.X;
-                        Two.X = Three.X;
-                        One.X = Three.X;
-                        Four.Y++;
-                        Two.Y--;
-                        One.Y -= 2;
-                    }
-                }
+                if (Board[One.X + 2, One.Y - 2] == 1 || Board[Two.X + 1, Two.Y - 1] == 1 ||
+                    Board[Four.X - 1, Four.Y + 1] == 1) return;
+                Four.X = Three.X;
+                Two.X = Three.X;
+                One.X = Three.X;
+                Four.Y++;
+                Two.Y--;
+                One.Y -= 2;
             }
         }
 

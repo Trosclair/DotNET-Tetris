@@ -1,52 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GameSol
+﻿namespace GameSol.Pieces
 {
-    class Block
+    internal class Block
     {
-        private int _X;
-        private int _Y;
-
         public Block(int x, int y)
         {
-            _X = x;
-            _Y = y;
+            X = x;
+            Y = y;
         }
 
         public Block(Block block)
         {
-            _X = block.X;
-            _Y = block.Y;
+            X = block.X;
+            Y = block.Y;
         }
 
-        public int X
-        {
-            get
-            {
-                return _X;
-            }
+        public int X { get; set; }
 
-            set
-            {
-                _X = value;
-            }
-        }
-
-        public int Y
-        {
-            get
-            {
-                return _Y;
-            }
-
-            set
-            {
-                _Y = value;
-            }
-        }
+        public int Y { get; set; }
     }
 }

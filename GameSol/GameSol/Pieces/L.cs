@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GameSol
+﻿namespace GameSol.Pieces
 {
-    class L : Piece
+    internal class L : Piece
     {
         public L(int[,] board)
         {
@@ -14,7 +8,7 @@ namespace GameSol
             Two = new Block(1, 5);
             Three = new Block(2, 5);
             Four = new Block(2, 6);
-            Piece_Type = "L";
+            StrPieceType = "L";
             Board = board;
         }
 

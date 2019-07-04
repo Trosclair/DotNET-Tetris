@@ -1,30 +1,41 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+using GameSol.Pieces;
+using static System.Environment;
 
 namespace GameSol
 {
-    class Tetris
+    internal class Tetris
     {
-        public Piece currPiece = null;
-        public Piece nextPiece = null;
+        public Piece currentPiece;
+        public Piece nextPiece;
         public int[,] board = new int[20, 10];
-        public enum GameState { TitleScreen, Game, GameOver};
-        public GameState _gameState = GameState.TitleScreen;
         public ConsoleKeyInfo key;
         public bool isKeyPressed;
-        public ScoreAndStatistics _scoreAndStats = new ScoreAndStatistics();
+        public ScoreAndStatistics scoreAndStats = new ScoreAndStatistics();
         public Random r = new Random();
         public char letter = 'X';
-        public int level = 0;
-        public int lines = 0;
+        public int level;
+        public int lines;
 
         public Tetris()
         {
             nextPiece = NewPiece();
+            TitleScreen();
+        }
+
+        public void TitleScreen()
+        {
+            while (key.Key != ConsoleKey.Enter)
+            {
+                if (TickCount - lastTick < 60) continue;
+                GetKeyPress();
+                PrintTitleScreen();
+                lastTick = TickCount;
+            }
+            DropPiece();
+            dropTimer = TickCount;
+            Start();
         }
 
         public void Start()
@@ -32,29 +43,29 @@ namespace GameSol
             while (true)
             {         
                 GetKeyPress();
-                if (key.Key == ConsoleKey.Enter && _gameState == GameState.TitleScreen)
+                if (currentPiece != null && currentPiece.IsDropping)
                 {
-                    _gameState = GameState.Game;
-                    dropTimer = System.Environment.TickCount;
+                    CheckMove();
                 }
-                if (_gameState == GameState.Game)
+                if (TickCount - dropTimer >= 1000 - (50 * level))
                 {
-                    if (currPiece != null && currPiece.IsDropping)
-                    {
-                        CheckMove();
-                    }
-                    if (System.Environment.TickCount - dropTimer >= 1000 - (50 * level))
-                    {
-                        currPiece.ClearPositionFromAMove();
-                        currPiece.MoveDown();
-                        Update();
-                        dropTimer = System.Environment.TickCount;
-                    }
+                    currentPiece.ClearPositionFromAMove();
+                    currentPiece.MoveDown();
+                    dropTimer = TickCount;
                 }
-                if (System.Environment.TickCount - lastTick >= 60)
+                if (TickCount - lastTick >= 60)
                 {
-                    Update();
-                    lastTick = System.Environment.TickCount;
+                    if (!currentPiece.IsDropping)
+                    {
+                        CheckLineClears();
+                        DropPiece();
+                    }
+                    board[currentPiece.One.X, currentPiece.One.Y] = 2;
+                    board[currentPiece.Two.X, currentPiece.Two.Y] = 2;
+                    board[currentPiece.Three.X, currentPiece.Three.Y] = 2;
+                    board[currentPiece.Four.X, currentPiece.Four.Y] = 2;
+                    PrintGameGui();
+                    lastTick = TickCount;
                 }
             }
         }
@@ -69,74 +80,68 @@ namespace GameSol
             else isKeyPressed = false;
         }
 
-        public void Update()
+        public void GameOver()
         {
-            if (_gameState == GameState.Game)
+            while (key.Key != ConsoleKey.Enter)
             {
-                if (currPiece == null || !currPiece.IsDropping)
-                {
-                    CheckLineClears();
-                    DropPiece();
-                }
-                board[currPiece.One.X, currPiece.One.Y] = 2;
-                board[currPiece.Two.X, currPiece.Two.Y] = 2;
-                board[currPiece.Three.X, currPiece.Three.Y] = 2;
-                board[currPiece.Four.X, currPiece.Four.Y] = 2;
-                printGameGUI();
+                GetKeyPress();
+                if (TickCount - lastTick < 60) continue;
+                PrintGameOver();
             }
-            else if (_gameState == GameState.GameOver)
-            {
-                printGameOver();
-            }
-            else if (_gameState == GameState.TitleScreen)
-            {
-                printTitleScreen();
-            }
-
         }
 
         public void CheckMove()
         {
-            Block one = new Block(currPiece.One.X, currPiece.One.Y);
-            Block two = new Block(currPiece.Two.X, currPiece.Two.Y);
-            Block three = new Block(currPiece.Three.X, currPiece.Three.Y);
-            Block four = new Block(currPiece.Four.X, currPiece.Four.Y);
+            var one = new Block(currentPiece.One.X, currentPiece.One.Y);
+            var two = new Block(currentPiece.Two.X, currentPiece.Two.Y);
+            var three = new Block(currentPiece.Three.X, currentPiece.Three.Y);
+            var four = new Block(currentPiece.Four.X, currentPiece.Four.Y);
             try
             {
-                currPiece.ClearPositionFromAMove();
+                currentPiece.ClearPositionFromAMove();
                 if (key.Key == ConsoleKey.K && isKeyPressed)
                 {
-                    currPiece.RotateLeft();
+                    currentPiece.RotateLeft();
                 }
                 else if (key.Key == ConsoleKey.L && isKeyPressed)
                 {
-                    currPiece.RotateRight();
+                    currentPiece.RotateRight();
                 }
                 else if (key.Key == ConsoleKey.LeftArrow && isKeyPressed)
                 {
-                    currPiece.MoveLeft();
+                    currentPiece.MoveLeft();
                 }
                 else if (key.Key == ConsoleKey.DownArrow && isKeyPressed)
                 {
-                    currPiece.MoveDown();
+                    currentPiece.MoveDown();
                 }
                 else if (key.Key == ConsoleKey.RightArrow && isKeyPressed)
                 {
-                    currPiece.MoveRight();
+                    currentPiece.MoveRight();
                 }
-                bool a = board[currPiece.One.X, currPiece.One.Y] == 0 ||
-                board[currPiece.Two.X, currPiece.Two.Y] == 0 ||
-                board[currPiece.Three.X, currPiece.Three.Y] == 0 ||
-                board[currPiece.Four.X, currPiece.Four.Y] == 0;
+
+                CheckOutOfBounds();
             }
             catch (IndexOutOfRangeException)
             {
-                currPiece.One = new Block(one);
-                currPiece.Two = new Block(two);
-                currPiece.Three = new Block(three);
-                currPiece.Four = new Block(four);
-                
+                currentPiece.One = new Block(one);
+                currentPiece.Two = new Block(two);
+                currentPiece.Three = new Block(three);
+                currentPiece.Four = new Block(four);
             }
+        }
+
+        public void CheckOutOfBounds()
+        {
+            if (currentPiece.One.X > 19 || currentPiece.One.X < 0 ||
+                currentPiece.Two.X > 19 || currentPiece.Two.X < 0 ||
+                currentPiece.Three.X > 19 || currentPiece.Three.X < 0 ||
+                currentPiece.Four.X > 19 || currentPiece.Four.X < 0 ||
+                currentPiece.One.Y > 9 || currentPiece.One.Y < 0 ||
+                currentPiece.Two.Y > 9 || currentPiece.Two.Y < 0 ||
+                currentPiece.Three.Y > 9 || currentPiece.Three.Y < 0 ||
+                currentPiece.Four.Y > 9 || currentPiece.Four.Y < 0)
+                throw new ArgumentOutOfRangeException();
         }
 
         /// <summary>
@@ -144,11 +149,11 @@ namespace GameSol
         /// </summary>
         public void DropPiece()
         {
-            currPiece = nextPiece;
+            currentPiece = nextPiece;
             nextPiece = NewPiece();
-            if (board[currPiece.One.X, currPiece.One.Y] != 0 || board[currPiece.Two.X, currPiece.Two.Y] != 0 || board[currPiece.Three.X, currPiece.Three.Y] != 0 || board[currPiece.Four.X, currPiece.Four.Y] != 0)
+            if (board[currentPiece.One.X, currentPiece.One.Y] != 0 || board[currentPiece.Two.X, currentPiece.Two.Y] != 0 || board[currentPiece.Three.X, currentPiece.Three.Y] != 0 || board[currentPiece.Four.X, currentPiece.Four.Y] != 0)
             {
-                _gameState = GameState.GameOver;
+                GameOver();
             }
         }
 
@@ -156,7 +161,7 @@ namespace GameSol
         /// creates a string array holding the board 
         /// returns a string arr with each row of the board as an element in the array
         /// </summary>
-        public string[] boardToStringArr()
+        public string[] BoardToStringArr()
         {
             StringBuilder sb = new StringBuilder();
             string[] arr = new string[20];
@@ -170,7 +175,7 @@ namespace GameSol
                     }
                     else
                     {
-                        sb.Append(board[i, j].ToString());
+                        sb.Append('█');
                     }
 
                 }
@@ -181,29 +186,26 @@ namespace GameSol
         }
 
         /// <summary>
-        /// checks board for clears of rows and returns the amount of lines cleared. Calls clearline to clear the lines manually
-        /// 
-        /// optimizable by checking if the next three lines below the line being cleared are clearable. instead of calling clear line 3 times.
+        /// checks board for clears of rows and returns the amount of lines cleared. Calls clear line to clear the lines manually
+        /// able to be optimized by checking if the next three lines below the line being cleared are able to be cleared. instead of calling clear line 3 times.
         /// </summary>
         /// <returns></returns>
         public void CheckLineClears()
         {
-            int linesCleared = 0;
-            bool isClear;
-            for (int i = 19; i >= 0; i--)
+            var linesCleared = 0;
+            for (var i = 19; i >= 0; i--)
             {
-                isClear = true;
-                for (int j = 0; j < 10; j++)
+                var isClear = true;
+                for (var j = 0; j < 10; j++)
                 {
                     if (isClear && board[i, j] != 1) isClear = false;
                 }
-                if (isClear)
-                {
-                    linesCleared++;
-                    ClearLine(i);
-                    i++;
-                }
-                
+
+                if (!isClear) continue;
+                linesCleared++;
+                ClearLine(i);
+                i++;
+
             }
             UpdateScore(linesCleared);
         }
@@ -212,19 +214,19 @@ namespace GameSol
         {
             if (linesCleared == 1)
             {
-                _scoreAndStats.Score += 100*(level+1);
+                scoreAndStats.Score += 100*(level+1);
             }
             else if (linesCleared == 2)
             {
-                _scoreAndStats.Score += 300*(level+1);
+                scoreAndStats.Score += 300*(level+1);
             }
             else if (linesCleared == 3)
             {
-                _scoreAndStats.Score += 600*(level+1);
+                scoreAndStats.Score += 600*(level+1);
             }
             else if (linesCleared == 4)
             {
-                _scoreAndStats.Score += 1000*(level+1);
+                scoreAndStats.Score += 1000*(level+1);
             }
             lines += linesCleared;
             if ((level * 10) + 10 <= lines)
@@ -236,46 +238,46 @@ namespace GameSol
         public void ClearLine(int lineNumber)
         {
             // shifts the board starting at the line number down by one.
-            for (int i = lineNumber; i >= 1; i--)
+            for (var i = lineNumber; i >= 1; i--)
             {
-                for (int j = 9; j >= 0; j--)
+                for (var j = 9; j >= 0; j--)
                 {
                     board[i, j] = board[i - 1, j];
                 }
             }
-            for (int j = 0; j < 9; j++) board[0, j] = 0; // inserts blank row at top of the board.
+            for (var j = 0; j < 9; j++) board[0, j] = 0; // inserts blank row at top of the board.
         }
 
         public Piece NewPiece()
         {
-            switch ((r.Next(0, 7))) /// add score and stats functionallity 
+            switch ((r.Next(0, 7))) // add score and stats functionality 
             {
                 case 0:
-                    _scoreAndStats.L++;
+                    scoreAndStats.L++;
                     letter = 'L';
                     return new L(board);
                 case 1:
-                    _scoreAndStats.J++;
+                    scoreAndStats.J++;
                     letter = 'J';
                     return new J(board);             
                 case 2:
-                    _scoreAndStats.I++;
+                    scoreAndStats.I++;
                     letter = 'I';
                     return new I(board);
                 case 3:
-                    _scoreAndStats.U++;
+                    scoreAndStats.U++;
                     letter = 'U';
                     return new U(board);
                 case 4:
-                    _scoreAndStats.S++;
+                    scoreAndStats.S++;
                     letter = 'S';
                     return new S(board);
                 case 5:
-                    _scoreAndStats.Z++;
+                    scoreAndStats.Z++;
                     letter = 'Z';
                     return new Z(board);
                 case 6:
-                    _scoreAndStats.T++;
+                    scoreAndStats.T++;
                     letter = 'T';
                     return new T(board);
                 default:
@@ -283,39 +285,39 @@ namespace GameSol
             }
         }
 
-        public void printGameGUI()
+        public void PrintGameGui()
         {
-            string[] BoardAsString = boardToStringArr();
+            string[] boardAsString = BoardToStringArr();
             Console.Clear();
             Console.Write(
                 "||||||||||||||||||||||||||||||||||||||||||\n"
                 + "||||||||||||||||**TETRIS**||||||||||||||||\n"
                 + "|||||SCORE:|||||----------|| NEXT PIECE ||\n"
-                +"||||||||||||||||" + BoardAsString[0] + "||||||||||||||||\n" +
-                "|||||"+_scoreAndStats.Score.ToString("000000")+ "|||||" + BoardAsString[1] + "||            ||\n" +
-                "||||||||||||||||" + BoardAsString[2] + "||            ||\n" +
-                "|| STATISTICS ||" + BoardAsString[3] + "||     "+letter+"      ||\n" +
-                "||||||||||||||||" + BoardAsString[4] + "||            ||\n" +
-                "||| L - "+_scoreAndStats.L.ToString("0000")+" |||" + BoardAsString[5] + "||            ||\n" +
-                "||||||||||||||||" + BoardAsString[6] + "||            ||\n" +
-                "||| J - " + _scoreAndStats.J.ToString("0000") + " |||" + BoardAsString[7] + "||||||||||||||||\n" +
-                "||||||||||||||||" + BoardAsString[8] + "|||LVL - "+level.ToString("0000")+"|||\n" +
-                "||| S - " + _scoreAndStats.S.ToString("0000") + " |||" + BoardAsString[9] + "||||||||||||||||\n" +
-                "||||||||||||||||" + BoardAsString[10] + "|||LINES:" + lines.ToString("0000") + "|||\n" +
-                "||| Z - " + _scoreAndStats.Z.ToString("0000") + " |||" + BoardAsString[11] + "||||||||||||||||\n" +
-                "||||||||||||||||" + BoardAsString[12] + "||||||||||||||||\n" +
-                "||| I - " + _scoreAndStats.I.ToString("0000") + " |||" + BoardAsString[13] + "||||||||||||||||\n" +
-                "||||||||||||||||" + BoardAsString[14] + "||||||||||||||||\n" +
-                "||| U - " + _scoreAndStats.U.ToString("0000") + " |||" + BoardAsString[15] + "||||||||||||||||\n" +
-                "||||||||||||||||" + BoardAsString[16] + "||||||||||||||||\n" +
-                "||| T - " + _scoreAndStats.T.ToString("0000") + " |||" + BoardAsString[17] + "||||||FPS:||||||\n" +
-                "||||||||||||||||" + BoardAsString[18] + "||"+ CalculateFrameRate().ToString("000000000000") +"||\n" +
-                "||||||||||||||||" + BoardAsString[19] + "||||||||||||||||\n" +
+                +"||||||||||||||||" + boardAsString[0] + "||||||||||||||||\n" +
+                "|||||"+scoreAndStats.Score.ToString("000000")+ "|||||" + boardAsString[1] + "||            ||\n" +
+                "||||||||||||||||" + boardAsString[2] + "||            ||\n" +
+                "|| STATISTICS ||" + boardAsString[3] + "||     "+letter+"      ||\n" +
+                "||||||||||||||||" + boardAsString[4] + "||            ||\n" +
+                "||| L - "+scoreAndStats.L.ToString("0000")+" |||" + boardAsString[5] + "||            ||\n" +
+                "||||||||||||||||" + boardAsString[6] + "||            ||\n" +
+                "||| J - " + scoreAndStats.J.ToString("0000") + " |||" + boardAsString[7] + "||||||||||||||||\n" +
+                "||||||||||||||||" + boardAsString[8] + "|||LVL - "+level.ToString("0000")+"|||\n" +
+                "||| S - " + scoreAndStats.S.ToString("0000") + " |||" + boardAsString[9] + "||||||||||||||||\n" +
+                "||||||||||||||||" + boardAsString[10] + "|||LINES:" + lines.ToString("0000") + "|||\n" +
+                "||| Z - " + scoreAndStats.Z.ToString("0000") + " |||" + boardAsString[11] + "||||||||||||||||\n" +
+                "||||||||||||||||" + boardAsString[12] + "||||||||||||||||\n" +
+                "||| I - " + scoreAndStats.I.ToString("0000") + " |||" + boardAsString[13] + "||||||||||||||||\n" +
+                "||||||||||||||||" + boardAsString[14] + "||||||||||||||||\n" +
+                "||| U - " + scoreAndStats.U.ToString("0000") + " |||" + boardAsString[15] + "||||||||||||||||\n" +
+                "||||||||||||||||" + boardAsString[16] + "||||||||||||||||\n" +
+                "||| T - " + scoreAndStats.T.ToString("0000") + " |||" + boardAsString[17] + "||||||FPS:||||||\n" +
+                "||||||||||||||||" + boardAsString[18] + "||"+ CalculateFrameRate().ToString("000000000000") +"||\n" +
+                "||||||||||||||||" + boardAsString[19] + "||||||||||||||||\n" +
                 "||||||||||||||||||||||||||||||||||||||||||"
                 );
         }
         
-        public void printGameOver()
+        public void PrintGameOver()
         {
             Console.Clear();
             Console.Write(
@@ -323,32 +325,32 @@ namespace GameSol
                 + "||||||||||||||||**TETRIS**||||||||||||||||\n"
                 + "|||||SCORE:|||||----------|| NEXT PIECE ||\n"
                 + "||||||||||||||||XXXXXXXXXX||||||||||||||||\n" +
-                "|||||" + _scoreAndStats.Score.ToString("000000") + "|||||XXXXXXXXXX||            ||\n" +
+                "|||||" + scoreAndStats.Score.ToString("000000") + "|||||XXXXXXXXXX||            ||\n" +
                 "||||||||||||||||XXXXXXXXXX||            ||\n" +
                 "|| STATISTICS ||XXXXXXXXXX||     " + letter + "      ||\n" +
                 "||||||||||||||||XXXXXXXXXX||            ||\n" +
-                "||| L - " + _scoreAndStats.L.ToString("0000") + " |||XXXXXXXXXX||            ||\n" +
+                "||| L - " + scoreAndStats.L.ToString("0000") + " |||XXXXXXXXXX||            ||\n" +
                 "||||||||||||||||XXXXXXXXXX||            ||\n" +
-                "||| J - " + _scoreAndStats.J.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
+                "||| J - " + scoreAndStats.J.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
                 "||||||||||||||||XXXXXXXXXX||||||||||||||||\n" +
-                "||| S - " + _scoreAndStats.S.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
+                "||| S - " + scoreAndStats.S.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
                 "||||||||||||||||GAME__OVER||||||||||||||||\n" +
-                "||| Z - " + _scoreAndStats.Z.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
+                "||| Z - " + scoreAndStats.Z.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
                 "||||||||||||||||XXXXXXXXXX||||||||||||||||\n" +
-                "||| I - " + _scoreAndStats.I.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
+                "||| I - " + scoreAndStats.I.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
                 "||||||||||||||||XXXXXXXXXX||||||||||||||||\n" +
-                "||| U - " + _scoreAndStats.U.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
+                "||| U - " + scoreAndStats.U.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
                 "||||||||||||||||XXXXXXXXXX||||||||||||||||\n" +
-                "||| T - " + _scoreAndStats.T.ToString("0000") + " |||XXXXXXXXXX||||||FPS:||||||\n" +
+                "||| T - " + scoreAndStats.T.ToString("0000") + " |||XXXXXXXXXX||||||FPS:||||||\n" +
                 "||||||||||||||||XXXXXXXXXX||" + CalculateFrameRate().ToString("000000000000") + "||\n" +
                 "||||||||||||||||XXXXXXXXXX||||||||||||||||\n" +
                 "||||||||||||||||||||||||||||||||||||||||||"
                 );
             Console.ReadLine();
-            Environment.Exit(1);
+            Exit(1);
         }
 
-        public void printTitleScreen()
+        public void PrintTitleScreen()
         {
             Console.Clear();
             Console.Write(
@@ -356,23 +358,23 @@ namespace GameSol
                 + "||||||||||||||||**TETRIS**||||||||||||||||\n"
                 + "|||||SCORE:|||||----------|| NEXT PIECE ||\n"
                 + "||||||||||||||||XXXXXXXXXX||||||||||||||||\n" +
-                "|||||" + _scoreAndStats.Score.ToString("000000") + "|||||XXXXXXXXXX||            ||\n" +
+                "|||||" + scoreAndStats.Score.ToString("000000") + "|||||XXXXXXXXXX||            ||\n" +
                 "||||||||||||||||XXXXXXXXXX||            ||\n" +
                 "|| STATISTICS ||XXXXXXXXXX||     " + letter + "      ||\n" +
                 "||||||||||||||||XXXXXXXXXX||            ||\n" +
-                "||| L - " + _scoreAndStats.L.ToString("0000") + " |||XXXXXXXXXX||            ||\n" +
+                "||| L - " + scoreAndStats.L.ToString("0000") + " |||XXXXXXXXXX||            ||\n" +
                 "||||||||||||||||XXXXXXXXXX||            ||\n" +
-                "||| J - " + _scoreAndStats.J.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
+                "||| J - " + scoreAndStats.J.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
                 "||||||||||||||||XXXXXXXXXX||||||||||||||||\n" +
-                "||| S - " + _scoreAndStats.S.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
+                "||| S - " + scoreAndStats.S.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
                 "||||||||||||||||PressEnter||||||||||||||||\n" +
-                "||| Z - " + _scoreAndStats.Z.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
+                "||| Z - " + scoreAndStats.Z.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
                 "||||||||||||||||XXXXXXXXXX||||||||||||||||\n" +
-                "||| I - " + _scoreAndStats.I.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
+                "||| I - " + scoreAndStats.I.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
                 "||||||||||||||||XXXXXXXXXX||||||||||||||||\n" +
-                "||| U - " + _scoreAndStats.U.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
+                "||| U - " + scoreAndStats.U.ToString("0000") + " |||XXXXXXXXXX||||||||||||||||\n" +
                 "||||||||||||||||XXXXXXXXXX||||||||||||||||\n" +
-                "||| T - " + _scoreAndStats.T.ToString("0000") + " |||XXXXXXXXXX||||||FPS:||||||\n" +
+                "||| T - " + scoreAndStats.T.ToString("0000") + " |||XXXXXXXXXX||||||FPS:||||||\n" +
                 "||||||||||||||||XXXXXXXXXX||" + CalculateFrameRate().ToString("000000000000") + "||\n" +
                 "||||||||||||||||XXXXXXXXXX||||||||||||||||\n" +
                 "||||||||||||||||||||||||||||||||||||||||||");
@@ -386,11 +388,11 @@ namespace GameSol
 
         public static int CalculateFrameRate()
         {
-            if (System.Environment.TickCount - _lastTick >= 1000)
+            if (TickCount - _lastTick >= 1000)
             {
                 lastFrameRate = frameRate;
                 frameRate = 0;
-                _lastTick = System.Environment.TickCount;
+                _lastTick = TickCount;
             }
             frameRate++;
             return lastFrameRate;
