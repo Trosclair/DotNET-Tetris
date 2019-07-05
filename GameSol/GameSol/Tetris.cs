@@ -211,7 +211,6 @@ namespace GameSol
                 linesCleared++;
                 ClearLine(i);
                 i++;
-
             }
             UpdateScore(linesCleared);
         }
@@ -235,7 +234,7 @@ namespace GameSol
                 _ScoreAndStats.Score += 1000*(_Level+1);
             }
             _Lines += linesCleared;
-            if ((_Level * 10) + 10 <= _Lines)
+            if (_Level * 10 + 10 <= _Lines)
             {
                 _Level++;
             }
@@ -256,7 +255,7 @@ namespace GameSol
 
         public Piece NewPiece()
         {
-            switch ((_R.Next(0, 7))) // add score and stats functionality 
+            switch (_R.Next(0, 7))
             {
                 case 0:
                     _ScoreAndStats.L++;
@@ -293,7 +292,7 @@ namespace GameSol
 
         public void PrintGameGui()
         {
-            string[] boardAsString = BoardToStringArr();
+            var boardAsString = BoardToStringArr();
             Clear();
             Write(
 $@"||||||||||||||||||||||||||||||||||||||||||
