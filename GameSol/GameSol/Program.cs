@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GameSol
+namespace ConsoleTetris
 {
     internal class Program
     {

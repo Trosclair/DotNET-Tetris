@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GameSol.Pieces
+namespace ConsoleTetris.Pieces
 {
     internal enum PieceType { L, J, I, U, S, Z, T }
     internal abstract class Piece

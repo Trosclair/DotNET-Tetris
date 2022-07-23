@@ -1,10 +1,10 @@
-﻿using GameSol.Pieces;
+﻿using ConsoleTetris.Pieces;
 using System;
 using System.Text;
 using static System.Console;
 using static System.Environment;
 
-namespace GameSol
+namespace ConsoleTetris
 {
     internal class Tetris
     {

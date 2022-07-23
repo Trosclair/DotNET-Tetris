@@ -1,4 +1,4 @@
-﻿namespace GameSol.Pieces
+﻿namespace ConsoleTetris.Pieces
 {
     internal class U : Piece
     {

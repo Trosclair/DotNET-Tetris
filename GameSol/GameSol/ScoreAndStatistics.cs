@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GameSol
+namespace ConsoleTetris
 {
     public class ScoreAndStatistics
     {
