@@ -2,7 +2,7 @@
 {
     internal class S : Piece
     {
-        public S(int[,] board) : base(board, PieceType.S, 'S')
+        public S() : base(PieceType.S, 'S')
         {
             One = new Block(0, 5);
             Two = new Block(0, 6);
@@ -15,25 +15,28 @@
         ///*43**
         ///*****
 
-        public override void RotateLeft()
+        public override void RotateLeft(int[,] board)
         {
             if (One.X == Two.X)
             {
-                if (Board[One.X-1, One.Y] == 0 && Board[Three.X,Two.Y] == 0)
+                if (One.X > 0)
                 {
-                    if (Two.X != 0)
+                    if (board[One.X - 1, One.Y] == 0 && board[Three.X, Two.Y] == 0)
                     {
-                        Two.X--;
-                        Two.Y--;
-                        Three.X--;
-                        Three.Y++;
-                        Four.Y += 2;
+                        if (Two.X != 0)
+                        {
+                            Two.X--;
+                            Two.Y--;
+                            Three.X--;
+                            Three.Y++;
+                            Four.Y += 2;
+                        }
                     }
                 }
             }
-            else
+            else if (One.Y > 0)
             {
-                if (Board[One.X+1,One.Y] == 0 && Board[One.X+1, One.Y-1] == 0)
+                if (board[One.X + 1, One.Y] == 0 && board[One.X + 1, One.Y - 1] == 0)
                 {
                     if (Four.Y != 1)
                     {
@@ -47,9 +50,9 @@
             }
         }
 
-        public override void RotateRight()
+        public override void RotateRight(int[,] board)
         {
-            RotateLeft();
+            RotateLeft(board);
         }
     }
 }

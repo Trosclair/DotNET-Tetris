@@ -2,7 +2,7 @@
 {
     internal class T : Piece
     {
-        public T(int[,] board) : base(board, PieceType.T, 'T')
+        public T() : base( PieceType.T, 'T')
         {
             One = new Block(0, 5);
             Two = new Block(1, 5);
@@ -10,9 +10,9 @@
             Four = new Block(1, 4);
         }
 
-        public override void RotateLeft()
+        public override void RotateLeft(int[,] board)
         {
-            if (One.X == Two.X - 1 && Three.Y - 1 == Two.Y && Four.Y + 1 == Two.Y && Two.X != 19 && Board[Two.X+1, Two.Y] == 0)
+            if (One.X == Two.X - 1 && Three.Y - 1 == Two.Y && Four.Y + 1 == Two.Y && Two.X != 19 && board[Two.X + 1, Two.Y] == 0)
             {
                 // 00100
                 // 04230
@@ -24,7 +24,7 @@
                 Three.X--;
                 Three.Y--;
             }
-            else if (One.Y + 1 == Two.Y && Three.Y == Two.Y && Four.Y == Two.Y && Two.Y != 9 && Board[Two.X, Two.Y+1] == 0)
+            else if (One.Y + 1 == Two.Y && Three.Y == Two.Y && Four.Y == Two.Y && Two.Y != 9 && board[Two.X, Two.Y + 1] == 0)
             {
                 // 00300
                 // 01200
@@ -36,7 +36,7 @@
                 Four.X--;
                 Four.Y++;
             }
-            else if (One.X - 1 == Two.X && Three.X == Two.X && Four.X == Two.X && Two.X != 0 && Board[Two.X-1, Two.Y] == 0)
+            else if (One.X - 1 == Two.X && Three.X == Two.X && Four.X == Two.X && Two.X != 0 && board[Two.X - 1, Two.Y] == 0)
             {
                 // 00000
                 // 03240
@@ -48,7 +48,7 @@
                 Four.X--;
                 Four.Y--;
             }
-            else if (One.Y - 1 == Two.Y && Three.Y == Two.Y && Four.Y == Two.Y && Two.Y != 0 && Board[Two.X, Two.Y-1] == 0)
+            else if (One.Y - 1 == Two.Y && Three.Y == Two.Y && Four.Y == Two.Y && Two.Y != 0 && board[Two.X, Two.Y - 1] == 0)
             {
                 // 00400
                 // 00210
@@ -62,9 +62,9 @@
             }
         }
 
-        public override void RotateRight()
+        public override void RotateRight(int[,] board)
         {
-            if (One.X == Two.X - 1 && Three.Y - 1 == Two.Y && Four.Y + 1 == Two.Y && Two.X != 19 && Board[Two.X+1, Two.Y] == 0)
+            if (One.X == Two.X - 1 && Three.Y - 1 == Two.Y && Four.Y + 1 == Two.Y && Two.X != 19 && board[Two.X + 1, Two.Y] == 0)
             {
                 // 00100
                 // 04230
@@ -76,7 +76,7 @@
                 Three.X++;
                 Three.Y--;
             }
-            else if (One.Y + 1 == Two.Y && Three.Y == Two.Y && Four.Y == Two.Y && Two.Y != 9 && Board[Two.X, Two.Y+1] == 0)
+            else if (One.Y + 1 == Two.Y && Three.Y == Two.Y && Four.Y == Two.Y && Two.Y != 9 && board[Two.X, Two.Y + 1] == 0)
             {
                 // 00300
                 // 01200
@@ -88,7 +88,7 @@
                 Four.X--;
                 Four.Y--;
             }
-            else if (One.X - 1 == Two.X && Three.X == Two.X && Four.X == Two.X && Two.X != 0 && Board[Two.X-1, Two.Y] == 0)
+            else if (One.X - 1 == Two.X && Three.X == Two.X && Four.X == Two.X && Two.X != 0 && board[Two.X - 1, Two.Y] == 0)
             {
                 // 00000
                 // 03240
@@ -100,7 +100,7 @@
                 Four.X++;
                 Four.Y--;
             }
-            else if (One.Y - 1 == Two.Y && Three.Y == Two.Y && Four.Y == Two.Y && Two.Y != 0 && Board[Two.X, Two.Y-1] == 0)
+            else if (One.Y - 1 == Two.Y && Three.Y == Two.Y && Four.Y == Two.Y && Two.Y != 0 && board[Two.X, Two.Y - 1] == 0)
             {
                 // 00400
                 // 00210

@@ -2,7 +2,7 @@
 {
     internal class L : Piece
     {
-        public L(int[,] board) : base(board, PieceType.L, 'L')
+        public L() : base(PieceType.L, 'L')
         {
             One = new Block(0, 5);
             Two = new Block(1, 5);
@@ -16,25 +16,28 @@
         ///**34*
         ///*****
 
-        public override void RotateRight()
+        public override void RotateRight(int[,] board)
         {
             if (Three.Y + 1 == Four.Y)
             {
-                if (Board[Two.X, Two.Y-1] == 0 && Board[Two.X+1, Two.Y-1] == 0 && Board[Two.X, Two.Y+1] == 0)
+                if (Two.Y > 0)
                 {
-                    if (Three.Y != 0)
+                    if (board[Two.X, Two.Y - 1] == 0 && board[Two.X + 1, Two.Y - 1] == 0 && board[Two.X, Two.Y + 1] == 0)
                     {
-                        One.X++;
-                        One.Y++;
-                        Three.X--;
-                        Three.Y--;
-                        Four.Y -= 2;
+                        if (Three.Y != 0)
+                        {
+                            One.X++;
+                            One.Y++;
+                            Three.X--;
+                            Three.Y--;
+                            Four.Y -= 2;
+                        }
                     }
                 }
             }
             else if (Three.X + 1 == Four.X)
             {
-                if (Board[Two.X-1, Two.Y] == 0 && Board[Two.X-1, Two.Y-1] == 0 && Board[Two.X+1, Two.Y] == 0)
+                if (board[Two.X - 1, Two.Y] == 0 && board[Two.X - 1, Two.Y - 1] == 0 && board[Two.X + 1, Two.Y] == 0)
                 {
                     One.X++;
                     One.Y--;
@@ -45,21 +48,24 @@
             }
             else if (Four.Y + 1 == Three.Y)
             {
-                if (Board[Two.X, Two.Y+1] == 0 && Board[Two.X-1, Two.Y+1] == 0 && Board[Two.X, Two.Y-1] == 0)
+                if (Two.Y != 9)
                 {
-                    if (Three.Y != 9)
+                    if (board[Two.X, Two.Y + 1] == 0 && board[Two.X - 1, Two.Y + 1] == 0 && board[Two.X, Two.Y - 1] == 0)
                     {
-                        One.X--;
-                        One.Y--;
-                        Three.X++;
-                        Three.Y++;
-                        Four.Y += 2;
+                        if (Three.Y != 9)
+                        {
+                            One.X--;
+                            One.Y--;
+                            Three.X++;
+                            Three.Y++;
+                            Four.Y += 2;
+                        }
                     }
                 }
             }
             else if (Three.X - 1 == Four.X)
             {
-                if (Board[Two.X+1, Two.Y] == 0 && Board[Two.X+1, Two.Y+1] == 0 && Board[Two.X-1, Two.Y] == 0)
+                if (board[Two.X + 1, Two.Y] == 0 && board[Two.X + 1, Two.Y + 1] == 0 && board[Two.X - 1, Two.Y] == 0)
                 {
                     if (Three.X != 19)
                     {
@@ -73,25 +79,28 @@
             }
         }
 
-        public override void RotateLeft()
+        public override void RotateLeft(int[,] board)
         {
             if (Three.Y + 1 == Four.Y)
             {
-                if (Board[Two.X, Two.Y-1] == 0 && Board[Two.X+1, Two.Y+1] == 0 && Board[Two.X, Two.Y+1] == 0)
+                if (Two.Y > 0)
                 {
-                    if (Three.Y != 0)
+                    if (board[Two.X, Two.Y - 1] == 0 && board[Two.X + 1, Two.Y + 1] == 0 && board[Two.X, Two.Y + 1] == 0)
                     {
-                        One.X++;
-                        One.Y--;
-                        Three.X--;
-                        Three.Y++;
-                        Four.X -= 2;
+                        if (Three.Y != 0)
+                        {
+                            One.X++;
+                            One.Y--;
+                            Three.X--;
+                            Three.Y++;
+                            Four.X -= 2;
+                        }
                     }
                 }
             }
             else if (Three.X - 1 == Four.X)
             {
-                if (Board[Two.X-1, Two.Y] == 0 && Board[Two.X+1, Two.Y] == 0 && Board[Two.X-1, Two.Y-1] == 0)
+                if (board[Two.X - 1, Two.Y] == 0 && board[Two.X + 1, Two.Y] == 0 && board[Two.X - 1, Two.Y - 1] == 0)
                 {
                     if (Three.X != 19)
                     {
@@ -105,21 +114,24 @@
             }
             else if (Three.Y - 1 == Four.Y)
             {
-                if (Board[Two.X, Two.Y-1] == 0 && Board[Two.X+1, Two.Y-1] == 0 && Board[Two.X, Two.Y+1] == 0)
+                if (Two.Y != 9)
                 {
-                    if (Three.Y != 9)
+                    if (board[Two.X, Two.Y - 1] == 0 && board[Two.X + 1, Two.Y - 1] == 0 && board[Two.X, Two.Y + 1] == 0)
                     {
-                        One.X--;
-                        One.Y++;
-                        Three.X++;
-                        Three.Y--;
-                        Four.X += 2;
+                        if (Three.Y != 9)
+                        {
+                            One.X--;
+                            One.Y++;
+                            Three.X++;
+                            Three.Y--;
+                            Four.X += 2;
+                        }
                     }
                 }
             }
             else
             {
-                if (Board[Two.X-1, Two.Y] == 0 && Board[Two.X+1, Two.Y] == 0 && Board[Two.X+1, Two.Y+1] == 0)
+                if (board[Two.X - 1, Two.Y] == 0 && board[Two.X + 1, Two.Y] == 0 && board[Two.X + 1, Two.Y + 1] == 0)
                 {
                     One.X--;
                     One.Y--;

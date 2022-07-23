@@ -2,7 +2,7 @@
 {
     internal class U : Piece
     {
-        public U(int[,] board) : base(board, PieceType.U, 'U')
+        public U() : base(PieceType.U, 'U')
         {
             One = new Block(0, 5);
             Two = new Block(0, 4);
@@ -10,8 +10,8 @@
             Four = new Block(1, 4);
         }
 
-        public override void RotateLeft(){}
+        public override void RotateLeft(int[,] board) { }
 
-        public override void RotateRight(){}
+        public override void RotateRight(int[,] board) { }
     }
 }
