@@ -1,8 +1,8 @@
 ﻿namespace GameSol.Pieces
 {
+    public enum PieceType { L, J, I, U, S, Z, T }
     abstract class Piece
     {
-        public enum PieceType { L, J, I, U, S, Z, T }
         public abstract void RotateRight();
         public abstract void RotateLeft();
 
@@ -64,7 +64,7 @@
 
         internal Block Four { get; set; }
 
-        internal string StrPieceType { get; set; }
+        internal PieceType PieceType { get; set; }
 
         internal int[,] Board { get; set; }
 

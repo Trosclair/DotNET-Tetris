@@ -48,15 +48,14 @@ namespace GameSol
             {         
                 GetKeyPress();
                 if (_CurrentPiece == null) continue;
-                if (TickCount - _lastTick >= 60)
-                {
-                    _Board[_CurrentPiece.One.X, _CurrentPiece.One.Y] = 2;
-                    _Board[_CurrentPiece.Two.X, _CurrentPiece.Two.Y] = 2;
-                    _Board[_CurrentPiece.Three.X, _CurrentPiece.Three.Y] = 2;
-                    _Board[_CurrentPiece.Four.X, _CurrentPiece.Four.Y] = 2;
-                    PrintGameGui();
-                    _lastTick = TickCount;
-                }
+
+                _Board[_CurrentPiece.One.X, _CurrentPiece.One.Y] = 2;
+                _Board[_CurrentPiece.Two.X, _CurrentPiece.Two.Y] = 2;
+                _Board[_CurrentPiece.Three.X, _CurrentPiece.Three.Y] = 2;
+                _Board[_CurrentPiece.Four.X, _CurrentPiece.Four.Y] = 2;
+                PrintGameGui();
+                _lastTick = TickCount;
+
                 if (TickCount - _dropTimer >= 1000 - 50 * ScoreAndStatistics.Level)
                 {
                     _CurrentPiece.ClearPositionFromAMove();
@@ -266,7 +265,7 @@ namespace GameSol
         public void PrintGameGui()
         {
             var boardAsString = BoardToStringArr();
-            Clear();
+            SetCursorPosition(0, 0);
             Write(
 $@"||||||||||||||||||||||||||||||||||||||||||
 ||||||||||||||||**TETRIS**||||||||||||||||
@@ -296,7 +295,7 @@ $@"||||||||||||||||||||||||||||||||||||||||||
         
         public void PrintGameOver()
         {
-            Clear();
+            SetCursorPosition(0, 0);
             Write(
 $@"||||||||||||||||||||||||||||||||||||||||||
 ||||||||||||||||**TETRIS**||||||||||||||||
@@ -328,7 +327,7 @@ $@"||||||||||||||||||||||||||||||||||||||||||
 
         public void PrintTitleScreen()
         {
-            Clear();
+            SetCursorPosition(0, 0);
             Write(
 $@"||||||||||||||||||||||||||||||||||||||||||
 ||||||||||||||||**TETRIS**||||||||||||||||

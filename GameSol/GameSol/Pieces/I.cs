@@ -8,7 +8,7 @@
             Two = new Block(1, 5);
             Three = new Block(2, 5);
             Four = new Block(3, 5);
-            StrPieceType = "I";
+            PieceType = PieceType.I;
             Board = board;
         }
 
