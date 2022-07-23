@@ -1,6 +1,6 @@
-﻿namespace ConsoleTetris.Pieces
+﻿namespace TetrisLibrary.Pieces
 {
-    internal class I : Piece
+    public class I : Piece
     {
         public I() : base(PieceType.I, 'I')
         {

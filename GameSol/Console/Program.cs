@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TetrisLibrary
+namespace ConsoleTetris
 {
     internal class Program
     {

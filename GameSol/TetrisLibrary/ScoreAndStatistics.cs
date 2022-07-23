@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ConsoleTetris
+﻿namespace TetrisLibrary
 {
     public class ScoreAndStatistics
     {

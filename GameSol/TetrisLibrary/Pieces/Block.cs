@@ -1,6 +1,6 @@
-﻿namespace ConsoleTetris.Pieces
+﻿namespace TetrisLibrary.Pieces
 {
-    internal class Block
+    public class Block
     {
         public int X { get; set; }
         public int Y { get; set; }

@@ -1,6 +1,6 @@
-﻿using TetrisLibrary.Pieces;
-using System;
-using System.Text;
+﻿using System.Text;
+using TetrisLibrary;
+using TetrisLibrary.Pieces;
 using static System.Console;
 using static System.Environment;
 
@@ -8,8 +8,8 @@ namespace ConsoleTetris
 {
     internal class Tetris
     {
-        private Piece _CurrentPiece;
-        private Piece _NextPiece;
+        private Piece? _CurrentPiece;
+        private Piece? _NextPiece;
         private ConsoleKeyInfo _Key;
         private bool _IsKeyPressed;
         private static int _framelastTick;

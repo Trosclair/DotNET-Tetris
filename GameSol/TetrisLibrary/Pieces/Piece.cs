@@ -1,19 +1,19 @@
 ﻿using System;
 
-namespace ConsoleTetris.Pieces
+namespace TetrisLibrary.Pieces
 {
-    internal enum PieceType { L, J, I, U, S, Z, T }
-    internal abstract class Piece
+    public enum PieceType { L, J, I, U, S, Z, T }
+    public abstract class Piece
     {
         private static readonly Random random = new Random();
 
-        internal Block One { get; set; }
-        internal Block Two { get; set; }
-        internal Block Three { get; set; }
-        internal Block Four { get; set; }
-        internal PieceType PieceType { get; set; }
-        internal bool IsDropping { get; private set; } = true;
-        internal char PieceLetter { get; }
+        public Block One { get; set; }
+        public Block Two { get; set; }
+        public Block Three { get; set; }
+        public Block Four { get; set; }
+        public PieceType PieceType { get; set; }
+        public bool IsDropping { get; private set; } = true;
+        public char PieceLetter { get; }
 
         public Piece(PieceType pieceType, char pieceLetter)
         {
