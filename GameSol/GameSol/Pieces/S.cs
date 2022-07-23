@@ -2,14 +2,12 @@
 {
     internal class S : Piece
     {
-        public S(int[,] board)
+        public S(int[,] board) : base(board, PieceType.S, 'S')
         {
             One = new Block(0, 5);
             Two = new Block(0, 6);
             Three = new Block(1, 5);
             Four = new Block(1, 4);
-            PieceType = PieceType.S;
-            Board = board;
         }
 
         ///*****

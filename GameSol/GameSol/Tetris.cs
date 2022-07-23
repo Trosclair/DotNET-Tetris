@@ -273,7 +273,7 @@ $@"||||||||||||||||||||||||||||||||||||||||||
 ||||||||||||||||{boardAsString[0]}||||||||||||||||
 |||||{ScoreAndStatistics.Score:000000}|||||{boardAsString[1]}||            ||
 ||||||||||||||||{boardAsString[2]}||            ||
-|| STATISTICS ||{boardAsString[3]}||     {_Letter}      ||
+|| STATISTICS ||{boardAsString[3]}||     {_NextPiece.PieceLetter}      ||
 ||||||||||||||||{boardAsString[4]}||            ||
 ||| L - {ScoreAndStatistics.L:0000} |||{boardAsString[5]}||            ||
 ||||||||||||||||{boardAsString[6]}||            ||
@@ -303,7 +303,7 @@ $@"||||||||||||||||||||||||||||||||||||||||||
 ||||||||||||||||XXXXXXXXXX||||||||||||||||
 |||||{ScoreAndStatistics.Score:000000}|||||XXXXXXXXXX||            ||
 ||||||||||||||||XXXXXXXXXX||            ||
-|| STATISTICS ||XXXXXXXXXX||     {_Letter}      ||
+|| STATISTICS ||XXXXXXXXXX||     {_NextPiece.PieceLetter}      ||
 ||||||||||||||||XXXXXXXXXX||            ||
 ||| L - {ScoreAndStatistics.L:0000} |||XXXXXXXXXX||            ||
 ||||||||||||||||XXXXXXXXXX||            ||
@@ -335,7 +335,7 @@ $@"||||||||||||||||||||||||||||||||||||||||||
 ||||||||||||||||XXXXXXXXXX||||||||||||||||
 |||||{ScoreAndStatistics.Score:000000}|||||XXXXXXXXXX||            ||
 ||||||||||||||||XXXXXXXXXX||            ||
-|| STATISTICS ||XXXXXXXXXX||     {_Letter}      ||
+|| STATISTICS ||XXXXXXXXXX||     X      ||
 ||||||||||||||||XXXXXXXXXX||            ||
 ||| L - {ScoreAndStatistics.L:0000} |||XXXXXXXXXX||            ||
 ||||||||||||||||XXXXXXXXXX||            ||

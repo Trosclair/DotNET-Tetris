@@ -1,8 +1,15 @@
 ﻿namespace GameSol.Pieces
 {
-    public enum PieceType { L, J, I, U, S, Z, T }
-    abstract class Piece
+    internal enum PieceType { L, J, I, U, S, Z, T }
+    internal abstract class Piece
     {
+        public Piece(int[,] board, PieceType pieceType, char pieceLetter)
+        {
+            Board = board;
+            PieceType = pieceType;
+            PieceLetter = pieceLetter;
+        }
+
         public abstract void RotateRight();
         public abstract void RotateLeft();
 
@@ -57,18 +64,13 @@
         }
 
         internal Block One { get; set; }
-
         internal Block Two { get; set; }
-
         internal Block Three { get; set; }
-
         internal Block Four { get; set; }
-
         internal PieceType PieceType { get; set; }
-
         internal int[,] Board { get; set; }
-
         internal bool IsDropping { get; private set; } = true;
+        internal char PieceLetter { get; }
     }
 }
 

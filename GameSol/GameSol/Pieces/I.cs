@@ -2,14 +2,12 @@
 {
     internal class I : Piece
     {
-        public I(int[,] board)
+        public I(int[,] board) : base(board, PieceType.I, 'I')
         {
             One = new Block(0, 5);
             Two = new Block(1, 5);
             Three = new Block(2, 5);
             Four = new Block(3, 5);
-            PieceType = PieceType.I;
-            Board = board;
         }
 
         public override void RotateLeft()
