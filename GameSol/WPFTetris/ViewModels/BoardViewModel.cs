@@ -8,9 +8,9 @@ using WPFTetris.ViewModels;
 
 namespace WPFTetris.ViewModels
 {
-    internal class BoardViewModel : ObservableCollection<BlockViewModel>
+    public class BoardViewModel : ObservableCollection<BlockViewModel>
     {
-        public BlockViewModel this[int i, int j] => this[(i * 10) + j];
+        public BlockViewModel this[int i, int j] { get => this[(i * 10) + j]; set => this[(i * 10) + j] = value; }
 
         public BoardViewModel()
         {

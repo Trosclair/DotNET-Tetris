@@ -7,8 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TetrisLibrary;
-using TetrisLibrary.Pieces;
 using WPFTetris.Utilities;
+using WPFTetris.ViewModels.Pieces;
 
 namespace WPFTetris.ViewModels
 {

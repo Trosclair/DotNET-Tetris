@@ -8,7 +8,7 @@ using WPFTetris.Utilities;
 
 namespace WPFTetris.ViewModels
 {
-    internal class BlockViewModel : ObservableObject
+    public class BlockViewModel : ObservableObject
     {
         private int x = 0, y = 0;
         private Color color = Colors.DarkGray;
