@@ -10,19 +10,16 @@ namespace WPFTetris.ViewModels
 {
     public class BlockViewModel : ObservableObject
     {
-        private int x = 0, y = 0;
-        private Color color = Colors.DarkGray;
-        private Brush brush = Brushes.DarkGray;
+        public int BoardPosition { get; }
+        public int X { get; }
+        public int Y { get; }
+        public Brush Brush { get; }
 
-        public int X { get => x; set { x = value; OnPropertyChanged(nameof(X)); } }
-        public int Y { get => y; set { y = value; OnPropertyChanged(nameof(Y)); } }
-        public Color Color { get => color; set { color = value; OnPropertyChanged(nameof(Color)); } }
-        public Brush Brush { get => brush; set { brush = value; OnPropertyChanged(nameof(Brush)); } }
-
-        public BlockViewModel(int x, int y)
+        public BlockViewModel(int boardPosition, Brush brush)
         {
-            X = x;
-            Y = y;
+            X = boardPosition / 10;
+            Y = boardPosition % 10;
+            Brush = brush;
         }
     }
 }

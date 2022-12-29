@@ -11,8 +11,4 @@
     <Folder Include="Models\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\TetrisLibrary\TetrisLibrary.csproj" />
-  </ItemGroup>
-
 </Project>

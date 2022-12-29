@@ -8,15 +8,14 @@ using WPFTetris.ViewModels;
 
 namespace WPFTetris.ViewModels
 {
-    public class BoardViewModel : ObservableCollection<BlockViewModel>
+    public class BoardViewModel : ObservableCollection<BlockViewModel?>
     {
-        public BlockViewModel this[int i, int j] { get => this[(i * 10) + j]; set => this[(i * 10) + j] = value; }
+        public BlockViewModel? this[int i, int j] { get => this[(i * 10) + j]; set => this[(i * 10) + j] = value; }
 
         public BoardViewModel()
         {
-            for (int i = 0; i < 20; i++)
-                for (int j = 0; j < 10; j++)
-                    Add(new(i * 40, j * 40));
+            for (int i = 0; i < 200; i++)
+                Add(new BlockViewModel(i, y));
         }
     }
 }
