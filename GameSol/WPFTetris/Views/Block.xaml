@@ -3,7 +3,9 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:WPFTetris.Views"
+      xmlns:local="clr-namespace:WPFTetris.Views" 
+      xmlns:viewmodels="clr-namespace:WPFTetris.ViewModels" 
+      d:DataContext="{d:DesignInstance Type=viewmodels:BlockViewModel}"
       mc:Ignorable="d" 
       d:DesignHeight="40" d:DesignWidth="40">
     <Canvas>
@@ -13,8 +15,8 @@
                 <LinearGradientBrush StartPoint="1,0">
                     <GradientStop Color="#FFE0E2E2" Offset="0"/>
                     <GradientStop Color="{Binding Color, FallbackValue=Aqua}" Offset=".1"/>
-                    <GradientStop Color="#FFA6C8C8" Offset=".5"/>
-                    <GradientStop Color="{Binding Color, FallbackValue=Aqua}" Offset=".8"/>
+                    <GradientStop Color="WhiteSmoke" Offset=".5"/>
+                    <GradientStop Color="{Binding Color, FallbackValue=Aqua}" Offset=".9"/>
                     <GradientStop Color="#FFE0E2E2" Offset="1"/>
                 </LinearGradientBrush>
             </Rectangle.Fill>

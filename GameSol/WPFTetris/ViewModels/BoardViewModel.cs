@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using WPFTetris.ViewModels;
 
 namespace WPFTetris.ViewModels
@@ -15,7 +16,9 @@ namespace WPFTetris.ViewModels
         public BoardViewModel()
         {
             for (int i = 0; i < 200; i++)
-                Add(new BlockViewModel(i, y));
+                Add(new BlockViewModel(i / 10, i % 10, Colors.DarkGray, Brushes.DarkGray));
+
+
         }
     }
 }

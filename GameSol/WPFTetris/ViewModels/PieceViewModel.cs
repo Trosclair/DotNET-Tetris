@@ -1,40 +1,92 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 
 namespace WPFTetris.ViewModels
 {
     public abstract class PieceViewModel
     {
-        public ObservableCollection<BlockViewModel> Blocks { get; }
         public PieceType PieceType { get; }
-        public int RotationState { get; }
+        public int RotationState { get; } = 0;
+        public ObservableCollection<BlockViewModel> Blocks { get; } = new();
 
-        public PieceViewModel(ObservableCollection<BlockViewModel> blocks, PieceType pieceType, int rotationState)
+        public PieceViewModel(PieceType pieceType)
         {
-            Blocks = blocks;
             PieceType = pieceType;
-            RotationState = (rotationState + 4) % 4;
         }
 
-        public abstract ObservableCollection<BlockViewModel> RotateClockwise();
-        public abstract ObservableCollection<BlockViewModel> RotateCounterClockwise();
-        public ObservableCollection<BlockViewModel> MoveDown()
+        public abstract void RotateClockwise();
+        public abstract void RotateCounterClockwise();
+        public void MoveDown()
         {
-            return new(Blocks.Select(block => new BlockViewModel(block.BoardPosition + 10, block.Brush)));
+            Blocks[0].X++;
+            Blocks[1].X++;
+            Blocks[2].X++;
+            Blocks[3].X++;
+
+            if (PieceViewModelExtensions.IsOutOfBounds(this))
+            {
+                Blocks[0].X--;
+                Blocks[1].X--;
+                Blocks[2].X--;
+                Blocks[3].X--;
+            }
         }
 
-        public ObservableCollection<BlockViewModel> MoveRight()
+        public void MoveRight()
         {
-            return new(Blocks.Select(block => new BlockViewModel(block.BoardPosition + 1, block.Brush)));
+            Blocks[0].Y++;
+            Blocks[1].Y++;
+            Blocks[2].Y++;
+            Blocks[3].Y++;
+
+            if (PieceViewModelExtensions.IsOutOfBounds(this))
+            {
+                Blocks[0].Y--;
+                Blocks[1].Y--;
+                Blocks[2].Y--;
+                Blocks[3].Y--;
+            }
         }
 
-        public ObservableCollection<BlockViewModel> MoveLeft()
+        public void MoveLeft()
         {
-            return new(Blocks.Select(block => new BlockViewModel(block.BoardPosition - 1, block.Brush)));
+            Blocks[0].Y--;
+            Blocks[1].Y--;
+            Blocks[2].Y--;
+            Blocks[3].Y--;
+
+            if (PieceViewModelExtensions.IsOutOfBounds(this))
+            {
+                Blocks[0].Y++;
+                Blocks[1].Y++;
+                Blocks[2].Y++;
+                Blocks[3].Y++;
+            }
+        }
+    }
+
+    public static class PieceViewModelExtensions
+    {
+        public static bool IsOutOfBounds(this PieceViewModel me)
+        {
+            foreach (BlockViewModel block in me.Blocks)
+            {
+                if (block.IsOutOfBounds())
+                    return true;
+            }
+            return false;
+        }
+
+        public static bool CollidesWith(this PieceViewModel me, PieceViewModel otherPiece)
+        {
+            foreach (BlockViewModel myBlock in me.Blocks)
+            {
+                foreach (BlockViewModel theirBlock in otherPiece.Blocks)
+                {
+                    if (myBlock.CollidesWith(theirBlock))
+                        return true;
+                }
+            }
+            return false;
         }
     }
 }

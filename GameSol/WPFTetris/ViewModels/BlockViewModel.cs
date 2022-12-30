@@ -10,16 +10,32 @@ namespace WPFTetris.ViewModels
 {
     public class BlockViewModel : ObservableObject
     {
-        public int BoardPosition { get; }
-        public int X { get; }
-        public int Y { get; }
+        private const int tileSize = 40;
+        private int x, y;
+        public int X { get => x; set { x = value * tileSize; OnPropertyChanged(nameof(X)); } }
+        public int Y { get => y; set { y = value * tileSize; OnPropertyChanged(nameof(Y)); } }
         public Brush Brush { get; }
+        public Color Color { get; }
 
-        public BlockViewModel(int boardPosition, Brush brush)
+        public BlockViewModel(int x, int y, Color color, Brush brush)
         {
-            X = boardPosition / 10;
-            Y = boardPosition % 10;
+            X = x;
+            Y = y;
+            Color = color;
             Brush = brush;
+        }
+    }
+
+    public static class BlockViewModelExtensions
+    {
+        public static bool IsOutOfBounds(this BlockViewModel me)
+        {
+            return me.X > 19 || me.X < 0 || me.Y > 9 || me.Y < 0;
+        }
+
+        public static bool CollidesWith(this BlockViewModel me, BlockViewModel otherBlock)
+        {
+            return me.X == otherBlock.X || me.Y == otherBlock.Y;
         }
     }
 }

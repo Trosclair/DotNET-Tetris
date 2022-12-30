@@ -15,7 +15,7 @@ namespace WPFTetris.ViewModels
         private ObservableCollection<PieceViewModel> board = new();
         private Stopwatch globalTimer = new();
         private long currentDropTime = 0;
-        public ObservableCollection<PieceViewModel> Board { get => board; private set { board = value; OnPropertyChanged(nameof(Board)); } }
+        public BoardViewModel Board { get; } = new();
         public MainViewModel()
         {
             globalTimer.Start();
@@ -27,7 +27,7 @@ namespace WPFTetris.ViewModels
 
         }
 
-        public ObservableCollection<PieceViewModel> MapFunctionToPieceType(PieceViewModel piece, Func<ObservableCollection<PieceViewModel>> func)
+        public void MapFunctionToPieceType(PieceViewModel piece, Func<ObservableCollection<PieceViewModel>> func)
         {
             switch (piece.PieceType)
             {
