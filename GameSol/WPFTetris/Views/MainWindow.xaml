@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WPFTetris" xmlns:local1="clr-namespace:WPFTetris.Views" xmlns:vms="clr-namespace:WPFTetris.ViewModels"
+        xmlns:local="clr-namespace:WPFTetris" xmlns:local1="clr-namespace:WPFTetris.Views" xmlns:vms="clr-namespace:WPFTetris.ViewModels" d:DataContext="{d:DesignInstance Type=vms:MainViewModel}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1080" Width="1920">
+        Title="MainWindow" Height="1080" Width="1920" ResizeMode="NoResize" ShowInTaskbar="True" WindowState="Maximized" WindowStyle="None" KeyDown="Window_KeyDown">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -26,8 +26,8 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemContainerStyle>
                 <Style>
-                    <Setter Property="Canvas.Left" Value="{Binding Path=Y}" />
-                    <Setter Property="Canvas.Top" Value="{Binding Path=X}" />
+                    <Setter Property="Canvas.Left" Value="{Binding Path=PixelY}" />
+                    <Setter Property="Canvas.Top" Value="{Binding Path=PixelX}" />
                 </Style>
             </ItemsControl.ItemContainerStyle>
             <ItemsControl.ItemTemplate>

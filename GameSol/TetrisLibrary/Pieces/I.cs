@@ -19,7 +19,6 @@
                 Four.X++;
                 Four.Y = Three.Y;
                 Two.X--;
-                Four.Y = Three.Y;
                 One.X -= 2;
                 One.Y = Three.Y;
                 Two.Y = Three.Y;

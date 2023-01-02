@@ -11,11 +11,16 @@ namespace WPFTetris.ViewModels
     public class BlockViewModel : ObservableObject
     {
         private const int tileSize = 40;
-        private int x, y;
-        public int X { get => x; set { x = value * tileSize; OnPropertyChanged(nameof(X)); } }
-        public int Y { get => y; set { y = value * tileSize; OnPropertyChanged(nameof(Y)); } }
-        public Brush Brush { get; }
-        public Color Color { get; }
+        private int x, y, pixelX, pixelY;
+        private Color color = Colors.Transparent;
+        private Brush brush = Brushes.Transparent;
+
+        public int X { get => x; set { x = value; PixelX = x * tileSize; OnPropertyChanged(nameof(X)); } }
+        public int Y { get => y; set { y = value; PixelY = y * tileSize; OnPropertyChanged(nameof(Y)); } }
+        public int PixelX { get => pixelX; set { pixelX = value; OnPropertyChanged(nameof(PixelX)); } }
+        public int PixelY { get => pixelY; set { pixelY = value; OnPropertyChanged(nameof(PixelY)); } }
+        public Brush Brush { get => brush; internal set { brush = value; OnPropertyChanged(nameof(Brush)); } }
+        public Color Color { get => color; internal set { color = value; OnPropertyChanged(nameof(Color)); } }
 
         public BlockViewModel(int x, int y, Color color, Brush brush)
         {

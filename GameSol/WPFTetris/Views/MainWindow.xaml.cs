@@ -8,10 +8,16 @@ namespace WPFTetris.Views
     /// </summary>
     public partial class MainWindow : Window
     {
+        MainViewModel viewModel;
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
+            DataContext = viewModel = new MainViewModel();
+        }
+
+        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            viewModel.HandleUserInput(e.Key);
         }
     }
 }

@@ -1,66 +1,128 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 
 namespace WPFTetris.ViewModels
 {
     public abstract class PieceViewModel
     {
         public PieceType PieceType { get; }
-        public int RotationState { get; } = 0;
-        public ObservableCollection<BlockViewModel> Blocks { get; } = new();
+        public int RotationState { get; private set; } = 0;
+        public BoardViewModel Board { get; }
+        public BlockViewModel[] Blocks { get; } = new BlockViewModel[4];
+        public BlockViewModel One { get => Blocks[0]; set => Blocks[0] = value; }
+        public BlockViewModel Two { get => Blocks[1]; set => Blocks[1] = value; }
+        public BlockViewModel Three { get => Blocks[2]; set => Blocks[2] = value; }
+        public BlockViewModel Four { get => Blocks[3]; set => Blocks[3] = value; }
 
-        public PieceViewModel(PieceType pieceType)
+        public PieceViewModel(BoardViewModel board, PieceType pieceType)
         {
+            Board = board;
             PieceType = pieceType;
         }
 
         public abstract void RotateClockwise();
         public abstract void RotateCounterClockwise();
-        public void MoveDown()
-        {
-            Blocks[0].X++;
-            Blocks[1].X++;
-            Blocks[2].X++;
-            Blocks[3].X++;
 
-            if (PieceViewModelExtensions.IsOutOfBounds(this))
+        public bool MoveDown()
+        {
+            Action makeMove;
+            Action revertMove;
+
+            makeMove = () =>
             {
-                Blocks[0].X--;
-                Blocks[1].X--;
-                Blocks[2].X--;
-                Blocks[3].X--;
-            }
+                One.X++;
+                Two.X++;
+                Three.X++;
+                Four.X++;
+            };
+            revertMove = () =>
+            {
+                One.X--;
+                Two.X--;
+                Three.X--;
+                Four.X--;
+            };
+
+            return Board.MakeMoveIfValid(this, makeMove, revertMove);
+        }
+
+        public void HardDrop()
+        {
+            Action makeMove;
+            Action revertMove;
+
+            makeMove = () =>
+            {
+                One.X++;
+                Two.X++;
+                Three.X++;
+                Four.X++;
+            };
+            revertMove = () =>
+            {
+                One.X--;
+                Two.X--;
+                Three.X--;
+                Four.X--;
+            };
+
+            while (Board.MakeMoveIfValid(this, makeMove, revertMove)) ;
         }
 
         public void MoveRight()
         {
-            Blocks[0].Y++;
-            Blocks[1].Y++;
-            Blocks[2].Y++;
-            Blocks[3].Y++;
+            Action makeMove;
+            Action revertMove;
 
-            if (PieceViewModelExtensions.IsOutOfBounds(this))
+            makeMove = () =>
             {
-                Blocks[0].Y--;
-                Blocks[1].Y--;
-                Blocks[2].Y--;
-                Blocks[3].Y--;
-            }
+                One.Y++;
+                Two.Y++;
+                Three.Y++;
+                Four.Y++;
+            };
+            revertMove = () =>
+            {
+                One.Y--;
+                Two.Y--;
+                Three.Y--;
+                Four.Y--;
+            };
+
+            Board.MakeMoveIfValid(this, makeMove, revertMove);
         }
 
         public void MoveLeft()
         {
-            Blocks[0].Y--;
-            Blocks[1].Y--;
-            Blocks[2].Y--;
-            Blocks[3].Y--;
+            Action makeMove;
+            Action revertMove;
 
-            if (PieceViewModelExtensions.IsOutOfBounds(this))
+            makeMove = () =>
             {
-                Blocks[0].Y++;
-                Blocks[1].Y++;
-                Blocks[2].Y++;
-                Blocks[3].Y++;
-            }
+                One.Y--;
+                Two.Y--;
+                Three.Y--;
+                Four.Y--;
+            };
+            revertMove = () =>
+            {
+                One.Y++;
+                Two.Y++;
+                Three.Y++;
+                Four.Y++;
+            };
+
+            Board.MakeMoveIfValid(this, makeMove, revertMove);
+        }
+
+        public void UpdateRotationStateClockwise()
+        {
+            RotationState = (RotationState + 1) % 4;
+        }
+
+        public void UpdateRotationStateCounterClockwise()
+        {
+            RotationState = (RotationState + 3) % 4;
         }
     }
 
