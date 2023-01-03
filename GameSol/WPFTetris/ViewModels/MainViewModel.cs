@@ -48,6 +48,7 @@ namespace WPFTetris.ViewModels
                 case Key.S:
                     if (!pieceViewModel.MoveDown())
                     {
+                        Board.CheckBoardForLineClears();
                         pieceViewModel = CreatePiece();
                         Board.AddPieceToBoard(pieceViewModel);
                     }
@@ -61,6 +62,7 @@ namespace WPFTetris.ViewModels
                     break;
                 case Key.W:
                     pieceViewModel.HardDrop();
+                    Board.CheckBoardForLineClears();
                     pieceViewModel = CreatePiece();
                     Board.AddPieceToBoard(pieceViewModel);
                     break;

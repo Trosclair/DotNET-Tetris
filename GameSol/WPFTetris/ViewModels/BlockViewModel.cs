@@ -21,6 +21,7 @@ namespace WPFTetris.ViewModels
         public int PixelY { get => pixelY; set { pixelY = value; OnPropertyChanged(nameof(PixelY)); } }
         public Brush Brush { get => brush; internal set { brush = value; OnPropertyChanged(nameof(Brush)); } }
         public Color Color { get => color; internal set { color = value; OnPropertyChanged(nameof(Color)); } }
+        public bool IsEmpty => color == Colors.White || color == Colors.Transparent;
 
         public BlockViewModel(int x, int y, Color color, Brush brush)
         {

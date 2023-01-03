@@ -73,5 +73,47 @@ namespace WPFTetris.ViewModels
                 board[block.X, block.Y].Brush = Brushes.Transparent;
             }
         }
+
+        public static int CheckBoardForLineClears(this BoardViewModel board)
+        {
+            int linesCleared = 0;
+
+            for (int i = 19; i >= 0; i--)
+            {
+                bool isClear = true;
+
+                for (int j = 0; j < 10; j++)
+                {
+                    isClear &= !board[i, j].IsEmpty;
+                }
+
+                if (isClear)
+                {
+                    linesCleared++;
+                    ClearLine(board, i);
+                    i++;
+                }
+            }
+
+            return linesCleared;
+        }
+
+        private static void ClearLine(BoardViewModel board, int rowToClear)
+        {
+            for (int i = rowToClear; i >= 1; i--)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    board[i, j].Color = board[i - 1, j].Color;
+                    board[i, j].Brush = board[i - 1, j].Brush;
+                }
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                board[0, i].Color = Colors.Transparent;
+                board[0, i].Brush = Brushes.Transparent;
+            }
+        }
     }
 }
