@@ -1,16 +1,28 @@
 ﻿using System;
 using System.Windows.Media;
 
-namespace WPFTetris.ViewModels
+namespace WPFTetris.ViewModels.Pieces
 {
     internal class I : PieceViewModel
     {
-        public I(BoardViewModel board) : base(board, PieceType.I)
+        public I() : base(PieceType.I)
         {
-            One = new(0, 5, Colors.Aqua, Brushes.Aqua);
-            Two = new(1, 5, Colors.Aqua, Brushes.Aqua);
-            Three = new(2, 5, Colors.Aqua, Brushes.Aqua);
-            Four = new(3, 5, Colors.Aqua, Brushes.Aqua);
+            One = new(0, 6, Colors.Aqua, Brushes.Aqua);
+            Two = new(1, 6, Colors.Aqua, Brushes.Aqua);
+            Three = new(2, 6, Colors.Aqua, Brushes.Aqua);
+            Four = new(3, 6, Colors.Aqua, Brushes.Aqua);
+        }
+
+        public override void ResetPiecePosition()
+        {
+            One.X = 0;
+            Two.X = 1;
+            Three.X = 2;
+            Four.X = 3;
+
+            One.Y = Two.Y = Three.Y = Four.Y = 6;
+
+            RotationState = 0;
         }
 
         public override void RotateClockwise()
@@ -53,7 +65,7 @@ namespace WPFTetris.ViewModels
                 };
             }
 
-            if (Board.MakeMoveIfValid(this, makeMove, revertMove))
+            if (MainViewModel.Board.MakeMoveIfValid(this, makeMove, revertMove))
             {
                 UpdateRotationStateClockwise();
             }

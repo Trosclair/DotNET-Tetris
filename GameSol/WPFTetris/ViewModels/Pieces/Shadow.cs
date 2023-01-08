@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WPFTetris.ViewModels
+namespace WPFTetris.ViewModels.Pieces
 {
     internal class Shadow : PieceViewModel
     {
-        public Shadow(BoardViewModel board) : base(board, PieceType.Shadow)
+        public Shadow() : base(PieceType.Shadow)
         {
         }
 
+        public override void ResetPiecePosition() { }
         public override void RotateClockwise() { }
         public override void RotateCounterClockwise() { }
     }

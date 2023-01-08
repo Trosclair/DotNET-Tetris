@@ -7,22 +7,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WPFTetris.Utilities;
+using WPFTetris.ViewModels.Pieces;
 
 namespace WPFTetris.ViewModels
 {
     internal class MainViewModel : ObservableObject
     {
-        private Random random = new();
         private Stopwatch globalTimer = new();
         private long autoDropTime = 0;
         private long currentDropTime = 0;
-        private PieceViewModel pieceViewModel;
+        private PieceViewModel currentPiece;
         private bool gameOver = false;
-        public BoardViewModel Board { get; } = new();
+        public static BoardViewModel Board { get; } = new();
+        public static RightSideBarViewModel RightSideBar { get; } = new();
         public MainViewModel()
         {
-            pieceViewModel = CreatePiece();
-            Board.AddPieceToBoard(pieceViewModel);
+            currentPiece = RightSideBar.Pop();
+            Board.AddPieceToBoard(currentPiece);
             globalTimer.Start();
             Task.Run(Start);
         }
@@ -40,50 +41,41 @@ namespace WPFTetris.ViewModels
             switch (key)
             {
                 case Key.A:
-                    pieceViewModel.MoveLeft();
+                    currentPiece.MoveLeft();
                     break;
                 case Key.D:
-                    pieceViewModel.MoveRight();
+                    currentPiece.MoveRight();
                     break;
                 case Key.S:
-                    if (!pieceViewModel.MoveDown())
+                    if (!currentPiece.MoveDown())
                     {
                         Board.CheckBoardForLineClears();
-                        pieceViewModel = CreatePiece();
-                        Board.AddPieceToBoard(pieceViewModel);
+                        currentPiece = RightSideBar.Pop();
+                        Board.AddPieceToBoard(currentPiece);
                     }
                     autoDropTime = globalTimer.ElapsedMilliseconds;
                     break;
+                case Key.E:
+                    Board.RemovePieceFromBoard(currentPiece);
+                    currentPiece = RightSideBar.SwapHoldPiece(currentPiece);
+                    Board.AddPieceToBoard(currentPiece);
+                    break;
                 case Key.J:
-                    pieceViewModel.RotateCounterClockwise();
+                    currentPiece.RotateCounterClockwise();
                     break;
                 case Key.K:
-                    pieceViewModel.RotateClockwise();
+                    currentPiece.RotateClockwise();
                     break;
                 case Key.W:
-                    pieceViewModel.HardDrop();
+                    currentPiece.HardDrop();
                     Board.CheckBoardForLineClears();
-                    pieceViewModel = CreatePiece();
-                    Board.AddPieceToBoard(pieceViewModel);
+                    currentPiece = RightSideBar.Pop();
+                    Board.AddPieceToBoard(currentPiece);
                     break;
                 default:
                     break;
             }
         }
 
-        private PieceViewModel CreatePiece()
-        {
-            return (PieceType)random.Next(0, 7) switch
-            {
-                PieceType.I => new I(Board),
-                PieceType.T => new T(Board),
-                PieceType.S => new S(Board),
-                PieceType.Z => new Z(Board),
-                PieceType.L => new L(Board),
-                PieceType.J => new J(Board),
-                PieceType.U => new U(Board),
-                _ => throw new ArgumentException(),
-            };
-        }
     }
 }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
-using WPFTetris.ViewModels;
+using WPFTetris.ViewModels.Pieces;
 
 namespace WPFTetris.ViewModels
 {
@@ -28,7 +28,7 @@ namespace WPFTetris.ViewModels
         {
             bool isMoveValid;
 
-            board.RemovePieceToBoard(piece);
+            board.RemovePieceFromBoard(piece);
 
             makeMove();
 
@@ -65,7 +65,7 @@ namespace WPFTetris.ViewModels
             }
         }
 
-        public static void RemovePieceToBoard(this BoardViewModel board, PieceViewModel piece)
+        public static void RemovePieceFromBoard(this BoardViewModel board, PieceViewModel piece)
         {
             foreach (BlockViewModel block in piece.Blocks)
             {

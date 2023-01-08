@@ -1,25 +1,23 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 
-namespace WPFTetris.ViewModels
+namespace WPFTetris.ViewModels.Pieces
 {
     public abstract class PieceViewModel
     {
         public PieceType PieceType { get; }
-        public int RotationState { get; private set; } = 0;
-        public BoardViewModel Board { get; }
+        public int RotationState { get; protected set; } = 0;
         public BlockViewModel[] Blocks { get; } = new BlockViewModel[4];
         public BlockViewModel One { get => Blocks[0]; set => Blocks[0] = value; }
         public BlockViewModel Two { get => Blocks[1]; set => Blocks[1] = value; }
         public BlockViewModel Three { get => Blocks[2]; set => Blocks[2] = value; }
         public BlockViewModel Four { get => Blocks[3]; set => Blocks[3] = value; }
 
-        public PieceViewModel(BoardViewModel board, PieceType pieceType)
+        public PieceViewModel(PieceType pieceType)
         {
-            Board = board;
             PieceType = pieceType;
         }
 
+        public abstract void ResetPiecePosition();
         public abstract void RotateClockwise();
         public abstract void RotateCounterClockwise();
 
@@ -43,7 +41,7 @@ namespace WPFTetris.ViewModels
                 Four.X--;
             };
 
-            return Board.MakeMoveIfValid(this, makeMove, revertMove);
+            return MainViewModel.Board.MakeMoveIfValid(this, makeMove, revertMove);
         }
 
         public void HardDrop()
@@ -66,7 +64,7 @@ namespace WPFTetris.ViewModels
                 Four.X--;
             };
 
-            while (Board.MakeMoveIfValid(this, makeMove, revertMove)) ;
+            while (MainViewModel.Board.MakeMoveIfValid(this, makeMove, revertMove)) ;
         }
 
         public void MoveRight()
@@ -89,7 +87,7 @@ namespace WPFTetris.ViewModels
                 Four.Y--;
             };
 
-            Board.MakeMoveIfValid(this, makeMove, revertMove);
+            MainViewModel.Board.MakeMoveIfValid(this, makeMove, revertMove);
         }
 
         public void MoveLeft()
@@ -112,7 +110,7 @@ namespace WPFTetris.ViewModels
                 Four.Y++;
             };
 
-            Board.MakeMoveIfValid(this, makeMove, revertMove);
+            MainViewModel.Board.MakeMoveIfValid(this, makeMove, revertMove);
         }
 
         public void UpdateRotationStateClockwise()

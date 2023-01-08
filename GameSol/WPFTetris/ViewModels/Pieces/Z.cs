@@ -5,21 +5,33 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace WPFTetris.ViewModels
+namespace WPFTetris.ViewModels.Pieces
 {
-    internal class S : PieceViewModel
+    internal class Z : PieceViewModel
     {
-        public S(BoardViewModel board) : base(board, PieceType.S)
+        public Z() : base(PieceType.Z)
         {
-            One = new BlockViewModel(1, 5, Colors.DarkGreen, Brushes.DarkGreen);
-            Two = new BlockViewModel(1, 6, Colors.DarkGreen, Brushes.DarkGreen);
-            Three = new BlockViewModel(2, 5, Colors.DarkGreen, Brushes.DarkGreen);
-            Four = new BlockViewModel(2, 4, Colors.DarkGreen, Brushes.DarkGreen);
+            One = new BlockViewModel(1, 5, Colors.Red, Brushes.Red);
+            Two = new BlockViewModel(1, 4, Colors.Red, Brushes.Red);
+            Three = new BlockViewModel(2, 5, Colors.Red, Brushes.Red);
+            Four = new BlockViewModel(2, 6, Colors.Red, Brushes.Red);
+        }
+
+        public override void ResetPiecePosition()
+        {
+            One.X = Two.X = 1;
+            Three.X = Four.X = 2;
+
+            One.Y = Three.Y = 5;
+            Two.Y = 4;
+            Four.Y = 6;
+
+            RotationState = 0;
         }
 
         public override void RotateClockwise()
         {
-            int x2 = Two.X, y2 = Two.Y, x3 = Three.X, y3 = Three.Y, y4 = Four.Y;
+            int x2 = Two.X, y2 = Two.Y, x3 = Three.X, y3 = Three.Y, x4 = Four.X;
 
             Action makeMove;
             void revertMove()
@@ -28,33 +40,33 @@ namespace WPFTetris.ViewModels
                 Two.Y = y2;
                 Three.X = x3;
                 Three.Y = y3;
-                Four.Y = y4;
+                Four.X = x4;
             }
 
             if ((RotationState % 2) == 0)
             {
                 makeMove = () =>
                 {
-                    Two.X--;
-                    Two.Y--;
+                    Two.X++;
+                    Two.Y++;
                     Three.X--;
                     Three.Y++;
-                    Four.Y += 2;
+                    Four.X -= 2;
                 };
             }
             else
             {
                 makeMove = () =>
                 {
-                    Two.X++;
-                    Two.Y++;
+                    Two.X--;
+                    Two.Y--;
                     Three.X++;
                     Three.Y--;
-                    Four.Y -= 2;
+                    Four.X += 2;
                 };
             }
 
-            if (Board.MakeMoveIfValid(this, makeMove, revertMove))
+            if (MainViewModel.Board.MakeMoveIfValid(this, makeMove, revertMove))
             {
                 UpdateRotationStateClockwise();
             }

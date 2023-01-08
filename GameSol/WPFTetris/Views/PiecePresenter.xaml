@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="WPFTetris.Views.PiecePresenter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPFTetris.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="400">
+    <Border BorderThickness="5" CornerRadius="10">
+        <Border.BorderBrush>
+            <LinearGradientBrush>
+                <GradientStop Color="Yellow" Offset=".99"/>
+                <GradientStop Color="DarkGoldenrod" Offset=".7"/>
+                <GradientStop Color="Wheat"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+        <Grid>
+            <Rectangle Fill="Black" Opacity=".2"/>
+            <ContentPresenter Margin="25" Content="{Binding Piece}"/>
+        </Grid>
+    </Border>
+</UserControl>

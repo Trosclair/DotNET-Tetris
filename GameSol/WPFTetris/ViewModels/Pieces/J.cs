@@ -5,16 +5,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace WPFTetris.ViewModels
+namespace WPFTetris.ViewModels.Pieces
 {
     internal class J : PieceViewModel
     {
-        public J(BoardViewModel board) : base(board, PieceType.J)
+        public J() : base(PieceType.J)
         {
-            One = new BlockViewModel(0, 5, Colors.Blue, Brushes.Blue);
-            Two = new BlockViewModel(1, 5, Colors.Blue, Brushes.Blue);
-            Three = new BlockViewModel(2, 5, Colors.Blue, Brushes.Blue);
-            Four = new BlockViewModel(2, 4, Colors.Blue, Brushes.Blue);
+            One = new BlockViewModel(0, 6, Colors.Blue, Brushes.Blue);
+            Two = new BlockViewModel(1, 6, Colors.Blue, Brushes.Blue);
+            Three = new BlockViewModel(2, 6, Colors.Blue, Brushes.Blue);
+            Four = new BlockViewModel(2, 5, Colors.Blue, Brushes.Blue);
+        }
+
+        public override void ResetPiecePosition()
+        {
+            One.X = 0;
+            Two.X = 1;
+            Three.X = 2;
+            Four.X = 2;
+
+            One.Y = Two.Y = Three.Y = 5;
+            Four.Y = 4;
+
+            RotationState = 0;
         }
 
         public override void RotateClockwise()
@@ -76,7 +89,7 @@ namespace WPFTetris.ViewModels
                 };
             }
 
-            if (Board.MakeMoveIfValid(this, makeMove, revertMove))
+            if (MainViewModel.Board.MakeMoveIfValid(this, makeMove, revertMove))
             {
                 UpdateRotationStateClockwise();
             }
@@ -141,7 +154,7 @@ namespace WPFTetris.ViewModels
                 };
             }
 
-            if (Board.MakeMoveIfValid(this, makeMove, revertMove))
+            if (MainViewModel.Board.MakeMoveIfValid(this, makeMove, revertMove))
             {
                 UpdateRotationStateCounterClockwise();
             }
