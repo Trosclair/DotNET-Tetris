@@ -11,10 +11,10 @@ namespace WPFTetris.ViewModels
     {
         public S(BoardViewModel board) : base(board, PieceType.S)
         {
-            One = new BlockViewModel(0, 5, Colors.DarkGreen, Brushes.DarkGreen);
-            Two = new BlockViewModel(0, 6, Colors.DarkGreen, Brushes.DarkGreen);
-            Three = new BlockViewModel(1, 5, Colors.DarkGreen, Brushes.DarkGreen);
-            Four = new BlockViewModel(1, 4, Colors.DarkGreen, Brushes.DarkGreen);
+            One = new BlockViewModel(1, 5, Colors.DarkGreen, Brushes.DarkGreen);
+            Two = new BlockViewModel(1, 6, Colors.DarkGreen, Brushes.DarkGreen);
+            Three = new BlockViewModel(2, 5, Colors.DarkGreen, Brushes.DarkGreen);
+            Four = new BlockViewModel(2, 4, Colors.DarkGreen, Brushes.DarkGreen);
         }
 
         public override void RotateClockwise()
