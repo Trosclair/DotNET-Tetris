@@ -22,18 +22,18 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <DockPanel Grid.Row="0" Grid.Column="1">
+            <DockPanel Grid.Row="0" Grid.Column="1" Margin="5">
                 <TextBlock DockPanel.Dock="Top" Text="HOLD:" Foreground="White"/>
                 <local:PiecePresenter DataContext="{Binding Hold}"/>
             </DockPanel>
-            <DockPanel Grid.Row="0" >
+            <DockPanel Grid.Row="0" Margin="5">
                 <TextBlock DockPanel.Dock="Top" Text="Next:" Foreground="White"/>
                 <local:PiecePresenter DataContext="{Binding Next}"/>
             </DockPanel>
-            <local:PiecePresenter Width="150" HorizontalAlignment="Right" Grid.Row="1" DataContext="{Binding One}"/>
-            <local:PiecePresenter Width="150" HorizontalAlignment="Right" Grid.Row="2" DataContext="{Binding Two}"/>
-            <local:PiecePresenter Width="150" HorizontalAlignment="Right" Grid.Row="3" DataContext="{Binding Three}"/>
-            <local:PiecePresenter Width="150" HorizontalAlignment="Right" Grid.Row="4" DataContext="{Binding Four}"/>
+            <local:PiecePresenter Width="150" HorizontalAlignment="Right" Grid.Row="1" DataContext="{Binding One}" Margin="5"/>
+            <local:PiecePresenter Width="150" HorizontalAlignment="Right" Grid.Row="2" DataContext="{Binding Two}" Margin="5"/>
+            <local:PiecePresenter Width="150" HorizontalAlignment="Right" Grid.Row="3" DataContext="{Binding Three}" Margin="5"/>
+            <local:PiecePresenter Width="150" HorizontalAlignment="Right" Grid.Row="4" DataContext="{Binding Four}" Margin="5"/>
         </Grid>
     </Grid>
 </UserControl>
