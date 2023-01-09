@@ -7,10 +7,10 @@ namespace WPFTetris.ViewModels.Pieces
     {
         public I() : base(PieceType.I)
         {
-            One = new(0, 6, Colors.Aqua, Brushes.Aqua);
-            Two = new(1, 6, Colors.Aqua, Brushes.Aqua);
-            Three = new(2, 6, Colors.Aqua, Brushes.Aqua);
-            Four = new(3, 6, Colors.Aqua, Brushes.Aqua);
+            One = new(0, 5, Colors.Aqua, Brushes.Aqua);
+            Two = new(1, 5, Colors.Aqua, Brushes.Aqua);
+            Three = new(2, 5, Colors.Aqua, Brushes.Aqua);
+            Four = new(3, 5, Colors.Aqua, Brushes.Aqua);
         }
 
         public override void ResetPiecePosition()

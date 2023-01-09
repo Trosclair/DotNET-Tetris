@@ -15,7 +15,7 @@
             </LinearGradientBrush>
         </Border.BorderBrush>
         <Grid>
-            <Rectangle Fill="Black" Opacity=".2"/>
+            <Rectangle Fill="Black" Opacity=".6"/>
             <ContentPresenter Margin="25" Content="{Binding Piece}"/>
         </Grid>
     </Border>

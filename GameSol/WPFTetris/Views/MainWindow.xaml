@@ -7,42 +7,45 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="1080" Width="1920" ResizeMode="NoResize" ShowInTaskbar="True" WindowState="Maximized" WindowStyle="None" KeyDown="Window_KeyDown">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="400"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="800"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-
-        <ItemsControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Board}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemContainerStyle>
-                <Style>
-                    <Setter Property="Canvas.Left" Value="{Binding Path=PixelY}" />
-                    <Setter Property="Canvas.Top" Value="{Binding Path=PixelX}" />
-                </Style>
-            </ItemsControl.ItemContainerStyle>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type vms:BlockViewModel}">
-                    <local1:Block/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-
-        <Grid Grid.Row="1" Grid.Column="2">
+        <Image Source="/Views/tetris.jpg.jpg"/>
+        <Grid>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
                 <ColumnDefinition Width="400"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <local1:RightSideBar DataContext="{Binding RightSideBar}"/>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="800"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <ItemsControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Board}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemContainerStyle>
+                    <Style>
+                        <Setter Property="Canvas.Left" Value="{Binding Path=PixelY}" />
+                        <Setter Property="Canvas.Top" Value="{Binding Path=PixelX}" />
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type vms:BlockViewModel}">
+                        <local1:Block/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <Grid Grid.Row="1" Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="400"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <local1:RightSideBar DataContext="{Binding RightSideBar}"/>
+            </Grid>
         </Grid>
     </Grid>
 </Window>
