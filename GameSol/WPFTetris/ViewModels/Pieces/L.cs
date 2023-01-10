@@ -32,7 +32,7 @@ namespace WPFTetris.ViewModels.Pieces
 
         public override void RotateClockwise()
         {
-            int x1 = One.X, y1 = One.Y, x3 = Three.X, y3 = Three.Y, y4 = Four.Y;
+            int x1 = One.X, y1 = One.Y, x3 = Three.X, y3 = Three.Y, x4 = Four.X, y4 = Four.Y;
 
             Action makeMove;
             void revertMove()
@@ -40,7 +40,8 @@ namespace WPFTetris.ViewModels.Pieces
                 One.X = x1;
                 One.Y = y1;
                 Three.X = x3;
-                Three.X = y3;
+                Three.Y = y3;
+                Four.X = x4;
                 Four.Y = y4;
             }
 
@@ -97,7 +98,7 @@ namespace WPFTetris.ViewModels.Pieces
 
         public override void RotateCounterClockwise()
         {
-            int x1 = One.X, y1 = One.Y, x3 = Three.X, y3 = Three.Y, x4 = Four.X;
+            int x1 = One.X, y1 = One.Y, x3 = Three.X, y3 = Three.Y, x4 = Four.X, y4 = Four.Y;
 
             Action makeMove;
             void revertMove()
@@ -105,8 +106,9 @@ namespace WPFTetris.ViewModels.Pieces
                 One.X = x1;
                 One.Y = y1;
                 Three.X = x3;
-                Three.X = y3;
+                Three.Y = y3;
                 Four.X = x4;
+                Four.Y = y4;
             }
 
             if (RotationState == 0)
