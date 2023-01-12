@@ -4,78 +4,80 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
+using WPFTetris.Models;
 using WPFTetris.Utilities;
-using WPFTetris.ViewModels.Pieces;
+using WPFTetris.ViewModels.Game;
+using WPFTetris.ViewModels.Game.Pieces;
+using WPFTetris.ViewModels.Settings;
+using WPFTetris.Views;
 
 namespace WPFTetris.ViewModels
 {
     internal class MainViewModel : ObservableObject
     {
-        private Stopwatch globalTimer = new();
-        private long autoDropTime = 0;
-        private long currentDropTime = 0;
-        private PieceViewModel currentPiece;
-        private bool gameOver = false;
-        public static BoardViewModel Board { get; } = new();
-        public static RightSideBarViewModel RightSideBar { get; } = new();
+        public static event EventHandler<Key>? OnKeyDown;
+        public static event EventHandler<Key>? OnKeyUp;
+
+        public static Stopwatch GlobalTimer { get; } = new();
+        public static Dictionary<Key, (bool, long)> IsKeyPressed { get; } = new();
+        public GameViewModel Game { get; }
+        public SettingsViewModel Settings { get; }
+        public RelayCommand CustomGameSetupCommand => new(CustomGameSetup);
+        public RelayCommand QuickGameCommand => new(QuickGame);
+        public RelayCommand OptionsCommand => new(Options);
+
         public MainViewModel()
         {
-            currentPiece = RightSideBar.Pop();
-            Board.AddPieceToBoard(currentPiece);
-            globalTimer.Start();
-            Task.Run(Start);
+            GlobalTimer.Start();
+            Settings = new(new());      // TODO Deserialize settings here.
+            Game = new(Settings);
+            QuickGame();
         }
 
-        private void Start()
+        public void CustomGameSetup()
         {
-            while (!gameOver)
-            {
 
-            }
         }
 
-        public void HandleUserInput(Key key)
+        public void QuickGame()
         {
-            switch (key)
-            {
-                case Key.A:
-                    currentPiece.MoveLeft();
-                    break;
-                case Key.D:
-                    currentPiece.MoveRight();
-                    break;
-                case Key.S:
-                    if (!currentPiece.MoveDown())
-                    {
-                        Board.CheckBoardForLineClears();
-                        currentPiece = RightSideBar.Pop();
-                        Board.AddPieceToBoard(currentPiece);
-                    }
-                    autoDropTime = globalTimer.ElapsedMilliseconds;
-                    break;
-                case Key.E:
-                    Board.RemovePieceFromBoard(currentPiece);
-                    currentPiece = RightSideBar.SwapHoldPiece(currentPiece);
-                    Board.AddPieceToBoard(currentPiece);
-                    break;
-                case Key.J:
-                    currentPiece.RotateCounterClockwise();
-                    break;
-                case Key.K:
-                    currentPiece.RotateClockwise();
-                    break;
-                case Key.W:
-                    currentPiece.HardDrop();
-                    Board.CheckBoardForLineClears();
-                    currentPiece = RightSideBar.Pop();
-                    Board.AddPieceToBoard(currentPiece);
-                    break;
-                default:
-                    break;
-            }
+            CompositionTarget.Rendering += (_1, _2) => Game.Loop();
         }
 
+        public void Options()
+        {
+
+        }
+
+        public void KeyDown(Key key)
+        {
+            if (IsKeyPressed.ContainsKey(key))
+            {
+                IsKeyPressed[key] = (true, GlobalTimer.ElapsedMilliseconds);
+            }
+            else
+            {
+                IsKeyPressed.Add(key, (true, GlobalTimer.ElapsedMilliseconds));
+            }
+            //OnKeyDown?.Invoke(this, key);
+        }
+
+        public void KeyUp(Key key)
+        {
+            if (IsKeyPressed.ContainsKey(key))
+            {
+                IsKeyPressed[key] = (false, 0);
+            }
+            else
+            {
+                IsKeyPressed.Add(key, (false, 0));
+            }
+            //OnKeyUp?.Invoke(this, key);
+        }
     }
 }

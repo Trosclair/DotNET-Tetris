@@ -16,7 +16,7 @@
         </Border.BorderBrush>
         <Grid>
             <Rectangle Fill="Black" Opacity=".6"/>
-            <ContentPresenter Margin="25" Content="{Binding Piece}"/>
+            <ContentPresenter Margin="25" Content="{Binding DataContext, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
         </Grid>
     </Border>
 </UserControl>
