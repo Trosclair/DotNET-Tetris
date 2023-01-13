@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using WPFUtilities;
 using WPFTetris.Models.Settings.Gameplay;
-using WPFTetris.Utilities;
 
 namespace WPFTetris.ViewModels.Settings.Gameplay
 {

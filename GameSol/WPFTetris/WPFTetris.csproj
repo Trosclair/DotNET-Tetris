@@ -8,11 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Views\tetris.jpg.jpg" />
+    <None Remove="Backgrounds\tetris.jpg" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Backgrounds\" />
     <Folder Include="ViewModels\MainMenu\" />
   </ItemGroup>
 
@@ -21,7 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Views\tetris.jpg.jpg" />
+    <ProjectReference Include="..\..\..\WPF Utilities\WPF Utilities\WPFUtilities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Backgrounds\tetris.jpg" />
   </ItemGroup>
 
 </Project>

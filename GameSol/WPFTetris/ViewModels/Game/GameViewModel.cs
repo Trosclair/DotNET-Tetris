@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
-using WPFTetris.Models;
-using WPFTetris.Utilities;
+using System.Windows.Media;
+using WPFUtilities;
+using WPFUtilities.Commands;
 using WPFTetris.ViewModels.Parameters;
 using WPFTetris.ViewModels.Settings;
 
@@ -37,6 +33,10 @@ namespace WPFTetris.ViewModels.Game
         public SettingsViewModel Settings { init; get; }
         public ParametersViewModel Parameters { init; get; }
 
+        public RelayCommand QuitGameCommand => new(QuitGame);
+        public RelayCommand ResumeGameCommand => new(ResumeGame);
+        public RelayCommand OptionsCommand => new(Options);
+
         public GameViewModel(SettingsViewModel settings, ParametersViewModel parameters, int playerCount = 1)
         {
             Settings = settings;
@@ -45,11 +45,11 @@ namespace WPFTetris.ViewModels.Game
 
             for (int i = 0; i < playerCount; i++)
             {
-                Boards.Add(new(Settings, Parameters, Pause, i));
+                Boards.Add(new(Settings, Parameters, PauseGame, i));
             }
         }
 
-        public void Loop()
+        public void Loop(object? sender, EventArgs e)
         {
             if (globalTimer.ElapsedMilliseconds > frameRateTime + 1000)
             {
@@ -73,52 +73,26 @@ namespace WPFTetris.ViewModels.Game
             }
         }
 
-        public void Pause()
+        public void PauseGame()
         {
             IsPaused = true;
             PauseMenuVisibility = Visibility.Visible;
         }
-        
 
-        //public void HandleUserInput(Key key)
-        //{
-        //    switch (key)
-        //    {
-        //        case Key.A:
-        //            currentPiece.MoveLeft();
-        //            break;
-        //        case Key.D:
-        //            currentPiece.MoveRight();
-        //            break;
-        //        case Key.S:
-        //            if (!currentPiece.MoveDown())
-        //            {
-        //                BoardOne.CheckBoardForLineClears();
-        //                currentPiece = RightSideBar.Pop();
-        //                BoardOne.AddPieceToBoard(currentPiece);
-        //            }
-        //            autoDropTime = globalTimer.ElapsedMilliseconds;
-        //            break;
-        //        case Key.E:
-        //            BoardOne.RemovePieceFromBoard(currentPiece);
-        //            currentPiece = RightSideBar.SwapHoldPiece(currentPiece);
-        //            BoardOne.AddPieceToBoard(currentPiece);
-        //            break;
-        //        case Key.J:
-        //            currentPiece.RotateCounterClockwise();
-        //            break;
-        //        case Key.K:
-        //            currentPiece.RotateClockwise();
-        //            break;
-        //        case Key.W:
-        //            currentPiece.HardDrop();
-        //            BoardOne.CheckBoardForLineClears();
-        //            currentPiece = RightSideBar.Pop();
-        //            BoardOne.AddPieceToBoard(currentPiece);
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
+        private void QuitGame()
+        {
+            CompositionTarget.Rendering -= Loop;
+        }
+
+        private void Options()
+        {
+
+        }
+
+        private void ResumeGame()
+        {
+            PauseMenuVisibility = Visibility.Collapsed;
+            IsPaused = false;
+        }
     }
 }

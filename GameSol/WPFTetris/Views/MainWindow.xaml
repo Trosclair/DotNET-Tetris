@@ -5,13 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFTetris" xmlns:local1="clr-namespace:WPFTetris.Views" 
         xmlns:pieces="clr-namespace:WPFTetris.ViewModels.Game.Pieces" 
-        xmlns:vms="clr-namespace:WPFTetris.ViewModels" 
+        xmlns:vms="clr-namespace:WPFTetris.ViewModels" xmlns:mainMenu="clr-namespace:WPFTetris.Views.MainMenu"
+        xmlns:convertersNullTo="clr-namespace:WPFUtilities.Converters.NullTo;assembly=WPFUtilities"
         d:DataContext="{d:DesignInstance Type=vms:MainViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="1080" Width="1920" ResizeMode="NoResize" ShowInTaskbar="True" WindowState="Maximized" WindowStyle="None">
     <Grid>
-        <Image Source="/Views/tetris.jpg.jpg"/>
-        <Grid>
+        <Image Source="/Backgrounds/tetris.jpg"/>
+
+        <mainMenu:MainMenu Visibility="{Binding Game, FallbackValue=Visible, Converter={convertersNullTo:NullToVisibility NotNullVisibility=Collapsed, NullVisibility=Visible}}"/>
+
+        <Grid Visibility="{Binding Game, FallbackValue=Collapsed, Converter={convertersNullTo:NullToVisibility NotNullVisibility=Visible, NullVisibility=Collapsed}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="400"/>
