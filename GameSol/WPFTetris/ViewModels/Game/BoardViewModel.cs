@@ -4,12 +4,12 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows.Media;
 using WPFUtilities;
-using WPFTetris.ViewModels.Game.Pieces;
-using WPFTetris.ViewModels.Parameters;
-using WPFTetris.ViewModels.Settings;
-using WPFTetris.ViewModels.Settings.Controls;
+using Netris.ViewModels.Game.Pieces;
+using Netris.ViewModels.Parameters;
+using Netris.ViewModels.Settings;
+using Netris.ViewModels.Settings.Controls;
 
-namespace WPFTetris.ViewModels.Game
+namespace Netris.ViewModels.Game
 {
     public class BoardViewModel : ObservableObject
     {

@@ -1,10 +1,10 @@
 ﻿using WPFUtilities;
-using WPFTetris.Models.Settings;
-using WPFTetris.ViewModels.Settings.Controls;
-using WPFTetris.ViewModels.Settings.Gameplay;
-using WPFTetris.ViewModels.Settings.Video;
+using Netris.Models.Settings;
+using Netris.ViewModels.Settings.Controls;
+using Netris.ViewModels.Settings.Gameplay;
+using Netris.ViewModels.Settings.Video;
 
-namespace WPFTetris.ViewModels.Settings
+namespace Netris.ViewModels.Settings
 {
     public class SettingsViewModel : ObservableObject
     {

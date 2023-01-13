@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WPFTetris.Views.MainMenu
+namespace Netris.Views.MainMenu
 {
     /// <summary>
     /// Interaction logic for MainMenu.xaml

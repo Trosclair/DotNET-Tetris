@@ -4,9 +4,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using WPFUtilities;
 using WPFUtilities.Commands;
-using WPFTetris.ViewModels.Game;
+using Netris.ViewModels.Game;
 
-namespace WPFTetris.ViewModels
+namespace Netris.ViewModels
 {
     internal class MainViewModel : ObservableObject
     {

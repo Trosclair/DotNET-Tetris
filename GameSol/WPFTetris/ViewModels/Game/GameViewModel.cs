@@ -6,10 +6,10 @@ using System.Windows;
 using System.Windows.Media;
 using WPFUtilities;
 using WPFUtilities.Commands;
-using WPFTetris.ViewModels.Parameters;
-using WPFTetris.ViewModels.Settings;
+using Netris.ViewModels.Parameters;
+using Netris.ViewModels.Settings;
 
-namespace WPFTetris.ViewModels.Game
+namespace Netris.ViewModels.Game
 {
     public class GameViewModel : ObservableObject
     {

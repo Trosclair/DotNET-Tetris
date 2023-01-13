@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WPFTetris.Views.Settings
+namespace Netris.Views.Settings
 {
     /// <summary>
     /// Interaction logic for Settings.xaml

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WPFTetris.Models.Settings.Gameplay
+namespace Netris.Models.Settings.Gameplay
 {
     public class GameplaySettings
     {

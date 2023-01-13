@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 
-namespace WPFTetris.ViewModels.Game.Pieces
+namespace Netris.ViewModels.Game.Pieces
 {
     public abstract class PieceViewModel
     {

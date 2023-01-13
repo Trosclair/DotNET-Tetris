@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WPFTetris.Views.Settings.Gameplay
+namespace Netris.Views.Settings.Gameplay
 {
     /// <summary>
     /// Interaction logic for GamePlay.xaml

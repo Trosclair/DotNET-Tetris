@@ -1,8 +1,8 @@
 ﻿using System.Collections.ObjectModel;
-using WPFTetris.Models.Settings.Video;
+using Netris.Models.Settings.Video;
 using WPFUtilities;
 
-namespace WPFTetris.ViewModels.Settings.Video
+namespace Netris.ViewModels.Settings.Video
 {
     public class VideoSettingsViewModel : ObservableObject
     {

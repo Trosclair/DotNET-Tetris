@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32519.379
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFTetris", "WPFTetris\WPFTetris.csproj", "{5FA0F6D9-A1F2-460D-9A10-E99F4B349F24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Netris", "WPFTetris\Netris.csproj", "{5FA0F6D9-A1F2-460D-9A10-E99F4B349F24}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFUtilities", "..\..\WPF Utilities\WPF Utilities\WPFUtilities.csproj", "{3930F12F-A39B-4710-9580-5E2CB2E7AAA5}"
 EndProject

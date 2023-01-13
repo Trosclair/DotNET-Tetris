@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WPFTetris.ViewModels.Parameters;
+using Netris.ViewModels.Parameters;
 
-namespace WPFTetris.ViewModels.Game
+namespace Netris.ViewModels.Game
 {
     public class DASStateViewModel
     {

@@ -1,7 +1,7 @@
 ﻿using WPFUtilities;
-using WPFTetris.Models.Settings.Gameplay;
+using Netris.Models.Settings.Gameplay;
 
-namespace WPFTetris.ViewModels.Settings.Gameplay
+namespace Netris.ViewModels.Settings.Gameplay
 {
     public class GameplaySettingsViewModel : ObservableObject
     {

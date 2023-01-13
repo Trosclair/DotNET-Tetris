@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WPFTetris.Models.Parameters
+namespace Netris.Models.Parameters
 {
     public class Parameters
     {

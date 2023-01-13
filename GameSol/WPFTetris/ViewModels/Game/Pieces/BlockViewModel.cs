@@ -1,7 +1,7 @@
 ﻿using System.Windows.Media;
 using WPFUtilities;
 
-namespace WPFTetris.ViewModels.Game.Pieces
+namespace Netris.ViewModels.Game.Pieces
 {
     public class BlockViewModel : ObservableObject
     {

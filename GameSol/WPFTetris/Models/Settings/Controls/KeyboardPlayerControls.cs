@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace WPFTetris.Models.Settings.Controls
+namespace Netris.Models.Settings.Controls
 {
     public class KeyboardPlayerControls
     {

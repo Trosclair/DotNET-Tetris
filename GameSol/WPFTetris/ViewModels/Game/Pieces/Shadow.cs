@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace WPFTetris.ViewModels.Game.Pieces
+namespace Netris.ViewModels.Game.Pieces
 {
     public class Shadow : PieceViewModel
     {

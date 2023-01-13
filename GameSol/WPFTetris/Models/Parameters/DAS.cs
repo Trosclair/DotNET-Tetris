@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WPFTetris.Models.Parameters
+namespace Netris.Models.Parameters
 {
     /// <summary>
     /// Writing a DAS algorithm is a bitch, but parameterizing it is suffering incarnate...

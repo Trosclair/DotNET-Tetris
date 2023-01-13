@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WPFTetris.ViewModels.Game.Pieces
+namespace Netris.ViewModels.Game.Pieces
 {
     public class Empty : PieceViewModel
     {

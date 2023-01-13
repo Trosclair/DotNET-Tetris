@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WPFTetris.Views.Settings.Video
+namespace Netris.Views.Settings.Video
 {
     /// <summary>
     /// Interaction logic for Video.xaml

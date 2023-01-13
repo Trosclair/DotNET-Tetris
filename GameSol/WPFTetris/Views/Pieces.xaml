@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:piece="clr-namespace:WPFTetris.ViewModels.Game.Pieces"
-                    xmlns:views="clr-namespace:WPFTetris.Views">
+                    xmlns:piece="clr-namespace:Netris.ViewModels.Game.Pieces"
+                    xmlns:views="clr-namespace:Netris.Views">
     <DataTemplate DataType="{x:Type piece:I}">
         <Viewbox>
             <Grid Height="160" Width="40">

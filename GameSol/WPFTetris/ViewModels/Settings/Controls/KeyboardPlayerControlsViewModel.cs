@@ -1,8 +1,8 @@
 ﻿using System.Windows.Input;
-using WPFTetris.Models.Settings.Controls;
+using Netris.Models.Settings.Controls;
 using WPFUtilities;
 
-namespace WPFTetris.ViewModels.Settings.Controls
+namespace Netris.ViewModels.Settings.Controls
 {
     public class KeyboardPlayerControlsViewModel : ObservableObject
     {

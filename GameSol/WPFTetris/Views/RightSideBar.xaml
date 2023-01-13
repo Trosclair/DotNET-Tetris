@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="WPFTetris.Views.RightSideBar"
+﻿<UserControl x:Class="Netris.Views.RightSideBar"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WPFTetris.Views" xmlns:game="clr-namespace:WPFTetris.ViewModels.Game" d:DataContext="{d:DesignInstance Type=game:BoardViewModel}"
+             xmlns:local="clr-namespace:Netris.Views" xmlns:game="clr-namespace:Netris.ViewModels.Game" d:DataContext="{d:DesignInstance Type=game:BoardViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="400">
     <UserControl.Resources>

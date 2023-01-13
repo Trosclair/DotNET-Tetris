@@ -1,7 +1,7 @@
 ﻿using WPFUtilities;
-using WPFTetris.Models.Parameters;
+using Netris.Models.Parameters;
 
-namespace WPFTetris.ViewModels.Parameters
+namespace Netris.ViewModels.Parameters
 {
     public class DASViewModel : ObservableObject
     {

@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WPFTetris.Models.Settings.Controls;
-using WPFTetris.Models.Settings.Gameplay;
-using WPFTetris.Models.Settings.Video;
+using Netris.Models.Settings.Controls;
+using Netris.Models.Settings.Gameplay;
+using Netris.Models.Settings.Video;
 
-namespace WPFTetris.Models.Settings
+namespace Netris.Models.Settings
 {
     public class SettingsModel
     {

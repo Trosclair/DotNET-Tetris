@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Windows.Media;
 
-namespace WPFTetris.ViewModels.Game.Pieces
+namespace Netris.ViewModels.Game.Pieces
 {
     internal class I : PieceViewModel
     {

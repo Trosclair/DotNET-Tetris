@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WPFTetris.Models.Parameters;
+using Netris.Models.Parameters;
 
-namespace WPFTetris.ViewModels.Parameters
+namespace Netris.ViewModels.Parameters
 {
     public class ParametersViewModel
     {

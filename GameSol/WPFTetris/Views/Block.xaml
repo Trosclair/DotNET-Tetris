@@ -1,11 +1,11 @@
-﻿<UserControl x:Class="WPFTetris.Views.Block"
+﻿<UserControl x:Class="Netris.Views.Block"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:WPFTetris.Views" 
-      xmlns:viewmodels="clr-namespace:WPFTetris.ViewModels" 
-      d:DataContext="{d:DesignInstance Type=viewmodels:BlockViewModel}"
+      xmlns:local="clr-namespace:Netris.Views" 
+      xmlns:pieces="clr-namespace:Netris.ViewModels.Game.Pieces"
+      d:DataContext="{d:DesignInstance Type=pieces:BlockViewModel}"
       mc:Ignorable="d" 
       d:DesignHeight="40" d:DesignWidth="40">
     <Canvas Opacity=".9">

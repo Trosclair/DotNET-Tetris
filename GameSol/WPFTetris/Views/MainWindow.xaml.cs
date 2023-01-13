@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
-using WPFTetris.ViewModels;
+using Netris.ViewModels;
 
-namespace WPFTetris.Views
+namespace Netris.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

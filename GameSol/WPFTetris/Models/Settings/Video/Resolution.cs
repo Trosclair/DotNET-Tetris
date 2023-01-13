@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WPFTetris.Models.Settings.Video
+namespace Netris.Models.Settings.Video
 {
     public class Resolution
     {

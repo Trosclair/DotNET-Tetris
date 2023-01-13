@@ -1,4 +1,4 @@
-﻿namespace WPFTetris.ViewModels.Game.Pieces
+﻿namespace Netris.ViewModels.Game.Pieces
 {
     public enum PieceType
     {
