@@ -12,14 +12,18 @@ namespace Netris.ViewModels.Game.Pieces
 {
     public class PieceFactory
     {
-        private static readonly Random random = new();
-        private static readonly List<PieceType> pieceTypes = new();
-        private static readonly List<PieceType> bagInts = new();
+        private Random random;
+        private List<PieceType> pieceTypes;
+        private List<PieceType> bagInts;
 
         public Func<PlayerViewModel, PieceViewModel> GetNextPiece { init; get; }
 
         public PieceFactory(ParametersViewModel parameters, bool isHost) 
         {
+            random = new();
+            pieceTypes = new();
+            bagInts = new();
+
             if (isHost)
             {
                 GetNextPiece = parameters.PieceGeneration.Type switch

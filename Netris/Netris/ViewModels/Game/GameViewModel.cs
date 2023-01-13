@@ -9,16 +9,14 @@ using WPFUtilities.Commands;
 using Netris.ViewModels.Parameters;
 using Netris.ViewModels.Settings;
 using Netris.ViewModels.Game.Pieces;
+using WPFUtilities.Utilities;
 
 namespace Netris.ViewModels.Game
 {
     public class GameViewModel : ObservableObject
     {
         private int playerCount;
-        private long frameRateTime = 0;
-        private int frameRate = 0;
         private bool isPaused;
-        private static Stopwatch globalTimer = MainViewModel.GlobalTimer;
         private Visibility pauseMenuVisibility = Visibility.Collapsed;
 
         public ObservableCollection<PlayerViewModel> Boards { init; get; } = new();
@@ -26,7 +24,6 @@ namespace Netris.ViewModels.Game
         public PlayerViewModel BoardTwo { get => Boards[1]; set => Boards[1] = value; }
         public PlayerViewModel BoardThree { get => Boards[2]; set => Boards[2] = value; }
         public PlayerViewModel BoardFour { get => Boards[3]; set => Boards[3] = value;  }
-        public int FrameRate { get => frameRate; set { frameRate = value; OnPropertyChanged(nameof(FrameRate)); } }
         public bool IsPaused { get => isPaused; set { isPaused = value; } }
         public int PlayerCount { get => playerCount; set { playerCount = value; OnPropertyChanged(nameof(PlayerCount)); } }
         public Visibility PauseMenuVisibility { get => pauseMenuVisibility; set { pauseMenuVisibility = value; OnPropertyChanged(nameof(PauseMenuVisibility)); } }
@@ -34,7 +31,6 @@ namespace Netris.ViewModels.Game
         public SettingsViewModel Settings { init; get; }
         public ParametersViewModel Parameters { init; get; }
 
-        public RelayCommand QuitGameCommand => new(QuitGame);
         public RelayCommand ResumeGameCommand => new(ResumeGame);
         public RelayCommand OptionsCommand => new(Options);
 
@@ -52,19 +48,11 @@ namespace Netris.ViewModels.Game
             }
         }
 
-        public void Loop(object? sender, EventArgs e)
+        public void GameLoop()
         {
-            if (globalTimer.ElapsedMilliseconds > frameRateTime + 1000)
-            {
-                FrameRate = frameRate;
-                frameRate = 0;
-                frameRateTime = globalTimer.ElapsedMilliseconds;
-            }
-            frameRate++;
-            
             if (!isPaused)
             {
-                for (int i = 0; i < Boards.Count(); i++)
+                for (int i = 0; i < Boards.Count; i++)
                 {
                     Boards[i].CheckForInput();
 
@@ -82,10 +70,6 @@ namespace Netris.ViewModels.Game
             PauseMenuVisibility = Visibility.Visible;
         }
 
-        private void QuitGame()
-        {
-            CompositionTarget.Rendering -= Loop;
-        }
 
         private void Options()
         {

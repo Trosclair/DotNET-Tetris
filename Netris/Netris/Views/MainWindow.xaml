@@ -12,6 +12,8 @@
         Title="MainWindow" Height="1080" Width="1920" ResizeMode="NoResize" ShowInTaskbar="True" WindowState="Maximized" WindowStyle="None">
     <Grid>
         <Image Source="/Backgrounds/tetris.jpg"/>
+        
+        <TextBlock Text="{Binding FPSCounter.FrameRate}" Foreground="White"/>
 
         <mainMenu:MainMenu Visibility="{Binding Game, FallbackValue=Visible, Converter={convertersNullTo:NullToVisibility NotNullVisibility=Collapsed, NullVisibility=Visible}}"/>
 
@@ -27,7 +29,6 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="{Binding Game.FrameRate}" Foreground="White"/>
 
             <ItemsControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Game.BoardOne.Board}">
                 <ItemsControl.ItemsPanel>

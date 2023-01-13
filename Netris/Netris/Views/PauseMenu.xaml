@@ -26,7 +26,7 @@
 
             <Button Grid.Row="1" Command="{Binding Game.ResumeGameCommand}" Content="Resume" Grid.Column="1" Margin="10"/>
             <Button Grid.Row="2" Command="{Binding Game.OptionsCommand}" Content="Options" Grid.Column="1" Margin="10"/>
-            <Button Grid.Row="3" Command="{Binding Game.QuitGameCommand}" Content="Quit" Grid.Column="1" Margin="10"/>
+            <Button Grid.Row="3" Command="{Binding QuitGameCommand}" Content="Quit" Grid.Column="1" Margin="10"/>
         </Grid>
     </Grid>
 </UserControl>

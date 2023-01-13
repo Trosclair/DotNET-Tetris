@@ -22,7 +22,6 @@ namespace Netris.ViewModels.Game
         private long autoDropTime = 0;
         private long currentDropTime = 0;
         private bool hasHeld = false;
-        private bool isHoldingPause = false, isHoldingHold = false, isHoldingHardDrop = false;
         private PieceViewModel next, holdPiece, one, two, three, four;
 
         public ObservableCollection<BlockViewModel> Board { get; } = new();
@@ -171,7 +170,7 @@ namespace Netris.ViewModels.Game
             {
                 Pause();
             }
-            else if (Keyboard.IsKeyDown(playerControls.Hold) && !isHoldingHold)
+            else if (Keyboard.IsKeyDown(playerControls.Hold))
             {
                 Hold();
             }
