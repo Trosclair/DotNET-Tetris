@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Input;
 using WPFTetris.Models;
 using WPFTetris.Utilities;
+using WPFTetris.ViewModels.Parameters;
 using WPFTetris.ViewModels.Settings;
 
 namespace WPFTetris.ViewModels.Game
@@ -30,16 +31,19 @@ namespace WPFTetris.ViewModels.Game
 
         public int PlayerCount { get => playerCount; set { playerCount = value; OnPropertyChanged(nameof(PlayerCount)); } }
         public SettingsViewModel Settings { init; get; }
+        public ParametersViewModel Parameters { init; get; }
 
-        public GameViewModel(SettingsViewModel settings, int playerCount = 1)
+        public GameViewModel(SettingsViewModel settings, ParametersViewModel parameters, int playerCount = 1)
         {
             Settings = settings;
+            Parameters = parameters;
             PlayerCount = playerCount;
+
             globalTimer = MainViewModel.GlobalTimer;
 
             for (int i = 0; i < playerCount; i++)
             {
-                Boards.Add(new(Settings, i));
+                Boards.Add(new(Settings, Parameters, i));
             }
         }
 

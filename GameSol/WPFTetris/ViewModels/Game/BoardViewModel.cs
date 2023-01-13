@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using WPFTetris.Utilities;
 using WPFTetris.ViewModels.Game.Pieces;
+using WPFTetris.ViewModels.Parameters;
 using WPFTetris.ViewModels.Settings;
 using WPFTetris.ViewModels.Settings.Controls;
 
@@ -22,7 +23,9 @@ namespace WPFTetris.ViewModels.Game
         private readonly Shadow shadow;
         private PieceViewModel currentPiece;
         private SettingsViewModel settings;
-        private Dictionary<Key, (Action, long)> isThisPlayersKeysStillPressed = new();
+        private ParametersViewModel parameters;
+
+        private Dictionary<Key, DASStateViewModel> dasControls = new();
         private long autoDropTime = 0;
         private long currentDropTime = 0;
         private static readonly Random random = new();
@@ -42,7 +45,7 @@ namespace WPFTetris.ViewModels.Game
         //public RightSideBarViewModel RightSideBar { init; get; }
         public int PlayerNumber { init; get; }
 
-        public BoardViewModel(SettingsViewModel settings, int playerNumber)
+        public BoardViewModel(SettingsViewModel settings, ParametersViewModel parameters, int playerNumber)
         {
             for (int i = 0; i < 200; i++)
                 Board.Add(new BlockViewModel(i / 10, i % 10, Colors.Transparent, Brushes.Transparent));
@@ -56,20 +59,22 @@ namespace WPFTetris.ViewModels.Game
 
             PlayerNumber = playerNumber;
             this.settings = settings;
+            this.parameters = parameters;
 
             shadow = new(this);
             currentPiece = Pop();
             AddPieceToBoard(currentPiece);
 
             KeyboardPlayerControlsViewModel playerControls = settings.ControlSettings.KeyboardViewModels[playerNumber];
-            isThisPlayersKeysStillPressed.Add(playerControls.Hold, (Hold, 0));
-            isThisPlayersKeysStillPressed.Add(playerControls.MoveDown, (MoveDown, 0));
-            isThisPlayersKeysStillPressed.Add(playerControls.MoveRight, (MoveRight, 0));
-            isThisPlayersKeysStillPressed.Add(playerControls.MoveLeft, (MoveLeft, 0));
-            isThisPlayersKeysStillPressed.Add(playerControls.RotateClockwise, (RotateClockwise, 0));
-            isThisPlayersKeysStillPressed.Add(playerControls.RotateCounterClockwise, (RotateCounterClockwise, 0));
-            isThisPlayersKeysStillPressed.Add(playerControls.Pause, (Pause, 0));
-            isThisPlayersKeysStillPressed.Add(playerControls.HardDrop, (HardDrop, 0));
+            dasControls.Add(playerControls.MoveDown, new(parameters.DAS, MoveDown));
+            dasControls.Add(playerControls.MoveRight, new(parameters.DAS, MoveRight));
+            dasControls.Add(playerControls.MoveLeft, new(parameters.DAS, MoveLeft));
+            dasControls.Add(playerControls.RotateClockwise, new(parameters.DAS, RotateClockwise));
+            dasControls.Add(playerControls.RotateCounterClockwise, new(parameters.DAS, RotateCounterClockwise));
+
+            //dasControls.Add(playerControls.Hold, (Hold, 0));
+            //dasControls.Add(playerControls.Pause, (Pause, 0));
+            //dasControls.Add(playerControls.HardDrop, (HardDrop, 0));
         }
 
 
@@ -181,27 +186,23 @@ namespace WPFTetris.ViewModels.Game
 
         public void CheckForInput()
         {
-            foreach (Key key in isThisPlayersKeysStillPressed.Keys)
+            foreach (Key key in dasControls.Keys)
             {
-
                 bool isKeyDown = Keyboard.IsKeyDown(key);
-                (Action, long) ActionOnPress = isThisPlayersKeysStillPressed[key];
 
                 if (isKeyDown)
                 {
-                    if (ActionOnPress.Item2 == 0)
+                    if (!dasControls[key].IsDown)
                     {
-                        ActionOnPress.Item1.Invoke();
-                        isThisPlayersKeysStillPressed[key] = (ActionOnPress.Item1, MainViewModel.GlobalTimer.ElapsedMilliseconds);
+                        dasControls[key].Move();
+                        dasControls[key].IsDown = isKeyDown;
                     }
-                    else
-                    {
-                        // DAS implementation here.
-                    }
+                    dasControls[key].Update();
                 }
                 else
                 {
-                    isThisPlayersKeysStillPressed[key] = (ActionOnPress.Item1, 0);
+                    if (dasControls[key].IsDown)
+                        dasControls[key].IsDown = isKeyDown;
                 }
             }
         }

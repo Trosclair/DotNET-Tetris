@@ -13,6 +13,7 @@ using WPFTetris.Models;
 using WPFTetris.Utilities;
 using WPFTetris.ViewModels.Game;
 using WPFTetris.ViewModels.Game.Pieces;
+using WPFTetris.ViewModels.Parameters;
 using WPFTetris.ViewModels.Settings;
 using WPFTetris.Views;
 
@@ -20,13 +21,11 @@ namespace WPFTetris.ViewModels
 {
     internal class MainViewModel : ObservableObject
     {
-        public static event EventHandler<Key>? OnKeyDown;
-        public static event EventHandler<Key>? OnKeyUp;
-
         public static Stopwatch GlobalTimer { get; } = new();
         public static Dictionary<Key, (bool, long)> IsKeyPressed { get; } = new();
         public GameViewModel Game { get; }
         public SettingsViewModel Settings { get; }
+        public ParametersViewModel Parameters { get; }
         public RelayCommand CustomGameSetupCommand => new(CustomGameSetup);
         public RelayCommand QuickGameCommand => new(QuickGame);
         public RelayCommand OptionsCommand => new(Options);
@@ -35,7 +34,8 @@ namespace WPFTetris.ViewModels
         {
             GlobalTimer.Start();
             Settings = new(new());      // TODO Deserialize settings here.
-            Game = new(Settings);
+            Parameters = new(new());    // IBID
+            Game = new(Settings, Parameters);
             QuickGame();
         }
 
@@ -52,32 +52,6 @@ namespace WPFTetris.ViewModels
         public void Options()
         {
 
-        }
-
-        public void KeyDown(Key key)
-        {
-            if (IsKeyPressed.ContainsKey(key))
-            {
-                IsKeyPressed[key] = (true, GlobalTimer.ElapsedMilliseconds);
-            }
-            else
-            {
-                IsKeyPressed.Add(key, (true, GlobalTimer.ElapsedMilliseconds));
-            }
-            //OnKeyDown?.Invoke(this, key);
-        }
-
-        public void KeyUp(Key key)
-        {
-            if (IsKeyPressed.ContainsKey(key))
-            {
-                IsKeyPressed[key] = (false, 0);
-            }
-            else
-            {
-                IsKeyPressed.Add(key, (false, 0));
-            }
-            //OnKeyUp?.Invoke(this, key);
         }
     }
 }
