@@ -14,16 +14,15 @@ namespace Netris.ViewModels.Game
     public class PlayerViewModel : ObservableObject
     {
         private readonly Shadow shadow;
-        private readonly SettingsViewModel settings;
-        private readonly ParametersViewModel parameters;
         private readonly Action pause;
+        private readonly PieceFactory pieceFactory;
         private readonly Dictionary<Key, DASStateViewModel> dasControls = new();
         private readonly KeyboardPlayerControlsViewModel playerControls;
         private PieceViewModel currentPiece;
         private long autoDropTime = 0;
         private long currentDropTime = 0;
-        private static readonly Random random = new();
         private bool hasHeld = false;
+        private bool isHoldingPause = false, isHoldingHold = false, isHoldingHardDrop = false;
         private PieceViewModel next, holdPiece, one, two, three, four;
 
         public ObservableCollection<BlockViewModel> Board { get; } = new();
@@ -34,26 +33,27 @@ namespace Netris.ViewModels.Game
         public PieceViewModel Three { get => three; set { three = value; OnPropertyChanged(nameof(Three)); } }
         public PieceViewModel Four { get => four; set { four = value; OnPropertyChanged(nameof(Four)); } }
         public bool GameOver { get; set; } = false;
+        public int PiecesGenerated { get; set; } = 0;
         public BlockViewModel this[int i, int j] { get => Board[(i * 10) + j]; set => Board[(i * 10) + j] = value; }
         public BlockViewModel this[BlockViewModel block] { get => this[block.X, block.Y]; set => this[block.X, block.Y] = value; }
         //public RightSideBarViewModel RightSideBar { init; get; }
         public int PlayerNumber { init; get; }
 
-        public PlayerViewModel(SettingsViewModel settings, ParametersViewModel parameters, Action pause, int playerNumber)
+        public PlayerViewModel(SettingsViewModel settings, ParametersViewModel parameters, PieceFactory pieceFactory, Action pause, int playerNumber)
         {
             for (int i = 0; i < 200; i++)
                 Board.Add(new BlockViewModel(i / 10, i % 10, Colors.Transparent, Brushes.Transparent));
 
-            next = CreatePiece(this);
-            one = CreatePiece(this);
-            two = CreatePiece(this);
-            three = CreatePiece(this);
-            four = CreatePiece(this);
+            this.pieceFactory = pieceFactory;
+
+            next = pieceFactory.GetNextPiece(this);
+            one = pieceFactory.GetNextPiece(this);
+            two = pieceFactory.GetNextPiece(this);
+            three = pieceFactory.GetNextPiece(this);
+            four = pieceFactory.GetNextPiece(this);
             holdPiece = new Empty(this);
 
             PlayerNumber = playerNumber;
-            this.settings = settings;
-            this.parameters = parameters;
             this.pause = pause;
 
             shadow = new(this);
@@ -66,6 +66,7 @@ namespace Netris.ViewModels.Game
             dasControls.Add(playerControls.MoveLeft, new(parameters.DAS, MoveLeft));
             dasControls.Add(playerControls.RotateClockwise, new(parameters.DAS, RotateClockwise));
             dasControls.Add(playerControls.RotateCounterClockwise, new(parameters.DAS, RotateCounterClockwise));
+            dasControls.Add(playerControls.HardDrop, new(parameters.DAS, HardDrop));
 
             //dasControls.Add(playerControls.Hold, (Hold, 0));
             //dasControls.Add(playerControls.Pause, (Pause, 0));
@@ -80,7 +81,7 @@ namespace Netris.ViewModels.Game
             One = Two;
             Two = Three;
             Three = Four;
-            Four = CreatePiece(this);
+            Four = pieceFactory.GetNextPiece(this);
             hasHeld = false;
             return result;
         }
@@ -111,21 +112,6 @@ namespace Netris.ViewModels.Game
             {
                 return currentPiece;
             }
-        }
-
-        private static PieceViewModel CreatePiece(PlayerViewModel board)
-        {
-            return (PieceType)random.Next(0, 7) switch
-            {
-                PieceType.I => new I(board),
-                PieceType.T => new T(board),
-                PieceType.S => new S(board),
-                PieceType.Z => new Z(board),
-                PieceType.L => new L(board),
-                PieceType.J => new J(board),
-                PieceType.U => new U(board),
-                _ => new Empty(board),
-            };
         }
 
         private void MoveLeft()
@@ -185,13 +171,9 @@ namespace Netris.ViewModels.Game
             {
                 Pause();
             }
-            else if (Keyboard.IsKeyDown(playerControls.Hold))
+            else if (Keyboard.IsKeyDown(playerControls.Hold) && !isHoldingHold)
             {
                 Hold();
-            }
-            else if (Keyboard.IsKeyDown(playerControls.HardDrop))
-            {
-                HardDrop();
             }
             else
             {

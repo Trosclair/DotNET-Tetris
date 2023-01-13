@@ -8,6 +8,7 @@ using WPFUtilities;
 using WPFUtilities.Commands;
 using Netris.ViewModels.Parameters;
 using Netris.ViewModels.Settings;
+using Netris.ViewModels.Game.Pieces;
 
 namespace Netris.ViewModels.Game
 {
@@ -43,9 +44,11 @@ namespace Netris.ViewModels.Game
             Parameters = parameters;
             PlayerCount = playerCount;
 
+            PieceFactory pieceFactory = new(parameters, true);
+
             for (int i = 0; i < playerCount; i++)
             {
-                Boards.Add(new(Settings, Parameters, PauseGame, i));
+                Boards.Add(new(Settings, Parameters, pieceFactory, PauseGame, i));
             }
         }
 

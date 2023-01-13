@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Netris.ViewModels.Game.Pieces
 {
@@ -11,6 +6,7 @@ namespace Netris.ViewModels.Game.Pieces
     {
         public Empty(PlayerViewModel board) : base(PieceType.Empty, board)
         {
+            // I bet y'all are wondering why I gathered you all here today...
         }
 
         public override void ResetPiecePosition()

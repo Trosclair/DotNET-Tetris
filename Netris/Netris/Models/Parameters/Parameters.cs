@@ -10,6 +10,7 @@ namespace Netris.Models.Parameters
     public class Parameters
     {
         public DAS DAS { get; set; } = new();
+        public PieceGeneration PieceGeneration { get; set; } = new();
 
         [JsonConstructor]
         public Parameters()

@@ -11,12 +11,14 @@ namespace Netris.ViewModels.Parameters
     {
         private readonly Models.Parameters.Parameters model;
         public DASViewModel DAS { get; }
+        public PieceGenerationViewModel PieceGeneration { get; }
 
         public ParametersViewModel(Models.Parameters.Parameters parameters)
         {
             model = parameters;
 
             DAS = new(model.DAS);
+            PieceGeneration = new(model.PieceGeneration);
         }
     }
 }
