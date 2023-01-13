@@ -20,11 +20,11 @@ namespace Netris.ViewModels.Game
         private static Stopwatch globalTimer = MainViewModel.GlobalTimer;
         private Visibility pauseMenuVisibility = Visibility.Collapsed;
 
-        public ObservableCollection<BoardViewModel> Boards { init; get; } = new();
-        public BoardViewModel BoardOne { get => Boards[0]; set => Boards[0] = value; }
-        public BoardViewModel BoardTwo { get => Boards[1]; set => Boards[1] = value; }
-        public BoardViewModel BoardThree { get => Boards[2]; set => Boards[2] = value; }
-        public BoardViewModel BoardFour { get => Boards[3]; set => Boards[3] = value;  }
+        public ObservableCollection<PlayerViewModel> Boards { init; get; } = new();
+        public PlayerViewModel BoardOne { get => Boards[0]; set => Boards[0] = value; }
+        public PlayerViewModel BoardTwo { get => Boards[1]; set => Boards[1] = value; }
+        public PlayerViewModel BoardThree { get => Boards[2]; set => Boards[2] = value; }
+        public PlayerViewModel BoardFour { get => Boards[3]; set => Boards[3] = value;  }
         public int FrameRate { get => frameRate; set { frameRate = value; OnPropertyChanged(nameof(FrameRate)); } }
         public bool IsPaused { get => isPaused; set { isPaused = value; } }
         public int PlayerCount { get => playerCount; set { playerCount = value; OnPropertyChanged(nameof(PlayerCount)); } }

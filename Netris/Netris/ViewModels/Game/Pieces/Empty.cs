@@ -9,7 +9,7 @@ namespace Netris.ViewModels.Game.Pieces
 {
     public class Empty : PieceViewModel
     {
-        public Empty(BoardViewModel board) : base(PieceType.Empty, board)
+        public Empty(PlayerViewModel board) : base(PieceType.Empty, board)
         {
         }
 

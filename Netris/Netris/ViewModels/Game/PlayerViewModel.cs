@@ -11,21 +11,20 @@ using Netris.ViewModels.Settings.Controls;
 
 namespace Netris.ViewModels.Game
 {
-    public class BoardViewModel : ObservableObject
+    public class PlayerViewModel : ObservableObject
     {
         private readonly Shadow shadow;
+        private readonly SettingsViewModel settings;
+        private readonly ParametersViewModel parameters;
+        private readonly Action pause;
+        private readonly Dictionary<Key, DASStateViewModel> dasControls = new();
+        private readonly KeyboardPlayerControlsViewModel playerControls;
         private PieceViewModel currentPiece;
-        private SettingsViewModel settings;
-        private ParametersViewModel parameters;
-        private Action pause;
-
-        private Dictionary<Key, DASStateViewModel> dasControls = new();
         private long autoDropTime = 0;
         private long currentDropTime = 0;
         private static readonly Random random = new();
         private bool hasHeld = false;
         private PieceViewModel next, holdPiece, one, two, three, four;
-        private KeyboardPlayerControlsViewModel playerControls;
 
         public ObservableCollection<BlockViewModel> Board { get; } = new();
         public PieceViewModel Next { get => next; set { next = value; OnPropertyChanged(nameof(Next)); } }
@@ -40,7 +39,7 @@ namespace Netris.ViewModels.Game
         //public RightSideBarViewModel RightSideBar { init; get; }
         public int PlayerNumber { init; get; }
 
-        public BoardViewModel(SettingsViewModel settings, ParametersViewModel parameters, Action pause, int playerNumber)
+        public PlayerViewModel(SettingsViewModel settings, ParametersViewModel parameters, Action pause, int playerNumber)
         {
             for (int i = 0; i < 200; i++)
                 Board.Add(new BlockViewModel(i / 10, i % 10, Colors.Transparent, Brushes.Transparent));
@@ -114,7 +113,7 @@ namespace Netris.ViewModels.Game
             }
         }
 
-        private static PieceViewModel CreatePiece(BoardViewModel board)
+        private static PieceViewModel CreatePiece(PlayerViewModel board)
         {
             return (PieceType)random.Next(0, 7) switch
             {

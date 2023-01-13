@@ -10,7 +10,7 @@ namespace Netris.ViewModels.Game.Pieces
 {
     public class Shadow : PieceViewModel
     {
-        public Shadow(BoardViewModel board) : base(PieceType.Shadow, board)
+        public Shadow(PlayerViewModel board) : base(PieceType.Shadow, board)
         {
             One = new(0, 0, Colors.White, Brushes.White);
             Two = new(0, 0, Colors.White, Brushes.White);

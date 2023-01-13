@@ -6,7 +6,7 @@ namespace Netris.ViewModels.Game.Pieces
 {
     internal class I : PieceViewModel
     {
-        public I(BoardViewModel board) : base(PieceType.I, board)
+        public I(PlayerViewModel board) : base(PieceType.I, board)
         {
             One = new(0, 5, Colors.Aqua, Brushes.Aqua);
             Two = new(1, 5, Colors.Aqua, Brushes.Aqua);

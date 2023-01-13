@@ -7,14 +7,14 @@ namespace Netris.ViewModels.Game.Pieces
     {
         public PieceType PieceType { get; }
         public int RotationState { get; protected set; } = 0;
-        protected BoardViewModel Board { get; }
+        protected PlayerViewModel Board { get; }
         public BlockViewModel[] Blocks { get; } = new BlockViewModel[4];
         public BlockViewModel One { get => Blocks[0]; set => Blocks[0] = value; }
         public BlockViewModel Two { get => Blocks[1]; set => Blocks[1] = value; }
         public BlockViewModel Three { get => Blocks[2]; set => Blocks[2] = value; }
         public BlockViewModel Four { get => Blocks[3]; set => Blocks[3] = value; }
 
-        public PieceViewModel(PieceType pieceType, BoardViewModel board)
+        public PieceViewModel(PieceType pieceType, PlayerViewModel board)
         {
             PieceType = pieceType;
             Board = board;

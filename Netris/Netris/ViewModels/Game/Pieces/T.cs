@@ -15,7 +15,7 @@ namespace Netris.ViewModels.Game.Pieces
         // 04230
         // 00000
 
-        public T(BoardViewModel board) : base(PieceType.T, board)
+        public T(PlayerViewModel board) : base(PieceType.T, board)
         {
             One = new BlockViewModel(0, 5, Colors.Purple, Brushes.Purple);
             Two = new BlockViewModel(1, 5, Colors.Purple, Brushes.Purple);

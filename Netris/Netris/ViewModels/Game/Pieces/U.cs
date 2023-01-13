@@ -5,7 +5,7 @@ namespace Netris.ViewModels.Game.Pieces
 {
     public class U : PieceViewModel
     {
-        public U(BoardViewModel board) : base(PieceType.U, board)
+        public U(PlayerViewModel board) : base(PieceType.U, board)
         {
             One = new BlockViewModel(0, 5, Colors.Yellow, Brushes.Yellow);
             Two = new BlockViewModel(0, 4, Colors.Yellow, Brushes.Yellow);
