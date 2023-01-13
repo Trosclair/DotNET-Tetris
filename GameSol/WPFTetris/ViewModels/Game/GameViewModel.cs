@@ -20,7 +20,9 @@ namespace WPFTetris.ViewModels.Game
         private int playerCount;
         private long frameRateTime = 0;
         private int frameRate = 0;
-        private static Stopwatch globalTimer;
+        private bool isPaused;
+        private static Stopwatch globalTimer = MainViewModel.GlobalTimer;
+        private Visibility pauseMenuVisibility = Visibility.Collapsed;
 
         public ObservableCollection<BoardViewModel> Boards { init; get; } = new();
         public BoardViewModel BoardOne { get => Boards[0]; set => Boards[0] = value; }
@@ -28,8 +30,10 @@ namespace WPFTetris.ViewModels.Game
         public BoardViewModel BoardThree { get => Boards[2]; set => Boards[2] = value; }
         public BoardViewModel BoardFour { get => Boards[3]; set => Boards[3] = value;  }
         public int FrameRate { get => frameRate; set { frameRate = value; OnPropertyChanged(nameof(FrameRate)); } }
-
+        public bool IsPaused { get => isPaused; set { isPaused = value; } }
         public int PlayerCount { get => playerCount; set { playerCount = value; OnPropertyChanged(nameof(PlayerCount)); } }
+        public Visibility PauseMenuVisibility { get => pauseMenuVisibility; set { pauseMenuVisibility = value; OnPropertyChanged(nameof(PauseMenuVisibility)); } }
+
         public SettingsViewModel Settings { init; get; }
         public ParametersViewModel Parameters { init; get; }
 
@@ -39,11 +43,9 @@ namespace WPFTetris.ViewModels.Game
             Parameters = parameters;
             PlayerCount = playerCount;
 
-            globalTimer = MainViewModel.GlobalTimer;
-
             for (int i = 0; i < playerCount; i++)
             {
-                Boards.Add(new(Settings, Parameters, i));
+                Boards.Add(new(Settings, Parameters, Pause, i));
             }
         }
 
@@ -56,7 +58,25 @@ namespace WPFTetris.ViewModels.Game
                 frameRateTime = globalTimer.ElapsedMilliseconds;
             }
             frameRate++;
-            BoardOne.CheckForInput();
+            
+            if (!isPaused)
+            {
+                for (int i = 0; i < Boards.Count(); i++)
+                {
+                    Boards[i].CheckForInput();
+
+                    if (isPaused)
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+
+        public void Pause()
+        {
+            IsPaused = true;
+            PauseMenuVisibility = Visibility.Visible;
         }
         
 

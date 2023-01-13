@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using WPFTetris.Models.Settings.Controls;
 using WPFTetris.Utilities;
 using WPFTetris.ViewModels.Game.Pieces;
 using WPFTetris.ViewModels.Parameters;
@@ -24,6 +25,7 @@ namespace WPFTetris.ViewModels.Game
         private PieceViewModel currentPiece;
         private SettingsViewModel settings;
         private ParametersViewModel parameters;
+        private Action pause;
 
         private Dictionary<Key, DASStateViewModel> dasControls = new();
         private long autoDropTime = 0;
@@ -31,6 +33,7 @@ namespace WPFTetris.ViewModels.Game
         private static readonly Random random = new();
         private bool hasHeld = false;
         private PieceViewModel next, holdPiece, one, two, three, four;
+        private KeyboardPlayerControlsViewModel playerControls;
 
         public ObservableCollection<BlockViewModel> Board { get; } = new();
         public PieceViewModel Next { get => next; set { next = value; OnPropertyChanged(nameof(Next)); } }
@@ -45,7 +48,7 @@ namespace WPFTetris.ViewModels.Game
         //public RightSideBarViewModel RightSideBar { init; get; }
         public int PlayerNumber { init; get; }
 
-        public BoardViewModel(SettingsViewModel settings, ParametersViewModel parameters, int playerNumber)
+        public BoardViewModel(SettingsViewModel settings, ParametersViewModel parameters, Action pause, int playerNumber)
         {
             for (int i = 0; i < 200; i++)
                 Board.Add(new BlockViewModel(i / 10, i % 10, Colors.Transparent, Brushes.Transparent));
@@ -60,12 +63,13 @@ namespace WPFTetris.ViewModels.Game
             PlayerNumber = playerNumber;
             this.settings = settings;
             this.parameters = parameters;
+            this.pause = pause;
 
             shadow = new(this);
             currentPiece = Pop();
             AddPieceToBoard(currentPiece);
 
-            KeyboardPlayerControlsViewModel playerControls = settings.ControlSettings.KeyboardViewModels[playerNumber];
+            playerControls = settings.ControlSettings.KeyboardViewModels[playerNumber];
             dasControls.Add(playerControls.MoveDown, new(parameters.DAS, MoveDown));
             dasControls.Add(playerControls.MoveRight, new(parameters.DAS, MoveRight));
             dasControls.Add(playerControls.MoveLeft, new(parameters.DAS, MoveLeft));
@@ -181,28 +185,43 @@ namespace WPFTetris.ViewModels.Game
 
         private void Pause()
         {
-            // TODO Implement me! :/
+            pause();
         }
 
         public void CheckForInput()
         {
-            foreach (Key key in dasControls.Keys)
+            if (Keyboard.IsKeyDown(playerControls.Pause))
             {
-                bool isKeyDown = Keyboard.IsKeyDown(key);
+                Pause();
+            }
+            else if (Keyboard.IsKeyDown(playerControls.Hold))
+            {
+                Hold();
+            }
+            else if (Keyboard.IsKeyDown(playerControls.HardDrop))
+            {
+                HardDrop();
+            }
+            else
+            {
+                foreach (Key key in dasControls.Keys)
+                {
+                    bool isKeyDown = Keyboard.IsKeyDown(key);
 
-                if (isKeyDown)
-                {
-                    if (!dasControls[key].IsDown)
+                    if (isKeyDown)
                     {
-                        dasControls[key].Move();
-                        dasControls[key].IsDown = isKeyDown;
+                        if (!dasControls[key].IsDown)
+                        {
+                            dasControls[key].Move();
+                            dasControls[key].IsDown = isKeyDown;
+                        }
+                        dasControls[key].Update();
                     }
-                    dasControls[key].Update();
-                }
-                else
-                {
-                    if (dasControls[key].IsDown)
-                        dasControls[key].IsDown = isKeyDown;
+                    else
+                    {
+                        if (dasControls[key].IsDown)
+                            dasControls[key].IsDown = isKeyDown;
+                    }
                 }
             }
         }

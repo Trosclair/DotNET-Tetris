@@ -21,7 +21,7 @@ namespace WPFTetris.ViewModels
 {
     internal class MainViewModel : ObservableObject
     {
-        public static Stopwatch GlobalTimer { get; } = new();
+        public static Stopwatch GlobalTimer = new();
         public static Dictionary<Key, (bool, long)> IsKeyPressed { get; } = new();
         public GameViewModel Game { get; }
         public SettingsViewModel Settings { get; }
