@@ -11,7 +11,6 @@
     <Grid>
         <StackPanel Orientation="Vertical">
             <ComboBox ItemsSource="{Binding Resolutions}" SelectedItem="{Binding Resolution}" DisplayMemberPath="DisplayName"/>
-            <TextBox Text="{Binding Resolution.DisplayName}" Foreground="Black"/>
         </StackPanel>
     </Grid>
 </UserControl>
