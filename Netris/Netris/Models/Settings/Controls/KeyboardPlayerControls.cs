@@ -16,7 +16,7 @@ namespace Netris.Models.Settings.Controls
         public Key RotateClockwise { get; set; } = Key.K;
         public Key RotateCounterClockwise { get; set; } = Key.J;
         public Key Hold { get; set; } = Key.E;
-        public Key Pause { get; set; } = Key.Enter;
+        public Key Pause { get; set; } = Key.Escape;
 
         public KeyboardPlayerControls() { }
     }

@@ -4,67 +4,47 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Netris" xmlns:local1="clr-namespace:Netris.Views" 
-        xmlns:pieces="clr-namespace:Netris.ViewModels.Game.Pieces" 
         xmlns:vms="clr-namespace:Netris.ViewModels" xmlns:mainMenu="clr-namespace:Netris.Views.MainMenu"
         xmlns:convertersNullTo="clr-namespace:WPFUtilities.Converters.NullTo;assembly=WPFUtilities" 
         xmlns:settings="clr-namespace:Netris.Views.Settings" 
         xmlns:convertsBoolTo="clr-namespace:WPFUtilities.Converters.BoolTo;assembly=WPFUtilities"
+        xmlns:player="clr-namespace:Netris.ViewModels.Game"
         d:DataContext="{d:DesignInstance Type=vms:MainViewModel}"
         mc:Ignorable="d"
         Title="Netris" 
-        ShowInTaskbar="True" WindowStyle="{Binding Settings.VideoSettings.WindowStyle,Mode=TwoWay}" SizeToContent="{Binding Settings.VideoSettings.SizeToContent,Mode=TwoWay}" WindowState="{Binding Settings.VideoSettings.WindowState,Mode=TwoWay}"
-        ResizeMode="{Binding Settings.VideoSettings.ResizeMode,Mode=TwoWay}" Topmost="{Binding Settings.VideoSettings.KeepWindowOnTop,Mode=TwoWay}">
-    <Viewbox 
+        Height="{Binding Settings.VideoSettings.WindowResolution.Height, Mode=TwoWay}" 
+        Width="{Binding Settings.VideoSettings.WindowResolution.Width, Mode=TwoWay}" 
+        ShowInTaskbar="True" WindowStyle="{Binding Settings.VideoSettings.WindowStyle,Mode=TwoWay}" WindowState="{Binding Settings.VideoSettings.WindowState,Mode=TwoWay}"
+        ResizeMode="{Binding Settings.VideoSettings.ResizeMode,Mode=TwoWay}" Topmost="{Binding Settings.VideoSettings.KeepWindowOnTop,Mode=TwoWay}" Background="Black">
+    <Viewbox  Stretch="Fill">
+        <Grid
         Height="{Binding Settings.VideoSettings.Resolution.Height, Mode=TwoWay}" 
-        Width="{Binding Settings.VideoSettings.Resolution.Width, Mode=TwoWay}" Stretch="Fill">
-        <Grid>
+        Width="{Binding Settings.VideoSettings.Resolution.Width, Mode=TwoWay}">
             <Image Source="/Backgrounds/tetris.jpg"/>
 
             <TextBlock Text="{Binding FPSCounter.FrameRate}" Foreground="White"/>
 
             <mainMenu:MainMenu Visibility="{Binding Game, FallbackValue=Visible, Converter={convertersNullTo:NullToVisibility NotNullVisibility=Collapsed, NullVisibility=Visible}}"/>
 
-            <Grid Visibility="{Binding Game, FallbackValue=Collapsed, Converter={convertersNullTo:NullToVisibility NotNullVisibility=Visible, NullVisibility=Collapsed}}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="400"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition Height="800"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-
-                <ItemsControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Game.BoardOne.Board}">
+            <Viewbox>
+                <ItemsControl ItemsSource="{Binding Game.Boards}" Visibility="{Binding Game, FallbackValue=Collapsed, Converter={convertersNullTo:NullToVisibility NotNullVisibility=Visible, NullVisibility=Collapsed}}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <Canvas/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemContainerStyle>
-                        <Style>
-                            <Setter Property="Canvas.Left" Value="{Binding Path=PixelY}" />
-                            <Setter Property="Canvas.Top" Value="{Binding Path=PixelX}" />
-                        </Style>
-                    </ItemsControl.ItemContainerStyle>
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="{x:Type pieces:BlockViewModel}">
-                            <local1:Block/>
+                        <DataTemplate DataType="{x:Type player:PlayerViewModel}">
+                            <Viewbox>
+                                <local1:Player/>
+                            </Viewbox>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
+
                 </ItemsControl>
-
-                <local1:PauseMenu Grid.Column="1" Grid.Row="1" Visibility="{Binding Game.PauseMenuVisibility}"/>
-
-                <Grid Grid.Row="1" Grid.Column="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="400"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <local1:RightSideBar DataContext="{Binding Game.BoardOne}"/>
-                </Grid>
-            </Grid>
+            </Viewbox>
+            
+            <local1:PauseMenu Visibility="{Binding Game.IsPaused, FallbackValue=Collapsed, Converter={convertsBoolTo:BoolToVisibility TrueVisibility=Visible,FalseVisibility=Collapsed}}"/>
 
             <settings:Settings Visibility="{Binding IsSettingsOpen, FallbackValue=Collapsed, Converter={convertsBoolTo:BoolToVisibility FalseVisibility=Collapsed,TrueVisibility=Visible}}"/>
 

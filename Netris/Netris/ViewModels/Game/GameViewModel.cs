@@ -20,11 +20,7 @@ namespace Netris.ViewModels.Game
         private Visibility pauseMenuVisibility = Visibility.Collapsed;
 
         public ObservableCollection<PlayerViewModel> Boards { init; get; } = new();
-        public PlayerViewModel BoardOne { get => Boards[0]; set => Boards[0] = value; }
-        public PlayerViewModel BoardTwo { get => Boards[1]; set => Boards[1] = value; }
-        public PlayerViewModel BoardThree { get => Boards[2]; set => Boards[2] = value; }
-        public PlayerViewModel BoardFour { get => Boards[3]; set => Boards[3] = value;  }
-        public bool IsPaused { get => isPaused; set { isPaused = value; } }
+        public bool IsPaused { get => isPaused; set { isPaused = value; OnPropertyChanged(nameof(IsPaused)); } }
         public int PlayerCount { get => playerCount; set { playerCount = value; OnPropertyChanged(nameof(PlayerCount)); } }
         public Visibility PauseMenuVisibility { get => pauseMenuVisibility; set { pauseMenuVisibility = value; OnPropertyChanged(nameof(PauseMenuVisibility)); } }
 

@@ -11,9 +11,11 @@ namespace Netris.ViewModels.Settings.Video
     {
         private readonly VideoSettings model;
         private ResolutionViewModel resolution;
+        private ResolutionViewModel windowResolution;
 
         public ResolutionCollection Resolutions { get; private set; }
         public ResolutionViewModel Resolution { get => resolution; set { resolution = value; model.Resolution = value.Model; OnPropertyChanged(nameof(Resolution)); } }
+        public ResolutionViewModel WindowResolution { get => windowResolution; set { windowResolution = value; model.WindowResolution = value.Model; OnPropertyChanged(nameof(WindowResolution)); } }
         public WindowState WindowState { get => model.WindowState; set { model.WindowState = value; OnPropertyChanged(nameof(WindowState)); } }
         public WindowStyle WindowStyle { get => model.WindowStyle; set { model.WindowStyle = value; OnPropertyChanged(nameof(WindowStyle)); } }
         public ResizeMode ResizeMode { get => model.ResizeMode; set { model.ResizeMode = value; OnPropertyChanged(nameof(ResizeMode)); } }
@@ -33,11 +35,13 @@ namespace Netris.ViewModels.Settings.Video
             if (Resolutions.FirstOrDefault(x => x.Width == currentScreenWidth && x.Height == currentScreenHeight) is ResolutionViewModel res)
             {
                 resolution = res;
+                windowResolution = res;
             }
             else
             {
                 ResolutionViewModel newRes = new(new(currentScreenWidth, currentScreenHeight)); 
                 resolution = newRes;
+                windowResolution = newRes;
             }
         }
     }

@@ -13,6 +13,7 @@ namespace Netris.Models.Settings.Video
     public class VideoSettings
     {
         public Resolution Resolution { get; set; } = new(1920, 1080);
+        public Resolution WindowResolution { get; set; } = new(1920, 1080);
         public WindowState WindowState { get; set; } = WindowState.Maximized;
         public WindowStyle WindowStyle { get; set; } = WindowStyle.None;
         public ResizeMode ResizeMode { get; set; } = ResizeMode.NoResize;
