@@ -12,9 +12,9 @@ namespace Netris.ViewModels.Game.Pieces
 {
     public class PieceFactory
     {
-        private Random random;
-        private List<PieceType> pieceTypes;
-        private List<PieceType> bagInts;
+        private readonly Random random;
+        private readonly List<PieceType> pieceTypes;
+        private readonly List<PieceType> bagInts;
 
         public Func<PlayerViewModel, PieceViewModel> GetNextPiece { init; get; }
 

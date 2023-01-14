@@ -8,23 +8,13 @@ namespace Netris.Models.Settings.Video
 {
     public class Resolution
     {
-        public const string SixteenToNine = "16:9";
-        public const string FourToThree = "4:3";
+        public int Width { get; set; }
+        public int Height { get; set; }
 
-        public int Width { get; }
-        public int Height { get; }
-        public string AspectRatio { get; }
-
-        public Resolution(int width, int height, string aspectRatio) 
+        public Resolution(int width, int height) 
         { 
             Width = width;
             Height = height;
-            AspectRatio = aspectRatio;
-        }
-
-        public override string ToString()
-        {
-            return Width + "x" + Height + " (" + AspectRatio + ")";
         }
     }
 }

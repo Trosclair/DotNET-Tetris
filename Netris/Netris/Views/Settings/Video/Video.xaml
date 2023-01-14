@@ -3,10 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Netris.Views.Settings.Video"
+             xmlns:local="clr-namespace:Netris.Views.Settings.Video" 
+             xmlns:video="clr-namespace:Netris.ViewModels.Settings.Video" 
+             d:DataContext="{d:DesignInstance Type=video:VideoSettingsViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <StackPanel Orientation="Vertical">
+            <ComboBox ItemsSource="{Binding Resolutions}" SelectedItem="{Binding Resolution}" DisplayMemberPath="DisplayName"/>
+            <TextBox Text="{Binding Resolution.DisplayName}" Foreground="Black"/>
+        </StackPanel>
     </Grid>
 </UserControl>

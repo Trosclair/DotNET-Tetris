@@ -3,10 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Netris.Views.Settings"
+             xmlns:local="clr-namespace:Netris.Views.Settings" 
+             xmlns:controls="clr-namespace:Netris.Views.Settings.Controls" 
+             xmlns:gameplay="clr-namespace:Netris.Views.Settings.Gameplay" 
+             xmlns:video="clr-namespace:Netris.Views.Settings.Video" 
+             xmlns:settings="clr-namespace:Netris.ViewModels.Settings" 
+             d:DataContext="{d:DesignInstance Type=settings:SettingsViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <Rectangle Fill="Black" Opacity=".5"/>
+
+        <TabControl Background="Transparent">
+            <TabItem Header="Gameplay">
+                <gameplay:Gameplay DataContext="{Binding Settings.GameplaySettings}"/>
+            </TabItem>
+            <TabItem Header="Controls">
+                <controls:Controls DataContext="{Binding Settings.ControlSettings}"/>
+            </TabItem>
+            <TabItem Header="Video">
+                <video:Video DataContext="{Binding Settings.VideoSettings}"/>
+            </TabItem>
+        </TabControl>
     </Grid>
 </UserControl>

@@ -8,16 +8,19 @@ using Netris.ViewModels.Game;
 using System.Windows;
 using System;
 using WPFUtilities.Utilities;
+using Netris.ViewModels.Settings;
 
 namespace Netris.ViewModels
 {
     internal class MainViewModel : ObservableObject
     {
         private GameViewModel? game = null;
+        private bool isSettingsOpen = false;
         public static Stopwatch GlobalTimer = new();
 
         public GameViewModel? Game { get => game; set { game = value; OnPropertyChanged(nameof(Game)); } }
-        //public SettingsViewModel Settings { get; }
+        public bool IsSettingsOpen { get => isSettingsOpen; set { isSettingsOpen = value; OnPropertyChanged(nameof(IsSettingsOpen)); } }
+        public SettingsViewModel Settings { get; }
         //public ParametersViewModel Parameters { get; }
         public static FPSCounter FPSCounter { get; } = new();
         public RelayCommand CustomGameSetupCommand => new(CustomGameSetup);
@@ -29,9 +32,8 @@ namespace Netris.ViewModels
         {
             GlobalTimer.Start();
             CompositionTarget.Rendering += RenderingLoop;
-            //Settings = new(new());      // TODO Deserialize settings here.
+            Settings = new(new());      // TODO Deserialize settings here.
             //Parameters = new(new());    // IBID
-            //QuickGame();
         }
 
         private void RenderingLoop(object? sender, EventArgs e)
@@ -53,7 +55,7 @@ namespace Netris.ViewModels
 
         private void Options()
         {
-
+            IsSettingsOpen ^= true;
         }
 
         private void QuitGame()
