@@ -27,7 +27,6 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
-                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column="0" Command="{Binding CancelRebindCommand}" Content="Cancel" Margin="3"/>
