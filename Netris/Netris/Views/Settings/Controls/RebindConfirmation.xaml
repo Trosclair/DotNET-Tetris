@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Netris.Views.Settings.Controls" xmlns:controls="clr-namespace:Netris.ViewModels.Settings.Controls" d:DataContext="{d:DesignInstance Type=controls:KeyboardPlayerControlsViewModel}"
         mc:Ignorable="d" 
-             Background="Transparent" WindowStyle="None" WindowState="Normal" ShowInTaskbar="False" Topmost="True" AllowsTransparency="True">
+             Background="Black" WindowStyle="None" WindowState="Normal" ShowInTaskbar="False" Topmost="True" AllowsTransparency="True">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

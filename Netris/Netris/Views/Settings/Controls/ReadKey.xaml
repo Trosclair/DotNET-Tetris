@@ -7,7 +7,7 @@
         mc:Ignorable="d" 
              Background="Transparent" WindowStyle="None" WindowState="Normal" PreviewKeyDown="Window_PreviewKeyDown" ShowInTaskbar="False" Topmost="True" AllowsTransparency="True">
     <Grid>
-        <Rectangle Fill="Purple" Opacity=".5"/>
+        <Rectangle Fill="Black" />
         <TextBlock Text="Press key to bind..." Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Button Command="{Binding UnbindCommand}" Content="Unbind Key" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
     </Grid>
