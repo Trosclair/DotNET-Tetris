@@ -17,7 +17,6 @@ namespace Netris.Models.Settings.Video
         public WindowState WindowState { get; set; } = WindowState.Maximized;
         public WindowStyle WindowStyle { get; set; } = WindowStyle.None;
         public ResizeMode ResizeMode { get; set; } = ResizeMode.NoResize;
-        public SizeToContent SizeToContent { get; set; } = SizeToContent.WidthAndHeight;
         public bool KeepWindowOnTop { get; set; } = false;
         public bool UseWindowedMode { get; set; } = false;
 

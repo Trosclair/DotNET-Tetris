@@ -21,8 +21,8 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Button Grid.Column="1" Grid.Row="3" Content="Custom Game" Command="{Binding CustomGameSetupCommand}" Margin="50"/>
-        <Button Grid.Column="2" Grid.Row="3" Content="Quick Game" Command="{Binding QuickGameCommand}" Margin="50"/>
-        <Button Grid.Column="3" Grid.Row="3" Content="Options" Command="{Binding OptionsCommand}" Margin="50"/>
+        <Button Grid.Column="1" Grid.Row="3" Content="Custom Game" Command="{Binding CustomGameSetupCommand}"/>
+        <Button Grid.Column="2" Grid.Row="3" Content="Quick Game" Command="{Binding QuickGameCommand}"/>
+        <Button Grid.Column="3" Grid.Row="3" Content="Options" Command="{Binding OptionsCommand}"/>
     </Grid>
 </UserControl>

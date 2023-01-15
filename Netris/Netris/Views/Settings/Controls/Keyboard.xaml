@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="Netris.Views.Settings.Controls.Keyboard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Netris.Views.Settings.Controls" xmlns:controls="clr-namespace:Netris.ViewModels.Settings.Controls" xmlns:boolTo="clr-namespace:WPFUtilities.Converters.BoolTo;assembly=WPFUtilities" d:DataContext="{d:DesignInstance Type=controls:KeyboardPlayerControlsViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="Transparent">
+
+        <Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <Button Grid.Column="1" Grid.Row="1" Content="Move Down" Command="{Binding ChangeKeyboardBindCommand}" CommandParameter="MoveDown" Margin="3"/>
+                <Button Grid.Column="1" Grid.Row="2" Content="Move Right" Command="{Binding ChangeKeyboardBindCommand}" CommandParameter="MoveRight" Margin="3"/>
+                <Button Grid.Column="1" Grid.Row="3" Content="Move Left" Command="{Binding ChangeKeyboardBindCommand}" CommandParameter="MoveLeft" Margin="3"/>
+                <Button Grid.Column="1" Grid.Row="4" Content="Hard Drop" Command="{Binding ChangeKeyboardBindCommand}" CommandParameter="HardDrop" Margin="3"/>
+                <Button Grid.Column="1" Grid.Row="5" Content="Rotate Clockwise" Command="{Binding ChangeKeyboardBindCommand}" CommandParameter="RotateClockwise" Margin="3"/>
+                <Button Grid.Column="1" Grid.Row="6" Content="Rotate CounterClockwise" Command="{Binding ChangeKeyboardBindCommand}" CommandParameter="RotateCounterClockwise" Margin="3"/>
+                <Button Grid.Column="1" Grid.Row="7" Content="Hold" Command="{Binding ChangeKeyboardBindCommand}" CommandParameter="Hold" Margin="3"/>
+                <Button Grid.Column="1" Grid.Row="8" Content="Pause" Command="{Binding ChangeKeyboardBindCommand}" CommandParameter="Pause" Margin="3"/>
+
+                <TextBlock Grid.Column="3" Grid.Row="1" Text="{Binding MoveDownKeyText}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="3" Grid.Row="2" Text="{Binding MoveRightKeyText}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="3" Grid.Row="3" Text="{Binding MoveLeftKeyText}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="3" Grid.Row="4" Text="{Binding HardDropKeyText}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="3" Grid.Row="5" Text="{Binding RotateClockwiseKeyText}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="3" Grid.Row="6" Text="{Binding RotateCounterClockwiseKeyText}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="3" Grid.Row="7" Text="{Binding HoldKeyText}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="3" Grid.Row="8" Text="{Binding PauseKeyText}" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

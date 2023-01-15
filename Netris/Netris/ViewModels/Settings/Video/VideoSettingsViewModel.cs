@@ -19,9 +19,7 @@ namespace Netris.ViewModels.Settings.Video
         public WindowState WindowState { get => model.WindowState; set { model.WindowState = value; OnPropertyChanged(nameof(WindowState)); } }
         public WindowStyle WindowStyle { get => model.WindowStyle; set { model.WindowStyle = value; OnPropertyChanged(nameof(WindowStyle)); } }
         public ResizeMode ResizeMode { get => model.ResizeMode; set { model.ResizeMode = value; OnPropertyChanged(nameof(ResizeMode)); } }
-        public SizeToContent SizeToContent { get => model.SizeToContent; set { model.SizeToContent = value; OnPropertyChanged(nameof(SizeToContent)); } }
-        public bool KeepWindowOnTop { get => model.KeepWindowOnTop; set { model.KeepWindowOnTop = value; OnPropertyChanged(nameof(KeepWindowOnTop)); } }
-        public bool UseWindowedMode { get => model.UseWindowedMode; set { model.UseWindowedMode = value; OnPropertyChanged(nameof(UseWindowedMode)); } }
+        public bool UseWindowedMode { get => model.UseWindowedMode; set { model.UseWindowedMode = value; ChangeWindowedModeSettings(); OnPropertyChanged(nameof(UseWindowedMode)); } }
 
         public VideoSettingsViewModel(VideoSettings videoSettings) 
         {
@@ -42,6 +40,22 @@ namespace Netris.ViewModels.Settings.Video
                 ResolutionViewModel newRes = new(new(currentScreenWidth, currentScreenHeight)); 
                 resolution = newRes;
                 windowResolution = newRes;
+            }
+        }
+
+        private void ChangeWindowedModeSettings()
+        {
+            if (UseWindowedMode)
+            {
+                WindowState = WindowState.Normal;
+                WindowStyle = WindowStyle.SingleBorderWindow;
+                ResizeMode = ResizeMode.CanResize;
+            }
+            else
+            {
+                WindowState = WindowState.Maximized;
+                WindowStyle = WindowStyle.None;
+                ResizeMode = ResizeMode.NoResize;
             }
         }
     }

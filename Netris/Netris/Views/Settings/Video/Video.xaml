@@ -10,7 +10,10 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Margin="50">
         <StackPanel Orientation="Vertical">
+            <TextBlock Text="Resolution" Foreground="White"/>
             <ComboBox ItemsSource="{Binding Resolutions}" SelectedItem="{Binding Resolution}" DisplayMemberPath="DisplayName"/>
+            <CheckBox Content="Windowed Mode" IsChecked="{Binding UseWindowedMode}" Foreground="White"/>
+
         </StackPanel>
     </Grid>
 </UserControl>

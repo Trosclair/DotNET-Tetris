@@ -1,0 +1,14 @@
+﻿<Window x:Class="Netris.Views.Settings.Controls.ReadKey"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Netris.Views.Settings.Controls" xmlns:controls="clr-namespace:Netris.ViewModels.Settings.Controls" d:DataContext="{d:DesignInstance Type=controls:KeyboardPlayerControlsViewModel}"
+        mc:Ignorable="d" 
+             Background="Transparent" WindowStyle="None" WindowState="Normal" PreviewKeyDown="Window_PreviewKeyDown" ShowInTaskbar="False" Topmost="True" AllowsTransparency="True">
+    <Grid>
+        <Rectangle Fill="Purple" Opacity=".5"/>
+        <TextBlock Text="Press key to bind..." Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Command="{Binding UnbindCommand}" Content="Unbind Key" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+    </Grid>
+</Window>

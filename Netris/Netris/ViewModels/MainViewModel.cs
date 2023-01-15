@@ -16,10 +16,12 @@ namespace Netris.ViewModels
     {
         private GameViewModel? game = null;
         private bool isSettingsOpen = false;
+        private bool willShowMainMenu = true;
         public static Stopwatch GlobalTimer = new();
 
         public GameViewModel? Game { get => game; set { game = value; OnPropertyChanged(nameof(Game)); } }
         public bool IsSettingsOpen { get => isSettingsOpen; set { isSettingsOpen = value; OnPropertyChanged(nameof(IsSettingsOpen)); } }
+        public bool WillShowMainMenu { get => willShowMainMenu; set { willShowMainMenu = value; OnPropertyChanged(nameof(WillShowMainMenu)); } }
         public SettingsViewModel Settings { get; }
         //public ParametersViewModel Parameters { get; }
         public static FPSCounter FPSCounter { get; } = new();
@@ -50,21 +52,20 @@ namespace Netris.ViewModels
 
         private void QuickGame()
         {
+            WillShowMainMenu = false;
             Game = new(new(new()), new(new()));
         }
 
         private void Options()
         {
+            WillShowMainMenu ^= true;
             IsSettingsOpen ^= true;
         }
 
         private void QuitGame()
         {
-            if (Game is not null)
-            {
-                Game.PauseMenuVisibility = Visibility.Collapsed;
-                Game = null;
-            }
+            WillShowMainMenu = true;
+            Game = null;
         }
     }
 }

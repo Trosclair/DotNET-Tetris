@@ -17,12 +17,10 @@ namespace Netris.ViewModels.Game
     {
         private int playerCount;
         private bool isPaused;
-        private Visibility pauseMenuVisibility = Visibility.Collapsed;
 
         public ObservableCollection<PlayerViewModel> Boards { init; get; } = new();
         public bool IsPaused { get => isPaused; set { isPaused = value; OnPropertyChanged(nameof(IsPaused)); } }
         public int PlayerCount { get => playerCount; set { playerCount = value; OnPropertyChanged(nameof(PlayerCount)); } }
-        public Visibility PauseMenuVisibility { get => pauseMenuVisibility; set { pauseMenuVisibility = value; OnPropertyChanged(nameof(PauseMenuVisibility)); } }
 
         public SettingsViewModel Settings { init; get; }
         public ParametersViewModel Parameters { init; get; }
@@ -30,7 +28,7 @@ namespace Netris.ViewModels.Game
         public RelayCommand ResumeGameCommand => new(ResumeGame);
         public RelayCommand OptionsCommand => new(Options);
 
-        public GameViewModel(SettingsViewModel settings, ParametersViewModel parameters, int playerCount = 1)
+        public GameViewModel(SettingsViewModel settings, ParametersViewModel parameters, int playerCount = 4)
         {
             Settings = settings;
             Parameters = parameters;
@@ -46,24 +44,15 @@ namespace Netris.ViewModels.Game
 
         public void GameLoop()
         {
-            if (!isPaused)
+            for (int i = 0; i < Boards.Count && !IsPaused; i++)
             {
-                for (int i = 0; i < Boards.Count; i++)
-                {
-                    Boards[i].CheckForInput();
-
-                    if (isPaused)
-                    {
-                        break;
-                    }
-                }
+                Boards[i].CheckForInput();
             }
         }
 
         public void PauseGame()
         {
             IsPaused = true;
-            PauseMenuVisibility = Visibility.Visible;
         }
 
 
@@ -74,7 +63,6 @@ namespace Netris.ViewModels.Game
 
         private void ResumeGame()
         {
-            PauseMenuVisibility = Visibility.Collapsed;
             IsPaused = false;
         }
     }

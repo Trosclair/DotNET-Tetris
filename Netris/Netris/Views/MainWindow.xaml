@@ -12,19 +12,21 @@
         d:DataContext="{d:DesignInstance Type=vms:MainViewModel}"
         mc:Ignorable="d"
         Title="Netris" 
-        Height="{Binding Settings.VideoSettings.WindowResolution.Height, Mode=TwoWay}" 
-        Width="{Binding Settings.VideoSettings.WindowResolution.Width, Mode=TwoWay}" 
+        Height="{Binding Settings.VideoSettings.WindowResolution.Height, Mode=OneWay}" 
+        Width="{Binding Settings.VideoSettings.WindowResolution.Width, Mode=OneWay}" 
         ShowInTaskbar="True" WindowStyle="{Binding Settings.VideoSettings.WindowStyle,Mode=TwoWay}" WindowState="{Binding Settings.VideoSettings.WindowState,Mode=TwoWay}"
-        ResizeMode="{Binding Settings.VideoSettings.ResizeMode,Mode=TwoWay}" Topmost="{Binding Settings.VideoSettings.KeepWindowOnTop,Mode=TwoWay}" Background="Black">
+        ResizeMode="{Binding Settings.VideoSettings.ResizeMode,Mode=TwoWay}" Background="Black">
     <Viewbox  Stretch="Fill">
         <Grid
-        Height="{Binding Settings.VideoSettings.Resolution.Height, Mode=TwoWay}" 
-        Width="{Binding Settings.VideoSettings.Resolution.Width, Mode=TwoWay}">
-            <Image Source="/Backgrounds/tetris.jpg"/>
+            Height="{Binding Settings.VideoSettings.Resolution.Height, Mode=OneWay}" 
+            Width="{Binding Settings.VideoSettings.Resolution.Width, Mode=OneWay}">
+            <Viewbox Stretch="Fill">
+                <Image Source="/Backgrounds/tetris.jpg"/>
+            </Viewbox>
 
             <TextBlock Text="{Binding FPSCounter.FrameRate}" Foreground="White"/>
 
-            <mainMenu:MainMenu Visibility="{Binding Game, FallbackValue=Visible, Converter={convertersNullTo:NullToVisibility NotNullVisibility=Collapsed, NullVisibility=Visible}}"/>
+            <mainMenu:MainMenu Visibility="{Binding WillShowMainMenu, FallbackValue=Visible, Converter={convertsBoolTo:BoolToVisibility FalseVisibility=Collapsed, TrueVisibility=Visible}}"/>
 
             <Viewbox>
                 <ItemsControl ItemsSource="{Binding Game.Boards}" Visibility="{Binding Game, FallbackValue=Collapsed, Converter={convertersNullTo:NullToVisibility NotNullVisibility=Visible, NullVisibility=Collapsed}}">

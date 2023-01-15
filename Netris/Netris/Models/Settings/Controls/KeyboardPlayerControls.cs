@@ -1,23 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 using System.Windows.Input;
 
 namespace Netris.Models.Settings.Controls
 {
     public class KeyboardPlayerControls
     {
-        public Key MoveDown { get; set; } = Key.S;
-        public Key MoveRight { get; set; } = Key.D;
-        public Key MoveLeft { get; set; } = Key.A;
-        public Key HardDrop { get; set; } = Key.W;
-        public Key RotateClockwise { get; set; } = Key.K;
-        public Key RotateCounterClockwise { get; set; } = Key.J;
-        public Key Hold { get; set; } = Key.E;
-        public Key Pause { get; set; } = Key.Escape;
+        public Key MoveDown { get; set; }
+        public Key MoveRight { get; set; }
+        public Key MoveLeft { get; set; }
+        public Key HardDrop { get; set; }
+        public Key RotateClockwise { get; set; }
+        public Key RotateCounterClockwise { get; set; }
+        public Key Hold { get; set; }
+        public Key Pause { get; set; }
+        public int PlayerNumber { get; set; }
 
+        [JsonConstructor]
         public KeyboardPlayerControls() { }
+
+        public KeyboardPlayerControls(Key moveDown, Key moveRight, Key moveLeft, Key hardDrop, Key rotateClockwise, Key rotateCounterClockwise, Key hold, Key pause, int playerNumber)
+        {
+            MoveDown = moveDown;
+            MoveRight = moveRight;
+            MoveLeft = moveLeft;
+            HardDrop = hardDrop;
+            RotateClockwise = rotateClockwise;
+            RotateCounterClockwise = rotateCounterClockwise;
+            Hold = hold;
+            Pause = pause;
+            PlayerNumber = playerNumber;
+        }
     }
 }
