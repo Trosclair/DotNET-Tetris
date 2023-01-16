@@ -26,13 +26,15 @@ namespace Netris.ViewModels.Game
         public ParametersViewModel Parameters { init; get; }
 
         public RelayCommand ResumeGameCommand => new(ResumeGame);
-        public RelayCommand OptionsCommand => new(Options);
+        public RelayCommand OptionsCommand { get; }
 
-        public GameViewModel(SettingsViewModel settings, ParametersViewModel parameters, int playerCount = 4)
+        public GameViewModel(SettingsViewModel settings, ParametersViewModel parameters, Action openOptions, int playerCount = 3)
         {
             Settings = settings;
             Parameters = parameters;
             PlayerCount = playerCount;
+
+            OptionsCommand = new(openOptions);
 
             PieceFactory pieceFactory = new(parameters, true);
 
@@ -53,12 +55,6 @@ namespace Netris.ViewModels.Game
         public void PauseGame()
         {
             IsPaused = true;
-        }
-
-
-        private void Options()
-        {
-
         }
 
         private void ResumeGame()

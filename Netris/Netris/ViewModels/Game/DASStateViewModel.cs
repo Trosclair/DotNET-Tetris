@@ -17,12 +17,14 @@ namespace Netris.ViewModels.Game
         public int CurrentDelay { get => currentDelay; set { currentDelay = Math.Max(value, topDelay); } }
         public bool IsDown { get => isDown; set { isDown = value; CurrentDelay = value ? startingDelay : 0; lastUpdate = MainViewModel.GlobalTimer.ElapsedMilliseconds; } }
         public Action Move { get; set; }
-        public DASStateViewModel(DASViewModel das, Action move)
+        public Func<bool> Predicate { get; }
+        public DASStateViewModel(DASViewModel das, Action move, Func<bool> predicate)
         {
             acceleration = das.Acceleration;
             topDelay = das.EndingDelay;
             startingDelay = das.StartingDelay;
             Move = move;
+            Predicate = predicate;
         }
 
         public void Update()

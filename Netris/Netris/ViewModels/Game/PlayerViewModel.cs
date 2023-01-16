@@ -16,7 +16,7 @@ namespace Netris.ViewModels.Game
         private readonly Shadow shadow;
         private readonly Action pause;
         private readonly PieceFactory pieceFactory;
-        private readonly Dictionary<Key, DASStateViewModel> dasControls = new();
+        private readonly List<DASStateViewModel> dasControls = new();
         private readonly KeyboardPlayerControlsViewModel playerControls;
         private PieceViewModel currentPiece;
         private long autoDropTime = 0;
@@ -35,7 +35,6 @@ namespace Netris.ViewModels.Game
         public int PiecesGenerated { get; set; } = 0;
         public BlockViewModel this[int i, int j] { get => Board[(i * 10) + j]; set => Board[(i * 10) + j] = value; }
         public BlockViewModel this[BlockViewModel block] { get => this[block.X, block.Y]; set => this[block.X, block.Y] = value; }
-        //public RightSideBarViewModel RightSideBar { init; get; }
         public int PlayerNumber { init; get; }
 
         public PlayerViewModel(SettingsViewModel settings, ParametersViewModel parameters, PieceFactory pieceFactory, Action pause, int playerNumber)
@@ -60,12 +59,12 @@ namespace Netris.ViewModels.Game
             AddPieceToBoard(currentPiece);
 
             playerControls = settings.ControlSettings.KeyboardViewModels[playerNumber];
-            dasControls.Add(playerControls.MoveDown, new(parameters.DAS, MoveDown));
-            dasControls.Add(playerControls.MoveRight, new(parameters.DAS, MoveRight));
-            dasControls.Add(playerControls.MoveLeft, new(parameters.DAS, MoveLeft));
-            dasControls.Add(playerControls.RotateClockwise, new(parameters.DAS, RotateClockwise));
-            dasControls.Add(playerControls.RotateCounterClockwise, new(parameters.DAS, RotateCounterClockwise));
-            dasControls.Add(playerControls.HardDrop, new(parameters.DAS, HardDrop));
+            dasControls.Add(new(parameters.DAS, MoveDown, () => Keyboard.IsKeyDown(playerControls.MoveDown)));
+            dasControls.Add(new(parameters.DAS, MoveRight, () => Keyboard.IsKeyDown(playerControls.MoveRight)));
+            dasControls.Add( new(parameters.DAS, MoveLeft, () => Keyboard.IsKeyDown(playerControls.MoveLeft)));
+            dasControls.Add(new(parameters.DAS, RotateClockwise, () => Keyboard.IsKeyDown(playerControls.RotateClockwise)));
+            dasControls.Add(new(parameters.DAS, RotateCounterClockwise, () => Keyboard.IsKeyDown(playerControls.RotateCounterClockwise)));
+            dasControls.Add(new(parameters.DAS, HardDrop, () => Keyboard.IsKeyDown(playerControls.HardDrop)));
 
             //dasControls.Add(playerControls.Hold, (Hold, 0));
             //dasControls.Add(playerControls.Pause, (Pause, 0));
@@ -176,23 +175,21 @@ namespace Netris.ViewModels.Game
             }
             else
             {
-                foreach (Key key in dasControls.Keys)
+                foreach (DASStateViewModel dasControl in dasControls)
                 {
-                    bool isKeyDown = Keyboard.IsKeyDown(key);
-
-                    if (isKeyDown)
+                    if (dasControl.Predicate())
                     {
-                        if (!dasControls[key].IsDown)
+                        if (!dasControl.IsDown)
                         {
-                            dasControls[key].Move();
-                            dasControls[key].IsDown = isKeyDown;
+                            dasControl.Move();
+                            dasControl.IsDown = true;
                         }
-                        dasControls[key].Update();
+                        dasControl.Update();
                     }
                     else
                     {
-                        if (dasControls[key].IsDown)
-                            dasControls[key].IsDown = isKeyDown;
+                        if (dasControl.IsDown)
+                            dasControl.IsDown = false;
                     }
                 }
             }

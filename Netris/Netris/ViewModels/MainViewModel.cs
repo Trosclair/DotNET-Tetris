@@ -53,12 +53,16 @@ namespace Netris.ViewModels
         private void QuickGame()
         {
             WillShowMainMenu = false;
-            Game = new(new(new()), new(new()));
+            Game = new(Settings, new(new()), InGameOptions);
         }
 
         private void Options()
         {
-            WillShowMainMenu ^= true;
+            IsSettingsOpen ^= true;
+        }
+
+        private void InGameOptions()
+        {
             IsSettingsOpen ^= true;
         }
 
