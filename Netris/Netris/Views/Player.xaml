@@ -9,7 +9,7 @@
              xmlns:game="clr-namespace:Netris.ViewModels.Game" 
              d:DataContext="{d:DesignInstance Type=game:PlayerViewModel}"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="800" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary Source="/Views/Pieces.xaml"/>
     </UserControl.Resources>
@@ -19,12 +19,18 @@
             <ColumnDefinition Width="400"/>
             <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
-        
-        <DockPanel Grid.Column="0" Margin="5" Height="200" VerticalAlignment="Top">
-            <TextBlock DockPanel.Dock="Top" Text="HOLD:" Foreground="White"/>
-            <local:PiecePresenter DataContext="{Binding HoldPiece}"/>
-        </DockPanel>
 
+        <StackPanel Orientation="Vertical">
+            <DockPanel Grid.Column="0" Margin="5" Height="200" VerticalAlignment="Top">
+            <TextBlock DockPanel.Dock="Top" Text="HOLD:" Foreground="White"/>
+            <local:PiecePresenter DockPanel.Dock="Top" DataContext="{Binding HoldPiece}"/>
+            </DockPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="SCORE: " Foreground="White"/>
+                <TextBlock Text="{Binding Score}" Foreground="White"/>
+            </StackPanel>
+
+        </StackPanel>
         <ItemsControl Grid.Column="1" ItemsSource="{Binding Board}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>

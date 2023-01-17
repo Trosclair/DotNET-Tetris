@@ -23,6 +23,7 @@ namespace Netris.Views.MainMenu
         public MainMenu()
         {
             InitializeComponent();
+            quickGameButton.Focus();
         }
     }
 }

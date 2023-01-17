@@ -9,9 +9,11 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -21,8 +23,8 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Button Grid.Column="1" Grid.Row="3" Content="Custom Game" Command="{Binding CustomGameSetupCommand}"/>
-        <Button Grid.Column="2" Grid.Row="3" Content="Quick Game" Command="{Binding QuickGameCommand}"/>
-        <Button Grid.Column="3" Grid.Row="3" Content="Options" Command="{Binding OptionsCommand}"/>
+        <Button x:Name="customGameButton" Grid.Column="1" TabIndex="0" Grid.Row="3" Content="Custom Game" Command="{Binding CustomGameSetupCommand}"/>
+        <Button x:Name="quickGameButton" Grid.Column="3" Grid.Row="3" TabIndex="1" Content="Quick Game" Command="{Binding QuickGameCommand}"/>
+        <Button x:Name="optionsButton" Grid.Column="5" Grid.Row="3" TabIndex="2" Content="Options" Command="{Binding OptionsCommand}"/>
     </Grid>
 </UserControl>

@@ -49,6 +49,7 @@ namespace Netris.ViewModels.Game
             for (int i = 0; i < Boards.Count && !IsPaused; i++)
             {
                 Boards[i].CheckForInput();
+                Boards[i].UpdateBoard();
             }
         }
 
