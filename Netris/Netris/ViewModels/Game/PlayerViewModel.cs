@@ -26,7 +26,6 @@ namespace Netris.ViewModels.Game
         private readonly List<DASStateViewModel> dasControls = new();
         private readonly KeyboardPlayerControlsViewModel playerControls;
         private PieceViewModel currentPiece;
-        private long autoDropTime = 0;
         private long currentDropTime = 0;
         private bool hasHeld = false;
         private bool gameOver = false;
@@ -176,6 +175,7 @@ namespace Netris.ViewModels.Game
                 }
                 hasHeld = true;
 
+                currentDropTime = gameTime.ElapsedMilliseconds;
                 return result;
             }
             else
@@ -202,7 +202,7 @@ namespace Netris.ViewModels.Game
                 currentPiece = Pop();
                 AddPieceToBoard(currentPiece);
             }
-            autoDropTime = MainViewModel.GlobalTimer.ElapsedMilliseconds;
+            currentDropTime = gameTime.ElapsedMilliseconds;
         }
 
         private void Hold()
@@ -228,18 +228,24 @@ namespace Netris.ViewModels.Game
             CheckBoardForLineClears();
             currentPiece = Pop();
             AddPieceToBoard(currentPiece);
+            currentDropTime = gameTime.ElapsedMilliseconds;
         }
 
-        private void Pause()
+        public void Pause()
         {
-            pause();
+            gameTime.Stop();
+        }
+
+        public void UnPause()
+        {
+            gameTime.Start();
         }
 
         public void CheckForInput()
         {
             if (Keyboard.IsKeyDown(playerControls.Pause))
             {
-                Pause();
+                pause();
             }
             else if (Keyboard.IsKeyDown(playerControls.Hold))
             {
@@ -269,10 +275,10 @@ namespace Netris.ViewModels.Game
 
         public void UpdateBoard()
         {
-            if (MainViewModel.GlobalTimer.ElapsedMilliseconds > currentDropTime + (Level.FramesBeforeAutoDrop * 16.67))
+            if (gameTime.ElapsedMilliseconds > currentDropTime + (Level.FramesBeforeAutoDrop * 16.67))
             {
                 MoveDown();
-                currentDropTime = MainViewModel.GlobalTimer.ElapsedMilliseconds;
+                currentDropTime = gameTime.ElapsedMilliseconds;
             }
 
             UpdateLevel();
@@ -359,37 +365,45 @@ namespace Netris.ViewModels.Game
                     Score += Level.PointsForPerfectClear;
                 }
 
-                if (currentPiece is T && IsTSpin)
+                if (IsTSpin)
                 {
                     if (linesCleared == 1)
                     {
+                        TSpinSingleCount++;
                         Score += Level.PointsForTSpinSingle;
                     }
                     else if (linesCleared == 2)
                     {
+                        TSpinDoubleCount++;
                         Score += Level.PointsForTSpinDouble;
                     }
                     else
                     {
+                        TSpinTripleCount++;
                         Score += Level.PointsForTSpinTriple;
                     }
+                    IsTSpin = false;
                 }
                 else
                 {
                     if (linesCleared == 1)
                     {
+                        SingleCount++;
                         Score += Level.PointsForSingle;
                     }
                     else if (linesCleared == 2)
                     {
+                        DoubleCount++;
                         Score += Level.PointsForDouble;
                     }
                     else if (linesCleared == 3)
                     {
+                        TripleCount++;
                         Score += Level.PointsForTriple;
                     }
                     else
                     {
+                        TetrisCount++;
                         Score += Level.PointsForTetris;
                     }
                 }

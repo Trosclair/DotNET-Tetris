@@ -7,6 +7,7 @@
              xmlns:viewmodels="clr-namespace:Netris.ViewModels" 
              xmlns:pieces="clr-namespace:Netris.ViewModels.Game.Pieces" 
              xmlns:game="clr-namespace:Netris.ViewModels.Game" 
+             xmlns:pieceVMs="clr-namespace:Netris.ViewModels.Game.Pieces"
              d:DataContext="{d:DesignInstance Type=game:PlayerViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="800">
@@ -20,17 +21,53 @@
             <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Orientation="Vertical">
-            <DockPanel Grid.Column="0" Margin="5" Height="200" VerticalAlignment="Top">
-            <TextBlock DockPanel.Dock="Top" Text="HOLD:" Foreground="White"/>
-            <local:PiecePresenter DockPanel.Dock="Top" DataContext="{Binding HoldPiece}"/>
+        <DockPanel LastChildFill="False">
+            <DockPanel DockPanel.Dock="Top" Grid.Column="0" Margin="5" Height="200" VerticalAlignment="Top">
+                <TextBlock DockPanel.Dock="Top" Text="HOLD:" Foreground="White"/>
+                <local:PiecePresenter DockPanel.Dock="Top" DataContext="{Binding HoldPiece}"/>
             </DockPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="SCORE: " Foreground="White"/>
-                <TextBlock Text="{Binding Score}" Foreground="White"/>
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                <TextBlock Text="Score: " FontSize="20" Foreground="White"/>
+                <TextBlock Text="{Binding Score}" FontSize="20" Foreground="White"/>
             </StackPanel>
+            <GroupBox DockPanel.Dock="Top" Header="Stats:" Foreground="White">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Singles: " Foreground="White"/>
+                        <TextBlock Text="{Binding SingleCount}" Foreground="White"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Doubles: " Foreground="White"/>
+                        <TextBlock Text="{Binding DoubleCount}" Foreground="White"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Triples: " Foreground="White"/>
+                        <TextBlock Text="{Binding TripleCount}" Foreground="White"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Tetris: " Foreground="White"/>
+                        <TextBlock Text="{Binding TetrisCount}" Foreground="White"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="T-Spin Single: " Foreground="White"/>
+                        <TextBlock Text="{Binding TSpinSingleCount}" Foreground="White"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="T-Spin Double: " Foreground="White"/>
+                        <TextBlock Text="{Binding TSpinDoubleCount}" Foreground="White"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="T-Spin Triple: " Foreground="White"/>
+                        <TextBlock Text="{Binding TSpinTripleCount}" Foreground="White"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Perfect Clears: " Foreground="White"/>
+                        <TextBlock Text="{Binding PerfectClearsCount}" Foreground="White"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
 
-        </StackPanel>
+        </DockPanel>
         <ItemsControl Grid.Column="1" ItemsSource="{Binding Board}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>

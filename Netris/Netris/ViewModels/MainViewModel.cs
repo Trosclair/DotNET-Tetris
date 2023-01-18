@@ -9,6 +9,7 @@ using System.Windows;
 using System;
 using WPFUtilities.Utilities;
 using Netris.ViewModels.Settings;
+using Netris.ViewModels.Parameters;
 
 namespace Netris.ViewModels
 {
@@ -23,7 +24,7 @@ namespace Netris.ViewModels
         public bool IsSettingsOpen { get => isSettingsOpen; set { isSettingsOpen = value; OnPropertyChanged(nameof(IsSettingsOpen)); } }
         public bool WillShowMainMenu { get => willShowMainMenu; set { willShowMainMenu = value; OnPropertyChanged(nameof(WillShowMainMenu)); } }
         public SettingsViewModel Settings { get; }
-        //public ParametersViewModel Parameters { get; }
+        public ParametersViewModel Parameters { get; }
         public static FPSCounter FPSCounter { get; } = new();
         public RelayCommand CustomGameSetupCommand => new(CustomGameSetup);
         public RelayCommand QuickGameCommand => new(QuickGame);
@@ -35,7 +36,7 @@ namespace Netris.ViewModels
             GlobalTimer.Start();
             CompositionTarget.Rendering += RenderingLoop;
             Settings = new(new());      // TODO Deserialize settings here.
-            //Parameters = new(new());    // IBID
+            Parameters = new(new());    // IBID
         }
 
         private void RenderingLoop(object? sender, EventArgs e)
@@ -53,7 +54,7 @@ namespace Netris.ViewModels
         private void QuickGame()
         {
             WillShowMainMenu = false;
-            Game = new(Settings, new(new()), InGameOptions);
+            Game = new(Settings, Parameters, InGameOptions);
         }
 
         private void Options()

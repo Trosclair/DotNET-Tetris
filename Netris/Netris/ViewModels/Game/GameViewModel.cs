@@ -55,11 +55,19 @@ namespace Netris.ViewModels.Game
 
         public void PauseGame()
         {
+            foreach (PlayerViewModel pvm in Boards)
+            {
+                pvm.Pause();
+            }
             IsPaused = true;
         }
 
         private void ResumeGame()
         {
+            foreach (PlayerViewModel pvm in Boards)
+            {
+                pvm.UnPause();
+            }
             IsPaused = false;
         }
     }

@@ -48,6 +48,8 @@ namespace Netris.ViewModels.Game.Pieces
                 Three.Y = y3;
                 Four.X = x4;
                 Four.Y = y4;
+
+                Board.IsTSpin = false;
             }
 
             if (RotationState == 0)
@@ -72,6 +74,14 @@ namespace Netris.ViewModels.Game.Pieces
                 // 00300
                 makeMove = () =>
                 {
+                    if (Two.Y != 0)
+                    {
+                        if (!Board[Four.X, Four.Y - 1].IsEmpty && !Board[Three.X, Three.Y - 1].IsEmpty && !Board[Three.X, Three.Y + 1].IsEmpty)
+                        {
+                            Board.IsTSpin = true;
+                        }
+                    }
+
                     One.X++;
                     One.Y--;
                     Three.X--;
@@ -130,6 +140,8 @@ namespace Netris.ViewModels.Game.Pieces
                 Three.Y = y3;
                 Four.X = x4;
                 Four.Y = y4;
+
+                Board.IsTSpin = false;
             }
 
             if (RotationState == 0)
@@ -184,6 +196,14 @@ namespace Netris.ViewModels.Game.Pieces
                 // 00300
                 makeMove = () =>
                 {
+                    if (Two.Y != 9)
+                    {
+                        if (!Board[Three.X, Three.Y + 1].IsEmpty && !Board[Four.X, Four.Y - 1].IsEmpty && !Board[Four.X, Four.Y + 1].IsEmpty)
+                        {
+                            Board.IsTSpin = true;
+                        }
+                    }
+
                     One.X++;
                     One.Y++;
                     Three.X++;
